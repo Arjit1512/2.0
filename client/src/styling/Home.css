@@ -1,0 +1,297 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Montserrat:wght@100;400;900&family=Ubuntu&display=swap');
+
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow-x: hidden;
+}
+
+.navbar {
+    display: flex;
+    width: 100%;
+    height: max-content;
+    margin: 0;
+    padding: 0;
+    align-items: center;
+    flex-direction: row;
+    justify-content: center;
+    background-color: rgb(0, 0, 0);
+    position: fixed;
+}
+
+.navbar p {
+    font-size: .7875rem;
+    font-family: Aeonik Fono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
+    font-weight: 400;
+    color: white;
+    letter-spacing: .181818181818em;
+    line-height: 1.3636363636363635;
+    text-transform: uppercase;
+}
+
+.main {
+    background-color: transparent;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    display: flex;
+    height: max-content;
+    flex-direction: row;
+    gap: 302px;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo {
+    width: 4%;
+    margin-top: 2%;
+    cursor: pointer;
+}
+
+.main h3 {
+    color: rgb(255, 255, 255);
+    font-size: 1rem;
+    z-index: 1;
+    margin-top: 3.5%;
+    font-family: Aeonik Fono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
+    font-weight: 800;
+    letter-spacing: .181818181818em;
+    line-height: 1.3636363636363635;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.video-background {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.background-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+    animation: slowMotionEffect 5s infinite;
+}
+
+@keyframes slowMotionEffect {
+    0% {
+        transform: scale(z);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.flex-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.flex-wrap {
+    flex-wrap: wrap;
+}
+
+.flex-col {
+    display: flex;
+    flex-direction: column;
+}
+
+.th{
+    align-items: center;
+    text-align: center;
+}
+.th h1{
+    font-size:5.5rem;
+    color: white;
+    margin-top:15%;
+    font-family: Aeonik, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Open Sans, Helvetica Neue, san;
+    font-weight: 1000;
+    letter-spacing: .11818181818em;
+    line-height: 1.3636363636363635;
+    text-transform: uppercase;
+}
+/*
+.th span {
+    color: #0c1beaa7;
+    text-shadow: 
+        1px 1px 0 #000,   
+        -1px -1px 0 #000, 
+        1px -1px 0 #000,  
+        -1px 1px 0 #000;  
+}*/
+
+
+
+/*HOME-DIV*/
+#home-div {
+    margin-top: 2%;
+    height: 520px;
+}
+
+#home-div h1 {
+    text-align: center;
+    font-family: 'Playfair Display', serif;
+    font-weight: 500;
+}
+
+.break {
+    text-decoration: line-through;
+    color: gray;
+}
+
+.discount {
+    background-color: #ea2121;
+    width: max-content;
+    height: fit-content;
+    color: white;
+    border: 1.5px solid black;
+    position: relative;
+    bottom: 10%;
+}
+
+.hr {
+    width: 100%;
+    z-index: 1;
+}
+
+.hc {
+    width: 25%;
+    padding-left: 5%;
+    position: relative;
+    right: 2%;
+}
+
+.hc h5 {
+  font-family: "DM Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+  font-size: 20px;
+  margin: 0;
+}
+
+.body-text {
+    position: relative;
+    bottom: 8%;
+    font-family: "DM Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: static;
+}
+
+.body-img-top {
+    width: 21vw;
+    height: 100%;
+}
+
+.gray-text {
+    color: gray;
+    font-size: 0.8rem;
+    font-weight: 700;
+    font-family: Aeonik Fono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
+    margin-bottom: 7px;
+}
+
+
+.hc {
+    position: relative;
+    width: 25%;
+    padding-left: 3%;
+    right: 1%;
+    overflow: hidden;
+    height: 420px;
+    transition: transform 0.3s ease;
+}
+
+.hc:hover {
+    /* transform: translateY(-5px); */
+    cursor: pointer;
+}
+
+.body-img-top {
+    display: block;
+}
+
+.body-img-hover {
+    display: none;
+}
+
+.hc:hover .body-img-top {
+    display: none;
+}
+
+.hc:hover .body-img-hover {
+    display: block;
+}
+
+/*PART-3*/
+
+#part-3 {
+    width: 100%;
+    background-color: #000;
+    height: 80vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-size: cover;
+    background-position: center;
+    margin-top: 20px;
+}
+
+.p3-part1 {
+    z-index: 10;
+    position: relative;
+    left: 20%;
+    top: 5%;
+}
+
+.p3-part1 h3 {
+    color: white;
+    font-size: 48px;
+    font-family: 'Playfair Display', serif;
+    font-weight: 400;
+}
+
+.p3-part1 p {
+    color: gray;
+    font-weight: 100;
+    font-family: 'Inconsolata', monospace;
+}
+
+.p3-part1 i {
+    color: aliceblue;
+    cursor: pointer;
+    font-family: 'Playfair Display', serif;
+    text-decoration: none;
+}
+
+.p3-part1 i:hover {
+    color: darkslategrey;
+}
+
+.p3-part2 img {
+    position: relative;
+    right: 70%;
+    height: 60vh;
+}
+
+.gif-video{
+    position: relative;
+    left:45%;
+    width:50%;
+    top:10%
+}

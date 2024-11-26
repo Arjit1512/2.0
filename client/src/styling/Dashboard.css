@@ -1,0 +1,167 @@
+.flex-col-d {
+    display: flex;
+    flex-direction: column;
+}
+
+.flex-row-d {
+    display: flex;
+    flex-direction: row;
+}
+.dashboard{
+    padding:2%;
+    padding-top: 3%;
+}
+.dashboard h3{
+    color: black;
+    font-size: 1rem;
+    z-index: 1;
+    margin-top: 3.5%;
+    font-family: Aeonik Fono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
+    font-weight: 800;
+    letter-spacing: .181818181818em;
+    line-height: 1.3636363636363635;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+.order-img {
+    width: 12%;
+    height: 100%;
+    border: 1px solid black;
+}
+
+.order-box {
+    margin-bottom: 2.3%;
+    border: 2px solid gray;
+    width: 95%;
+    z-index: 2;
+}
+
+.date {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 400;
+    font-size: 1rem;
+}
+
+.date span {
+    font-weight: 600;
+}
+
+.dash-order h2 {
+    font-family: 'Rubik', sans-serif;
+    text-transform: uppercase;
+}
+
+.inner-box {
+    margin-left: 2%;
+
+}
+.inner-box p {
+    position: relative;
+    top: -5%;
+    margin: 3% 0%;
+    font-family: 'Inconsolata', monospace;
+    font-weight: 500;
+}
+
+.inner-box h4 {
+    position: relative;
+    top: 5%;
+    margin-bottom: 12%;
+    color: black;
+    font-size: 1rem;
+    z-index: 1;
+    margin-top: 3.5%;
+    font-family: Aeonik Fono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
+    font-weight: 600;
+    letter-spacing: .181818181818em;
+    line-height: 1.3636363636363635;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+
+@media (min-width: 370px) and (max-width:700px) {
+    .dash-order {
+        position: relative;
+        top: 17vh;
+    }
+
+    .navbar {
+        padding-bottom: 2vh !important;
+    }
+
+    .t-h {
+        position: relative !important;
+        bottom: -2vh !important;
+    }
+
+    .dragon-img {
+        visibility: hidden;
+    }
+
+    .order-img {
+        width: 55%;
+    }
+
+    .inner-box {
+        height: 20%;
+    }
+
+    .love {
+        visibility: hidden;
+    }
+}
+
+
+@media (min-width: 700px) and (max-width:1300px) {
+    .dash-order {
+        position: relative;
+        top: 17vh;
+        right: 4%;
+    }
+
+    .t-h {
+        position: relative !important;
+        bottom: -5vh !important;
+    }
+
+    .dragon-img {
+        visibility: hidden;
+    }
+
+    .order-img {
+        width: 52%;
+    }
+
+    .inner-box {
+        height: 20%;
+    }
+
+    .love {
+        visibility: hidden;
+    }
+}
+
+/*TQ*/
+
+.tq{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    background-color: black;
+    height: max-content;
+    padding: 5%;
+    font-size: .9875rem;
+    font-family: Aeonik Fono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
+    font-weight: 600;
+    letter-spacing: .181818181818em;
+    line-height: 1.3636363636363635;
+    text-transform: uppercase;
+}
+
+.tq span {
+    text-decoration: underline;
+    color: blue;
+    cursor: pointer;
+}

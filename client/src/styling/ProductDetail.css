@@ -1,0 +1,261 @@
+html {
+    scroll-behavior: smooth !important;
+}
+.not-fixed{
+    position: relative !important;
+}
+.pd25{
+    padding: 0% 5% 2% 5%;
+}
+
+.img-div img {
+    position: relative;
+    left: 0%;
+    top: 4vh;
+    width:690px;
+    height:590px;
+    object-fit: cover;
+}
+
+.pd h3 {
+    font-size: .9875rem;
+    font-family: Aeonik Fono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
+    font-weight: 600;
+    color: black;
+    letter-spacing: .181818181818em;
+    line-height: 1.3636363636363635;
+    text-transform: uppercase;
+}
+
+.pd h2 {
+    font-size: 2.2rem;
+}
+
+.pd a {
+    text-decoration: none;
+    color: black;
+}
+
+.pd a:hover {
+    color: #b2fa63;
+}
+
+.pd p {
+    width: 80%;
+    font-size: 1.1rem;
+    color: gray;
+    font-weight: 100;
+    font-family: 'Inconsolata', monospace;
+}
+
+.right-box {
+    border: 1px solid #beb4b4;
+    width: 60%;
+    margin-top: 2%;
+    padding: 0.1% 12% 1% 3%;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.black {
+    color: black !important;
+}
+
+.boxes {
+    display: flex;
+    flex-direction: row;
+    gap: 35px;
+}
+
+.box {
+    width: 40px;
+    height: 40px;
+    border: 2px solid gray;
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.box:hover {
+    border: 2px solid black;
+}
+
+.pd b {
+    color: black;
+}
+
+button.atc {
+    font-size: .9875rem;
+    font-family: Aeonik Fono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
+    font-weight: 600;
+    color: black;
+    letter-spacing: .181818181818em;
+    line-height: 1.3636363636363635;
+    text-transform: uppercase;
+    padding: 3% 30%;
+    position: relative;
+    left: 20%;
+    background-color: #b2fa63;
+    border: 0.8px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 3% 2%;
+}
+
+button.atc:hover {
+    color: #b2fa63;
+    background-color: black;
+    cursor: pointer;
+}
+
+/*size*/
+#size {
+    margin-top: 3%;
+}
+
+.l-box {
+    width: 50%;
+}
+
+.r-box {
+    width: 50%;
+    position: relative;
+    left: 0%;
+}
+
+.r-box h1 {
+    font-size: 3.2rem;
+    letter-spacing: 0.021818181818em;
+    font-weight: 800;
+    font-family: Aeonik, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Open Sans, Helvetica Neue, san;
+}
+.r-box p{
+    width:104%;
+}
+
+.bold b{
+    color: gray !important;
+}
+.bold{
+    padding-top: 3%;
+}
+
+.size-table-container {
+    margin-top: 8%;
+    overflow-x: auto;
+    font-family: 'Inconsolata', monospace;
+    
+}
+
+.size-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.size-table th,
+.size-table td {
+    text-align: center;
+    padding: 8px;
+    border: 1px solid black;
+}
+
+.size-table th {
+    background-color: black;
+    color: white;
+    font-weight: normal;
+}
+
+.size-table th:first-child {
+    background-color: white;
+    border: none;
+}
+
+.size-table td:first-child {
+    font-weight: bold;
+}
+
+.size-table tr:nth-child(even) {
+    background-color: white;
+}
+
+.size-table tr:hover {
+    transform: none;
+    background-color: white;
+}
+.or{
+    text-align: left !important;
+    margin-left: 3% !important;
+    font-size: .9875rem !important;
+    font-family: Aeonik Fono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace !important;
+    font-weight: 800 !important;
+    color: black !important;
+    letter-spacing: .181818181818em !important;
+    line-height: 1.3636363636363635 !important;
+    text-transform: uppercase !important;
+    padding-bottom: 1%;
+}
+
+/*middle*/
+#middle {
+    background-image: url("../sources/athlete.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#middle h3{
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 800;
+}
+
+/*notification*/
+.notification-box {
+    position: fixed;
+    height: max-content;
+    width: max-content;
+    padding: 0.5%;
+    border-radius: 4px;
+    border: 2px solid black;
+    background-color: #b2fa63;
+    color: black;
+    z-index: 100;
+    top: 7%;
+    left: 90%; 
+    transform: translate(-50%, -50%); 
+    font-family: 'Inconsolata', monospace;
+    font-size: 0.7rem;
+    font-weight: 800;
+}
+
+.notification-box .blinking-text {
+    animation: blink 1s step-start infinite;
+}
+
+@keyframes blink {
+    50% {
+        color: white; 
+    }
+    100% {
+        color: black; 
+    }
+}
+
+/*dropdown*/
+.d1 {
+    left: 78%;
+}
+.hi span{
+    background-color: #000;
+}
+.m1 {
+    position: relative;
+    left: -40%;
+    bottom: 3vh;
+    gap: 205px;
+}
