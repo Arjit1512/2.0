@@ -95,7 +95,7 @@ export const CartDetail = () => {
             });
             console.log(response.data);
             if (response.data.message === "Checkout successful!") {
-                loadRazorpaySript();
+                //loadRazorpaySript();
             }
             else {
                 alert(response.data.message);
@@ -108,50 +108,50 @@ export const CartDetail = () => {
     
     const totalBill = items.reduce((acc, item) => (acc + item.product_price * item.product_quantity), 0);
 
-    const loadRazorpaySript = async () => {
-        try {
-            const script = document.createElement("script");
-            script.src = "https://checkout.razorpay.com/v1/checkout.js";
-            script.async = true;
-            document.body.appendChild(script);
+    // const loadRazorpaySript = async () => {
+    //     try {
+    //         const script = document.createElement("script");
+    //         script.src = "https://checkout.razorpay.com/v1/checkout.js";
+    //         script.async = true;
+    //         document.body.appendChild(script);
     
-            script.onload = async () => {
-                const response = await axios.post(`http://localhost:3001/create-order`, {
-                    amount: totalBill, // Pass the total amount here
-                });
+    //         script.onload = async () => {
+    //             const response = await axios.post(`http://localhost:3001/create-order`, {
+    //                 amount: totalBill, // Pass the total amount here
+    //             });
     
-                const { orderId } = response.data;
+    //             const { orderId } = response.data;
     
-                const razorpayOptions = {
-                    key: process.env.RAZORPAY_KEY_ID, 
-                    amount: totalBill * 100, 
-                    currency: "INR",
-                    name: "True Hood",
-                    description: "Fashion Product Purchase",
-                    order_id: orderId,
-                    handler: function (response) {
-                        // Callback on successful payment
-                        console.log(response);
-                        alert("Payment Successful!");
-                        navigate("/dashboard");
-                    },
-                    prefill: {
-                        name: Name,
-                        email: "customer@example.com",
-                        contact: "",
-                    },
-                    theme: {
-                        color: "#3399cc",
-                    },
-                };
+    //             const razorpayOptions = {
+    //                 key: process.env.RAZORPAY_KEY_ID, 
+    //                 amount: totalBill * 100, 
+    //                 currency: "INR",
+    //                 name: "True Hood",
+    //                 description: "Fashion Product Purchase",
+    //                 order_id: orderId,
+    //                 handler: function (response) {
+    //                     // Callback on successful payment
+    //                     console.log(response);
+    //                     alert("Payment Successful!");
+    //                     navigate("/dashboard");
+    //                 },
+    //                 prefill: {
+    //                     name: Name,
+    //                     email: "customer@example.com",
+    //                     contact: "",
+    //                 },
+    //                 theme: {
+    //                     color: "#3399cc",
+    //                 },
+    //             };
     
-                const razorpay = new Razorpay(razorpayOptions);
-                razorpay.open();
-            };
-        } catch (error) {
-            console.log("Error loading Razorpay:", error);
-        }
-    };
+    //             const razorpay = new Razorpay(razorpayOptions);
+    //             razorpay.open();
+    //         };
+    //     } catch (error) {
+    //         console.log("Error loading Razorpay:", error);
+    //     }
+    // };
 
 
     const addAddress = async () => {
