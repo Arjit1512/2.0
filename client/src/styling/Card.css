@@ -1,6 +1,5 @@
 .card {
-    background-color: #f9f9f9;
-    border: 0.3px solid #ddd;
+    background-color: white;
     padding: 15px;
     width: 140%;
     margin:2% 5%;
@@ -9,11 +8,13 @@
 }
 
 .card-img {
-    width: 100%; 
+    width: 100%;
     border-radius: 4px;
     margin-bottom: 10px;
     object-fit: cover;
-    height:290px;
+    height: 335px;
+    position: relative;
+    right: 9%;
 }
 .card:hover{
     cursor: pointer;
@@ -22,11 +23,19 @@
     text-align: left;
 }
 .card-name{
-    font-family: Arial, sans-serif;
     font-size: 1.4rem;
     font-weight:700;
 }
 .card-price{
     font-weight:500;
     font-size: 1.2rem;
+    font-size: 1rem;
+    z-index: 1;
+    margin-top: 3.5%;
+    font-family: Aeonik Fono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
+    font-weight: 800;
+    letter-spacing: .181818181818em;
+    line-height: 1.3636363636363635;
+    text-transform: uppercase;
+    cursor: pointer;
 }

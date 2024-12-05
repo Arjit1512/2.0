@@ -6,7 +6,7 @@ import { useMyContext } from './CartContext';
 
 const Login = () => {
   const navigate = useNavigate();
-  const {globalUserID,setGlobalUserID} = useMyContext();
+  const {globalUserID,setGlobalUserID,loggedIn,setLoggedIn} = useMyContext();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loginError, setLoginError] = useState('');
@@ -29,9 +29,10 @@ const Login = () => {
       if (response.data.message === "Login successfull!") {
         localStorage.setItem('token', response.data.token);
         localStorage.setItem('userID', response.data.userID); 
-        localStorage.setItem('userName',response.data.userName);
+        localStorage.setItem('userName', response.data.userName); 
         console.log('USERID:::: ',response.data.userID);
         setGlobalUserID(response.data.userID);
+        setLoggedIn(true);
         navigate("/");
       }
       else {

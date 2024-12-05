@@ -31,7 +31,6 @@ const Register = () => {
       if (response.data.message === "Registration successfull!") {
         localStorage.setItem('token', response.data.token);
         localStorage.setItem('userID', response.data.userID); 
-        localStorage.setItem('userName',response.data.userName);
         setGlobalUserID(response.data.userID);
         navigate("/");
       }

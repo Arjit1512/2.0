@@ -7,6 +7,7 @@ import dotenv from 'dotenv';
 import User from './models/User.js';
 import jwt from 'jsonwebtoken';
 import Cart from './models/Cart.js';
+import crypto from 'crypto';
 import products from './products.js';
 
 dotenv.config();
@@ -26,26 +27,30 @@ const verifyToken = (req, res, next) => {
 
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        req.userId = decoded.userId; 
-        next(); 
+        req.userId = decoded.userId;
+        next();
     } catch (error) {
         return res.status(401).json({ message: "Invalid token" });
     }
 };
 
-const createOrder = async (req, res) => {
+app.post('/create-order', async (req, res) => {
     try {
-        const { amount } = req.body; // Amount in smallest currency unit (e.g., paise for INR)
+        const { amount } = req.body; // Amount in the smallest currency unit (e.g., paise for INR)
+        if (!amount) {
+            return res.status(400).json({ message: "Amount required!" });
+        }
         const razorpay = new Razorpay({
             key_id: process.env.RAZORPAY_KEY_ID,
             key_secret: process.env.RAZORPAY_KEY_SECRET,
         });
 
         const options = {
-            amount: amount * 100, // Convert to smallest unit
+            amount: amount,
             currency: "INR",
             receipt: `receipt_${Date.now()}`,
         };
+
 
         const order = await razorpay.orders.create(options);
         res.status(200).json({
@@ -55,9 +60,70 @@ const createOrder = async (req, res) => {
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });
     }
-};
+});
 
-export { createOrder };
+
+app.post('/verify-payment', async (req, res) => {
+    const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
+    if (!razorpay_order_id || !razorpay_payment_id || !razorpay_signature) {
+        return res.status(400).json({ success: false, message: "Missing required payment details!" });
+    }
+
+    const hmac = crypto.createHmac('sha256', process.env.RAZORPAY_KEY_SECRET);
+    hmac.update(`${razorpay_order_id}|${razorpay_payment_id}`);
+    const generatedSignature = hmac.digest('hex');
+
+    if (generatedSignature === razorpay_signature) {
+        // Payment is verified
+        return res.status(200).json({ success: true, message: "Payment verified!" });
+    } else {
+        return res.status(400).json({ success: false, message: "Invalid payment signature!" });
+    }
+});
+
+app.post('/:userId/checkout', verifyToken, async (req, res) => {
+    try {
+        const { userId } = req.params;
+        console.log('User ID:', userId);
+        if (req.userId !== userId) {
+            return res.status(403).json({ message: "You are not authorized to perform this action" });
+        }
+
+        if (!mongoose.Types.ObjectId.isValid(userId)) {
+            return res.status(400).json({ error: "Invalid user ID" });
+        }
+        const user = await User.findById(userId).populate('cart');
+        if (!user) {
+            return res.status(400).json({ message: "User does not exists!" });
+        }
+        const bill = user.cart.reduce((acc, item) => acc + item.totalBill, 0);
+        if (bill == 0) {
+            return res.status(200).json({ message: "No items in the cart!" });
+        }
+        const cartItemIds = user.cart.map(item => item._id);
+        await Cart.deleteMany({ _id: { $in: cartItemIds } });
+
+        user.orders.push({
+            totalBill: bill,
+            date: new Date(),
+            items: user.cart.map((item) => ({
+                productId: item.product_id,
+                productQuantity: item.product_quantity,
+                productEntirePrice: item.product_quantity * item.product_price,
+                productName: item.product_name,
+                productImagePath: item.imagePath,
+                productSize: item.size,
+                _id: item._id
+            }))
+        })
+
+        user.cart = [];
+        await user.save();
+        return res.status(200).json({ message: "Checkout successful!", totalBill: bill });
+    } catch (error) {
+        console.log('Error: ', error);
+    }
+})
 
 app.post('/register', async (req, res) => {
     try {
@@ -75,7 +141,7 @@ app.post('/register', async (req, res) => {
         const token = jwt.sign({ userId: newUser._id }, secret, { expiresIn: '30d' });
         newUser.tokens.push({ token });
         await newUser.save();
-        return res.status(200).json({ token: token, message: "Registration successfull!", userID: newUser._id , userName: userName });
+        return res.status(200).json({ token: token, message: "Registration successfull!", userID: newUser._id, userName: userName });
     }
     catch (error) {
         console.log('Error: ', error);
@@ -108,9 +174,30 @@ app.post('/login', async (req, res) => {
     }
 })
 
+app.get('/:userId/get-user-details', verifyToken, async (req, res) => {
+    try {
+        const { userId } = req.params;
+        if (req.userId !== userId) {
+            return res.status(403).json({ message: "You are not authorized to perform this action" });
+        }
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(200).json({ message: "User does not exisits!" });
+        }
+        return res.status(200).json({ name: user.userName, email: user.email, message:"success" });
+    }
+    catch (error) {
+        console.log('Error: ', error);
+    }
+})
+
+
 app.get('/:userId/get-cart', verifyToken, async (req, res) => {
     try {
         const { userId } = req.params;
+        if (req.userId !== userId) {
+            return res.status(403).json({ message: "You are not authorized to perform this action" });
+        }
         if (userId) {
             const user = await User.findById(userId).populate('cart');
             if (!user) {
@@ -123,6 +210,7 @@ app.get('/:userId/get-cart', verifyToken, async (req, res) => {
             }
             return res.status(200).json({ message: "Cart items fetched!", items, orders: orders });
         }
+        return res.status(400).json({ error: "userID is required" });
     }
     catch (error) {
         console.log('Error: ', error);
@@ -133,6 +221,14 @@ app.get('/:userId/get-cart', verifyToken, async (req, res) => {
 app.post('/:userId/add-item/:productId', verifyToken, async (req, res) => {
     try {
         const { userId, productId } = req.params;
+        if (req.userId !== userId) {
+            return res.status(403).json({ message: "You are not authorized to perform this action" });
+        }
+        console.log('User ID:', userId);
+        if (!mongoose.Types.ObjectId.isValid(userId)) {
+            return res.status(400).json({ error: "Invalid user ID" });
+        }
+
         const { size } = req.body;
         const user = await User.findById(userId);
         if (!user) {
@@ -177,6 +273,13 @@ app.post('/:userId/add-item/:productId', verifyToken, async (req, res) => {
 app.post('/:userId/remove-item/:productId', verifyToken, async (req, res) => {
     try {
         const { userId, productId } = req.params;
+        if (req.userId !== userId) {
+            return res.status(403).json({ message: "You are not authorized to perform this action" });
+        }
+        console.log('User ID:', userId);
+        if (!mongoose.Types.ObjectId.isValid(userId)) {
+            return res.status(400).json({ error: "Invalid user ID" });
+        }
         const { size } = req.body;
         const user = await User.findById(userId);
         if (!user) {
@@ -215,46 +318,19 @@ app.post('/:userId/remove-item/:productId', verifyToken, async (req, res) => {
     }
 })
 
-app.post('/:userId/checkout', verifyToken, async (req, res) => {
-    try {
-        const { userId } = req.params;
-        const user = await User.findById(userId).populate('cart');
-        if (!user) {
-            return res.status(400).json({ message: "User does not exists!" });
-        }
-        const bill = user.cart.reduce((acc, item) => acc + item.totalBill, 0);
-        if (bill == 0) {
-            return res.status(400).json({ message: "No items in the cart!" });
-        }
-        const cartItemIds = user.cart.map(item => item._id);
-        await Cart.deleteMany({ _id: { $in: cartItemIds } });
 
-        user.orders.push({
-            totalBill: bill,
-            date: new Date(),
-            items: user.cart.map((item) => ({
-                productId: item.product_id,
-                productQuantity: item.product_quantity,
-                productEntirePrice: item.product_quantity * item.product_price,
-                productName:item.product_name,
-                productImagePath:item.imagePath,
-                productSize:item.size,
-                _id: item._id
-            }))
-        })
-
-        user.cart = [];
-        await user.save();
-        return res.status(200).json({ message: "Checkout successful!", totalBill: bill });
-    } catch (error) {
-        console.log('Error: ', error);
-    }
-})
 
 app.post('/:userId/add-address', verifyToken, async (req, res) => {
     try {
         const { userId } = req.params;
+        if (req.userId !== userId) {
+            return res.status(403).json({ message: "You are not authorized to perform this action" });
+        }
         const { street, city, state, pincode } = req.body;
+        console.log('User ID:', userId);
+        if (!mongoose.Types.ObjectId.isValid(userId)) {
+            return res.status(400).json({ error: "Invalid user ID" });
+        }
 
         // Regex for validating Indian pincode (6 digits)
         const pincodeRegex = /^[1-9][0-9]{5}$/;
@@ -281,6 +357,13 @@ app.post('/:userId/add-address', verifyToken, async (req, res) => {
 app.post('/:userId/remove-address/:addressId', verifyToken, async (req, res) => {
     try {
         const { userId, addressId } = req.params;
+        if (req.userId !== userId) {
+            return res.status(403).json({ message: "You are not authorized to perform this action" });
+        }
+        console.log('User ID:', userId);
+        if (!mongoose.Types.ObjectId.isValid(userId)) {
+            return res.status(400).json({ error: "Invalid user ID" });
+        }
 
         const user = await User.findById(userId);
         if (!user) {
@@ -298,6 +381,35 @@ app.post('/:userId/remove-address/:addressId', verifyToken, async (req, res) => 
 
     } catch (error) {
         console.log('Error: ', error);
+    }
+})
+
+app.post('/:userId/feedback', verifyToken, async(req,res)=> {
+    try{
+        const { userId } = req.params;
+        const {fName,lName,subject,message} = req.body;
+        if (req.userId !== userId) {
+            return res.status(403).json({ message: "You are not authorized to perform this action" });
+        }
+        if (!mongoose.Types.ObjectId.isValid(userId)) {
+            return res.status(400).json({ error: "Invalid user ID" });
+        }
+
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(400).json({ message: "User does not exists!" });
+        }
+        if (!message) {
+            return res.status(200).json({ message: "Message is required!" });
+        }
+        user.feedback.push({
+            fName,lName,subject,message
+        });
+        await user.save();
+        return res.status(200).json({message:'Feedback taken succesfully'});
+
+    }catch(error){
+        console.log('Error: ',error);
     }
 })
 

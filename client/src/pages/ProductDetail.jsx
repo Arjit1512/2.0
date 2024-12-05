@@ -21,8 +21,10 @@ const ProductDetail = () => {
   const navigate = useNavigate();
   const { globalUserID, setGlobalUserID } = useMyContext();
   const token = localStorage.getItem('token');
+  const { loggedIn, setLoggedIn } = useMyContext();
   const [selectedSize, setSelectedSize] = useState('');
-  const [popup, setPopup] = useState(false); const [isOpen, setIsOpen] = useState(false);
+  const [popup, setPopup] = useState(false); 
+  const [isOpen, setIsOpen] = useState(false);
   const refresh = () => {
     navigate("/");
   }
@@ -30,12 +32,12 @@ const ProductDetail = () => {
 
   const handleQuantityChange = async (id, action, size) => {
     try {
-      
-      if(size===''){
+
+      if (size === '') {
         alert('Enter valid size!')
         return;
       }
-      
+
       console.log('Button clicked');
       setPopup(true);
 
@@ -43,26 +45,26 @@ const ProductDetail = () => {
       console.log('id: ', id);
       console.log('Size: ', size);
 
-      setTimeout(()=> {
+      setTimeout(() => {
         setPopup(false);
-      },2000)
+      }, 2000)
 
 
 
       if (action === "increase") {
-        const response = await axios.post(`http://localhost:3001/${globalUserID}/add-item/${id}`, { size: size },{
-          headers:{
-              Authorization:`Bearer ${token}`
+        const response = await axios.post(`http://localhost:3001/${globalUserID}/add-item/${id}`, { size: size }, {
+          headers: {
+            Authorization: `Bearer ${token}`
           }
-      });
+        });
         console.log(response.message);
       }
       else if (action === "decrease") {
-        const response = await axios.post(`http://localhost:3001/${globalUserID}/remove-item/${id}`, { size: size },{
-          headers:{
-              Authorization:`Bearer ${token}`
+        const response = await axios.post(`http://localhost:3001/${globalUserID}/remove-item/${id}`, { size: size }, {
+          headers: {
+            Authorization: `Bearer ${token}`
           }
-      });
+        });
         console.log(response.message);
       }
     } catch (error) {
@@ -70,6 +72,30 @@ const ProductDetail = () => {
     }
   }
 
+  const handleSize = async (size) => {
+    try {
+      if (loggedIn) {
+        setSelectedSize(size);
+      }
+      if (!loggedIn) {
+        alert("Please login to add items!");
+      }
+    } catch (error) {
+      console.log('Error: ', error);
+    }
+  }
+  const handleLogout = async () => {
+    try {
+      localStorage.removeItem("token");
+      localStorage.removeItem("userId");
+      setLoggedIn(false);
+      setGlobalUserID(null);
+      window.location.reload();
+      console.log('User logged out successfully.');
+    } catch (error) {
+      console.log('Error: ', error);
+    }
+  }
 
   if (!cloth) {
     return (
@@ -101,7 +127,12 @@ const ProductDetail = () => {
           </div>
           {isOpen && (
             <div className="dropdown-menu black">
-              <a onClick={() => navigate("/login")} className="dropdown-item">Login</a>
+              {loggedIn && (
+                <a onClick={handleLogout} className="dropdown-item">Logout</a>
+              )}
+              {!loggedIn && (
+                <a onClick={() => navigate("/login")} className="dropdown-item">Login</a>
+              )}
               <a onClick={() => navigate("/cart")} className="dropdown-item">Cart</a>
               <a onClick={() => navigate("/dashboard")} className="dropdown-item">My Orders</a>
             </div>
@@ -129,11 +160,11 @@ const ProductDetail = () => {
             <h2>{cloth.name}</h2>
             <p className='black'>₹{cloth.price}.00</p>
             <div className='boxes'>
-              <div className='box' onClick={() => setSelectedSize('XS')}>XS</div>
-              <div className='box' onClick={() => setSelectedSize('S')}>S</div>
-              <div className='box' onClick={() => setSelectedSize('M')}>M</div>
-              <div className='box' onClick={() => setSelectedSize('L')}>L</div>
-              <div className='box' onClick={() => setSelectedSize('XL')}>XL</div>
+              <div className='box' onClick={() => handleSize('XS')}>XS</div>
+              <div className='box' onClick={() => handleSize('S')}>S</div>
+              <div className='box' onClick={() => handleSize('M')}>M</div>
+              <div className='box' onClick={() => handleSize('L')}>L</div>
+              <div className='box' onClick={() => handleSize('XL')}>XL</div>
             </div>
             <h3><a href="#size">Size Guide</a></h3>
             <p>Selected Size: <b>{selectedSize}</b></p>

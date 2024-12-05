@@ -20,6 +20,13 @@
 }
 .header-login p{
     margin-top: 1%;
+    font-size: .9875rem;
+    font-family: Aeonik Fono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
+    font-weight: 600;
+    color: white;
+    letter-spacing: .181818181818em;
+    line-height: 1.3636363636363635;
+    text-transform: uppercase;
 }
 .wrapper {
     position: relative;

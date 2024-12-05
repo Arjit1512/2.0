@@ -3,6 +3,7 @@ const MyContext = createContext();
 
 export const MyProvider = ({ children }) => {
     const [globalUserID, setGlobalUserID] = useState(null);
+    const [loggedIn,setLoggedIn] = useState(false);
 
     useEffect(() => {
         const storedUserID = localStorage.getItem('userID');
@@ -12,7 +13,7 @@ export const MyProvider = ({ children }) => {
     }, []);
 
     return (
-        <MyContext.Provider value={{ globalUserID, setGlobalUserID }}>
+        <MyContext.Provider value={{ globalUserID, setGlobalUserID,loggedIn, setLoggedIn }}>
             {children}
         </MyContext.Provider>
     )

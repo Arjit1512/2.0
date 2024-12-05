@@ -4,8 +4,8 @@ html {
 .not-fixed{
     position: relative !important;
 }
-.pd25{
-    padding: 0% 5% 2% 5%;
+.pd25 {
+    padding: 0% 4% 2% 4%;
 }
 
 .img-div img {
@@ -42,10 +42,11 @@ html {
 
 .pd p {
     width: 80%;
-    font-size: 1.1rem;
     color: gray;
-    font-weight: 100;
-    font-family: 'Inconsolata', monospace;
+    font-size: 0.8rem;
+    font-weight: 700;
+    font-family: Aeonik Fono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
+    margin-bottom: 7px;
 }
 
 .right-box {
@@ -248,10 +249,10 @@ button.atc:hover {
 
 /*dropdown*/
 .d1 {
-    left: 78%;
+    left: 75%;
 }
-.hi span{
-    background-color: #000;
+.hi span {
+    background-color: #000 !important;
 }
 .m1 {
     position: relative;

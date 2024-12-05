@@ -19,8 +19,21 @@ const Home = () => {
   const navigate = useNavigate();
   const { globalUserID, setGlobalUserID } = useMyContext();
   const [isOpen, setIsOpen] = useState(false);
+  const { loggedIn, setLoggedIn } = useMyContext();
   const refresh = () => {
     window.location.reload();
+  }
+  const handleLogout = async () => {
+    try {
+      localStorage.removeItem("token");
+      localStorage.removeItem("userId");
+      setLoggedIn(false);
+      setGlobalUserID(null);
+      window.location.reload();
+      console.log('User logged out successfully.');
+    } catch (error) {
+      console.log('Error: ', error);
+    }
   }
   return (
     <div>
@@ -47,8 +60,13 @@ const Home = () => {
               <span></span>
             </div>
             {isOpen && (
-              <div className="dropdown-menu">
-                <a onClick={() => navigate("/login")} className="dropdown-item">Login</a>
+              <div className="dropdown-menu black">
+                {loggedIn && (
+                  <a onClick={handleLogout} className="dropdown-item">Logout</a>
+                )}
+                {!loggedIn && (
+                  <a onClick={() => navigate("/login")} className="dropdown-item">Login</a>
+                )}
                 <a onClick={() => navigate("/cart")} className="dropdown-item">Cart</a>
                 <a onClick={() => navigate("/dashboard")} className="dropdown-item">My Orders</a>
               </div>

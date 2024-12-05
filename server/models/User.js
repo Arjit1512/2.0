@@ -9,7 +9,8 @@ const UserSchema = new mongoose.Schema(
         },
         email: {
             type: String,
-            required: true
+            required: true,
+            unique:true
         },
         password: {
             type: String,
@@ -84,6 +85,23 @@ const UserSchema = new mongoose.Schema(
                 },
                 pincode: {
                     type: Number,
+                    required: true
+                },
+            }
+        ],
+        feedback: [
+            {
+                fName: {
+                    type: String
+                },
+                lName: {
+                    type: String
+                },
+                subject: {
+                    type: String
+                },
+                message: {
+                    type: String,
                     required: true
                 },
             }

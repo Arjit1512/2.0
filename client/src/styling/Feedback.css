@@ -1,0 +1,166 @@
+
+#community-page {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.cpage1 {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    padding: 4% 0 0 10%;
+}
+
+.cpage1 h1 {
+    font-size: 2.9875rem;
+    font-family: Aeonik Fono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
+    font-weight: 1000;
+    color: black;
+    letter-spacing: .021818181818em;
+    line-height: 1.3636363636363635;
+    text-transform: uppercase;
+}
+
+form label {
+    font-size: 1rem;
+    font-family: Aeonik Fono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
+    font-weight: 1000;
+    color: black;
+    letter-spacing: .021818181818em;
+    line-height: 1.3636363636363635;
+    text-transform: uppercase;
+}
+
+.cpage2 {
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+}
+
+.brown-border {
+    border-width: 5px;
+    color: brown;
+    height: 4px;
+    width: 100%;
+    position: relative;
+    bottom:2%;
+    background-color: brown;
+}
+
+.text-community {
+    word-spacing: 3px;
+    font-family: 'Inconsolata', monospace;
+    font-weight: 500;
+}
+
+.name-form {
+    width: 91.8%;
+    justify-content: space-between;
+}
+
+.move-div {
+    position: relative;
+    left: 5%;
+}
+
+input {
+    padding: 9px;
+    width: 90%;
+    border: 2px solid black;
+    padding-left: 5px;
+    font-size: 14px;
+    font-family: 'Inconsolata', monospace;
+    background-color: rgb(231, 236, 241);
+}
+
+label {
+    font-size: 20px;
+    padding-bottom: 5px;
+}
+
+textarea {
+    border: 2px solid black;
+    width: 90%;
+    padding: 7px;
+    background-color: rgb(231, 236, 241);
+}
+
+.send {
+    padding: 15px 30px 15px 30px;
+    position: relative;
+    top: 35px;
+    font-weight: 1000;
+    font-size: 14px;
+    cursor: pointer;
+    width: max-content;
+    background-color: transparent;
+    color: brown;
+    border: 2px solid brown;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.send:hover {
+    background-color: brown;
+    color: white;
+}
+
+.cpage2 img {
+    width: 80%;
+    cursor: pointer;
+    position: relative;
+    top: 28%;
+    left: 5%;
+}
+
+.contact-text {
+    position: relative;
+    top: 30%;
+    left: 5%;
+    font-size: 20px;
+    width: max-content;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 500;
+}
+
+.contact-text h2 {
+    margin-top: 0;
+}
+.contact-text h1{
+    font-size: 1.9875rem;
+    font-family: Aeonik Fono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
+    font-weight: 1000;
+    color: black;
+    letter-spacing: .021818181818em;
+    line-height: 1.3636363636363635;
+    text-transform: uppercase;
+}
+.address p {
+    margin-bottom: 0;
+    font-size: 0.9rem;
+    font-family: 'Inconsolata', monospace;
+}
+
+.addr {
+    padding-bottom: 15% !important;
+}
+
+.lb2 {
+    position: relative;
+    top: 30%;
+    left: 5%;
+    height: 3.4px;
+    width: 80%;
+    background-color: brown;
+}
+
+.address {
+    position: relative;
+    top: 30%;
+    left: 5%;
+    width: max-content;
+    font-family: 'Open Sans', sans-serif;
+    ;
+    font-weight: 300;
+    font-size: 17px;
+}

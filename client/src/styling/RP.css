@@ -1,0 +1,66 @@
+.returns-container {
+    width: 80%;
+    margin: auto;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: 'Playfair Display', serif;
+    margin-top: 5%;
+  }
+  
+  .returns-title {
+    text-align: center;
+    font-size: 2.5em;
+    margin-bottom: 30px;
+    color: #333;
+    font-size: 2.9875rem;
+    font-family: Aeonik Fono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
+    font-weight: 1000;
+    color: black;
+    letter-spacing: .021818181818em;
+    line-height: 1.3636363636363635;
+    text-transform: uppercase;
+  }
+  
+  .policy-section {
+    margin-bottom: 20px;
+  }
+  
+  .policy-section h2 {
+    font-size: 1.5em;
+    color: #000;
+    margin-bottom: 10px;
+  }
+  
+  .policy-section p {
+    font-size: 1.2em;
+    color: #555;
+    line-height: 1.6;
+    margin: 0;
+    font-family: 'Inconsolata', monospace;
+  }
+  
+  
+@media (max-width: 768px) {
+    .returns-container {
+      width: 95%;
+      padding: 15px;
+    }
+  
+    .returns-title {
+      font-size: 2em;
+      margin-bottom: 20px;
+    }
+  
+    .policy-section h2 {
+      font-size: 1.3em;
+    }
+  
+    .policy-section p {
+      font-size: 1em;
+    }
+    body{
+        overflow-x: hidden;
+    }
+  }
