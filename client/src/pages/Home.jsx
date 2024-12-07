@@ -1,11 +1,16 @@
 import React from 'react'
 import logo from "../sources/H-logo.png";
+import logo1 from "../sources/hnigg.png";
 import '../styling/Home.css';
 import { useNavigate, Link } from 'react-router-dom';
 import vid from "../sources/thunder.mp4";
 import videoSource from '../sources/Hstar.gif';
+import ts from '../sources/ts.jpg';
 import { useState } from 'react';
 import { useMyContext } from './CartContext';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
+import { faInstagram, faFacebook, faTwitter } from '@fortawesome/free-brands-svg-icons';
 import i1 from "../sources/i1.jpg";
 import i2 from "../sources/i2.jpg";
 import i3 from "../sources/i3.jpg";
@@ -67,6 +72,7 @@ const Home = () => {
                 {!loggedIn && (
                   <a onClick={() => navigate("/login")} className="dropdown-item">Login</a>
                 )}
+                <a onClick={() => navigate("/products")} className="dropdown-item">SALE</a>
                 <a onClick={() => navigate("/cart")} className="dropdown-item">Cart</a>
                 <a onClick={() => navigate("/dashboard")} className="dropdown-item">My Orders</a>
               </div>
@@ -81,7 +87,7 @@ const Home = () => {
       </section>
 
       <section id='home-div'>
-        <div className='flex-row hr'>
+        <div className='flex-row hr fr1'>
           <div className='flex-col hc' onClick={() => { navigate("/products/1") }}>
             <img src={i1} className="body-img-top" alt="T-Shirt Green" />
             <img src={i2} className="body-img-hover" alt="T-Shirt Green Hover" />
@@ -155,7 +161,60 @@ const Home = () => {
 
       </section>
 
+      <section id='travis'>
+        <img className='ts' src={ts} alt="ts.jpg" />
+        <div className='typist'>
+          <p className='typewriter'>
+            " We sincerely promise that our exclusive t-shirt designs, crafted with the finest fabrics and the latest trends, will not only match your style but also<br />
+            leave you absolutely impressed with their comfort and uniqueness. Experience the perfect blend of fashion and quality like never before! "
+          </p>
+        </div>
+      </section>
 
+
+      <section id='footer'>
+        <div className='mp'>
+          <img src={logo1} alt="logo.png" />
+          <div className='move-p'>
+            <p className='inv-rev'>Born in the hood and praised on the street,<br />
+              True Hood has firmly settled itself as an iconic<br />
+              street wear brand inspired by innovation and style.</p>
+          </div>
+        </div>
+        <div className='mp1'>
+          <h4>Customer</h4>
+          <a href="/customer-care">FAQ</a>
+          <a href="/dashboard">My Orders</a>
+          <a href="/customer-care">Contact Us</a>
+          <a href="/rp">Returns</a>
+        </div>
+        <div className='mp1'>
+          <h4>Navigate</h4>
+          <a href="/login">Login</a>
+          <a href="/tac">Terms & Conditions</a>
+          <a href="/rp">Refund Policy</a>
+          <a href="/register">Register</a>
+        </div>
+        <div className='mp1'>
+          <h4>Follow us at</h4>
+          <div className='flex-row'>
+            <a href="mailto:truehood.business@gmail.com" target="_blank" rel="noopener noreferrer">
+              <FontAwesomeIcon icon={faEnvelope} />
+            </a>
+            <a href="https://www.instagram.com/truehoodclothing" target="_blank" rel="noopener noreferrer">
+              <FontAwesomeIcon icon={faInstagram} />
+            </a>
+            <a href="/tac" target="_blank" rel="noopener noreferrer">
+              <FontAwesomeIcon icon={faFacebook} />
+            </a>
+          </div>
+        </div>
+
+
+      </section>
+      <div className='copyright'>
+        <h3>© Copyright 2024 True Hood</h3>
+      </div>
     </div>
   )
 }

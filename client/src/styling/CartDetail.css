@@ -78,9 +78,9 @@
     width: 45px;
     padding-right: 700px;
     background-color: #000;
-    position: relative;
-    right: 40%;
-    top: 30vh;
+    position: absolute;
+    right: 18%;
+    top: 34vh;
 }
 
 .filter-gray {

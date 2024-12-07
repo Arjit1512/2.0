@@ -75,7 +75,7 @@ const CustomerCare = () => {
       </div>
 
       <div className='c-us flex-row'>
-      <div className='c-right'>
+        <div className='c-right'>
           <h1>Our location</h1>
           <p>Lalitha Nagar,<br />
             Ram Nagar,<br />
@@ -85,7 +85,7 @@ const CustomerCare = () => {
         <div className='c-left'>
           <img src={map} alt="map.png" />
         </div>
-        
+
       </div>
 
 
@@ -95,11 +95,13 @@ const CustomerCare = () => {
           Visit our <a onClick={() => navigate("/tac")}>Terms and Conditions</a> page for more information.</p>
       </div>
 
-      <div className='c-us'>
-        <h1>FAQs</h1>
-        <p>Before reaching out, you may find answers to common questions in our FAQs section. Here are some frequently asked questions:</p>
-        <FAQ />
-      </div>
+      <section id="faq">
+        <div className='c-us'>
+          <h1>FAQs</h1>
+          <p>Before reaching out, you may find answers to common questions in our FAQs section. Here are some frequently asked questions:</p>
+          <FAQ />
+        </div>
+      </section>
 
       <div className='c-us'>
         <h1>Return Policy</h1>
@@ -116,7 +118,7 @@ const CustomerCare = () => {
       <div className='c-us'>
         <h1>Feedback</h1>
         <p>We value your feedback! Help us improve by sharing your thoughts and suggestions.<br />
-        Submit your feedback through our <a onClick={() => navigate("/feedback")}>Feedback Form</a>.</p>
+          Submit your feedback through our <a onClick={() => navigate("/feedback")}>Feedback Form</a>.</p>
       </div>
     </div>
   )

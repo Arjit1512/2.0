@@ -51,11 +51,11 @@ const Products = () => {
           </div>
           {isOpen && (
             <div className="dropdown-menu black">
-              {loggedIn && (
-                <a onClick={() => navigate("/login")} className="dropdown-item">Logout</a>
-              )}
               {!loggedIn && (
-                <a onClick={handleLogout} className="dropdown-item">Login</a>
+                <a onClick={() => navigate("/login")} className="dropdown-item">Login</a>
+              )}
+              {loggedIn && (
+                <a onClick={handleLogout} className="dropdown-item">Logout</a>
               )}
               <a onClick={() => navigate("/cart")} className="dropdown-item">Cart</a>
               <a onClick={() => navigate("/dashboard")} className="dropdown-item">My Orders</a>
@@ -65,10 +65,10 @@ const Products = () => {
       </div>
 
       <div className='picture'>
-        <div className='over'>
-          <h1>LIMITED EDITION</h1>
-          <h2>TRUE HOOD COLLECTION</h2>
-        </div>
+        {/* <div className='over'>
+          <h1 style={{visibility:"hidden"}}>LIMITED EDITION</h1>
+          <h2 style={{visibility:"hidden"}}>TRUE HOOD COLLECTION</h2>
+        </div> */}
         <img src={pic} alt="img.png" />
       </div>
 
