@@ -37,6 +37,7 @@ const Login = () => {
       }
       else {
         console.log(response.data.message);
+        alert(response.data.message);
         setLoginError('Login failed! Please try again');
       }
     } catch (error) {

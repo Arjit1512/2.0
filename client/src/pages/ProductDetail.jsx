@@ -6,7 +6,7 @@ import '../styling/ProductDetail.css';
 import logo from "../sources/H-logo.png";
 import axios from 'axios';
 import size from "../sources/size.png";
-import athlete from "../sources/athlete.jpg";import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import athlete from "../sources/athlete.jpg"; import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { faInstagram, faFacebook, faTwitter } from '@fortawesome/free-brands-svg-icons';
 import logo1 from "../sources/hnigg.png";
@@ -14,8 +14,8 @@ import i1 from "../sources/i1.jpg";
 import i2 from "../sources/i2.jpg";
 import i3 from "../sources/i3.jpg";
 import i4 from "../sources/i4.jpg";
-import i5 from "../sources/i5.jpg";
-import i6 from "../sources/i6.jpg";
+import i13 from "../sources/i13.png";
+import i14 from "../sources/i14.png";
 import i7 from "../sources/i7.png";
 import i8 from "../sources/i8.png";
 
@@ -100,6 +100,13 @@ const ProductDetail = () => {
       console.log('Error: ', error);
     }
   }
+
+  const handleClick = (id) => {
+    navigate(`/products/${id}`);
+    window.scrollTo(0, 0);
+    document.body.scrollTop = 0; // For Safari
+    document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE, and Opera
+  };
 
   if (!cloth) {
     return (
@@ -259,7 +266,7 @@ const ProductDetail = () => {
 
         <section id='home-div'>
           <div className='flex-row hr fr1'>
-            <div className='flex-col hc' onClick={() => { navigate("/products/1") }}>
+            <div className='flex-col hc' onClick={() => handleClick(1)}>
               <img src={i1} className="body-img-top" alt="T-Shirt Green" />
               <img src={i2} className="body-img-hover" alt="T-Shirt Green Hover" />
               <div className="body-body">
@@ -270,7 +277,7 @@ const ProductDetail = () => {
               </div>
             </div>
 
-            <div className='flex-col hc' onClick={() => { navigate("/products/3") }}>
+            <div className='flex-col hc' onClick={() => handleClick(3)}>
               <img src={i3} className="body-img-top" alt="T-Shirt Green" />
               <img src={i4} className="body-img-hover" alt="T-Shirt Green Hover" />
               <div className="body-body">
@@ -280,17 +287,17 @@ const ProductDetail = () => {
               </div>
             </div>
 
-            <div className='flex-col hc' onClick={() => { navigate("/products/5") }}>
-              <img src={i5} className="body-img-top" alt="T-Shirt Green" />
-              <img src={i6} className="body-img-hover" alt="T-Shirt Green Hover" />
+            <div className='flex-col hc' onClick={() => handleClick(13)}>
+              <img src={i13} className="body-img-top" alt="T-Shirt Green" />
+              <img src={i14} className="body-img-hover" alt="T-Shirt Green Hover" />
               <div className="body-body">
                 <p className='gray-text'>OVERSIZED T-SHIRT</p>
-                <h5 className="body-title">Vengeance of the Hood</h5>
+                <h5 className="body-title">Hood Over Fear</h5>
                 <p className="body-text"> ₹699.00</p>
               </div>
             </div>
 
-            <div className='flex-col hc' onClick={() => { navigate("/products/7") }}>
+            <div className='flex-col hc' onClick={() => handleClick(7)}>
               <img src={i7} className="body-img-top" alt="T-Shirt Green" />
               <img src={i8} className="body-img-hover" alt="T-Shirt Green Hover" />
               <div className="body-body">

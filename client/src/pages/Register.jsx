@@ -36,6 +36,7 @@ const Register = () => {
       }
       else {
         console.log(response.data.message);
+        alert(response.data.message);
         setLoginError('Registration failed! Please try again');
       }
     } catch (error) {

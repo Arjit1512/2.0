@@ -15,8 +15,8 @@ import i1 from "../sources/i1.jpg";
 import i2 from "../sources/i2.jpg";
 import i3 from "../sources/i3.jpg";
 import i4 from "../sources/i4.jpg";
-import i5 from "../sources/i5.jpg";
-import i6 from "../sources/i6.jpg";
+import i13 from "../sources/i13.png";
+import i14 from "../sources/i14.png";
 import i7 from "../sources/i7.png";
 import i8 from "../sources/i8.png";
 
@@ -109,12 +109,12 @@ const Home = () => {
             </div>
           </div>
 
-          <div className='flex-col hc' onClick={() => { navigate("/products/5") }}>
-            <img src={i5} className="body-img-top" alt="T-Shirt Green" />
-            <img src={i6} className="body-img-hover" alt="T-Shirt Green Hover" />
+          <div className='flex-col hc' onClick={() => { navigate("/products/13") }}>
+            <img src={i13} className="body-img-top" alt="T-Shirt Green" />
+            <img src={i14} className="body-img-hover" alt="T-Shirt Green Hover" />
             <div className="body-body">
               <p className='gray-text'>OVERSIZED T-SHIRT</p>
-              <h5 className="body-title">Vengeance of the Hood</h5>
+              <h5 className="body-title">Hood Over Fear</h5>
               <p className="body-text"> ₹699.00</p>
             </div>
           </div>
