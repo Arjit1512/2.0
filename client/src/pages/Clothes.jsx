@@ -26,15 +26,15 @@ const Clothes = [
         description: "I'm a product",
         category: "T-Shirts"
     },
-    {
-        id: 5,
-        imgURL: pro5,
-        altURL: alt5,
-        price:1.00,
-        name: "Vengeance of the Hood",
-        description: "I'm a product",
-        category: "T-Shirts"
-    },
+    // {
+    //     id: 5,
+    //     imgURL: pro5,
+    //     altURL: alt5,
+    //     price:1.00,
+    //     name: "Vengeance of the Hood",
+    //     description: "I'm a product",
+    //     category: "T-Shirts"
+    // },
     {
         id: 3,
         imgURL: pro3,
@@ -44,24 +44,24 @@ const Clothes = [
         description: "I'm a product",
         category: "T-Shirts"
     },
-    {
-        id: 15,
-        imgURL: pro15,
-        altURL: alt15,
-        price:1.00,
-        name: "True Hood Original",
-        description: "I'm a product",
-        category: "T-Shirts"
-    },
-    {
-        id: 11,
-        imgURL: pro11,
-        altURL: alt11,
-        price:1.00,
-        name: "The Kendrick Lamar Tee",
-        description: "I'm a product",
-        category: "T-Shirts"
-    },
+    // {
+    //     id: 15,
+    //     imgURL: pro15,
+    //     altURL: alt15,
+    //     price:1.00,
+    //     name: "True Hood Original",
+    //     description: "I'm a product",
+    //     category: "T-Shirts"
+    // },
+    // {
+    //     id: 11,
+    //     imgURL: pro11,
+    //     altURL: alt11,
+    //     price:1.00,
+    //     name: "The Kendrick Lamar Tee",
+    //     description: "I'm a product",
+    //     category: "T-Shirts"
+    // },
     {
         id: 7,
         imgURL: pro7,
@@ -80,15 +80,15 @@ const Clothes = [
         description: "I'm a product",
         category: "T-Shirts"
     },
-    {
-        id: 17,
-        imgURL: pro17,
-        altURL: alt17,
-        price: 1.00,
-        name: "True Hood Culture",
-        description: "I'm a product",
-        category: "T-Shirts"
-    }
+    // {
+    //     id: 17,
+    //     imgURL: pro17,
+    //     altURL: alt17,
+    //     price: 1.00,
+    //     name: "True Hood Culture",
+    //     description: "I'm a product",
+    //     category: "T-Shirts"
+    // }
 ];
 
 export default Clothes;

@@ -6,7 +6,10 @@ import '../styling/ProductDetail.css';
 import logo from "../sources/H-logo.png";
 import axios from 'axios';
 import size from "../sources/size.png";
-import athlete from "../sources/athlete.jpg";
+import athlete from "../sources/athlete.jpg";import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
+import { faInstagram, faFacebook, faTwitter } from '@fortawesome/free-brands-svg-icons';
+import logo1 from "../sources/hnigg.png";
 import i1 from "../sources/i1.jpg";
 import i2 from "../sources/i2.jpg";
 import i3 from "../sources/i3.jpg";
@@ -23,7 +26,7 @@ const ProductDetail = () => {
   const token = localStorage.getItem('token');
   const { loggedIn, setLoggedIn } = useMyContext();
   const [selectedSize, setSelectedSize] = useState('');
-  const [popup, setPopup] = useState(false); 
+  const [popup, setPopup] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const refresh = () => {
     navigate("/");
@@ -79,6 +82,7 @@ const ProductDetail = () => {
       }
       if (!loggedIn) {
         alert("Please login to add items!");
+        navigate("/login");
       }
     } catch (error) {
       console.log('Error: ', error);
@@ -119,7 +123,7 @@ const ProductDetail = () => {
       )}
       <div className='main m1 black' >
         <img src={logo} alt="logo" className='logo' onClick={refresh} />
-        <div className="dropdown d1 black">
+        <div className="dropdown db d1 black">
           <div className="hamburger-icon hi" onClick={() => setIsOpen(!isOpen)}>
             <span></span>
             <span></span>
@@ -146,7 +150,7 @@ const ProductDetail = () => {
           <img src={cloth.altURL} alt='item-img' />
         </div>
         <div className='flex-row pd25'>
-          <div className='left-box'>
+          <div className='left-box inv-rev'>
             <h3>Product Details</h3>
             <h2>{cloth.name}</h2>
             <p>Experience ultimate comfort and style with our premium True Hood T-shirt. Crafted from 100% soft,
@@ -160,11 +164,11 @@ const ProductDetail = () => {
             <h2>{cloth.name}</h2>
             <p className='black'>₹{cloth.price}.00</p>
             <div className='boxes'>
-              <div className='box' onClick={() => handleSize('XS')}>XS</div>
               <div className='box' onClick={() => handleSize('S')}>S</div>
               <div className='box' onClick={() => handleSize('M')}>M</div>
               <div className='box' onClick={() => handleSize('L')}>L</div>
               <div className='box' onClick={() => handleSize('XL')}>XL</div>
+              <div className='box' onClick={() => handleSize('XXL')}>XXL</div>
             </div>
             <h3><a href="#size">Size Guide</a></h3>
             <p>Selected Size: <b>{selectedSize}</b></p>
@@ -177,16 +181,18 @@ const ProductDetail = () => {
         </section>
 
         <section id="size" className='pd25'>
-          <div className='flex-row'>
+          <div className='flex-row fr1'>
             <div className='l-box'>
               <img src={size} alt="size.png" />
             </div>
             <div className='r-box'>
               <h3>Size Guide</h3>
-              <h1>Optimized for you</h1>
-              <p>True Hood apparel is crafted to embody the essence of urban culture, blending contemporary design with unmatched comfort. Each piece is tailored for a relaxed fit, allowing effortless movement while showcasing bold, authentic statements. With True Hood, you don’t just wear fashion—you represent a lifestyle that celebrates individuality, resilience, and the fearless pursuit of self-expression.</p>
+              <h1 className='inv-rev'>Optimized for you</h1>
+              <div className='pla'>
+                <p className=''>True Hood apparel is crafted to embody the essence of urban culture, blending contemporary design with unmatched comfort. Each piece is tailored for a relaxed fit, allowing effortless movement while showcasing bold, authentic statements. With True Hood, you don’t just wear fashion—you represent a lifestyle that celebrates individuality, resilience, and the fearless pursuit of self-expression.</p>
+              </div>
               <p>
-                <div className='bold'>
+                <div className='bold inv-rev'>
                   <b>If you fall between sizes, for maximum performance benefits we advise selecting the smaller size.</b>
                 </div>
               </p>
@@ -197,12 +203,12 @@ const ProductDetail = () => {
                   <thead>
                     <tr>
                       <th></th>
-                      <th>XS</th>
                       <th>S</th>
                       <th>M</th>
                       <th>L</th>
                       <th>XL</th>
                       <th>XXL</th>
+                      <th>XXXL</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -211,13 +217,39 @@ const ProductDetail = () => {
                         <div>CHEST (IN)</div>
                         <div>(A in fig)</div>
                       </td>
-                      <td>35-37</td>
-                      <td>37-39</td>
-                      <td>39-41</td>
-                      <td>41-43</td>
-                      <td>43-45</td>
-                      <td>45-47</td>
+                      <td>42</td>
+                      <td>44</td>
+                      <td>46</td>
+                      <td>48</td>
+                      <td>50</td>
+                      <td>52</td>
                     </tr>
+
+                    <tr>
+                      <td>
+                        <div>Length (IN)</div>
+                      </td>
+                      <td>29</td>
+                      <td>29.75</td>
+                      <td>30.5</td>
+                      <td>31.25</td>
+                      <td>32</td>
+                      <td>32.75</td>
+                    </tr>
+
+                    <tr>
+                      <td>
+                        <div>Shoulder (IN)</div>
+                        <div>(F in fig)</div>
+                      </td>
+                      <td>20.5</td>
+                      <td>21.25</td>
+                      <td>22</td>
+                      <td>22.75</td>
+                      <td>23.5</td>
+                      <td>24.25</td>
+                    </tr>
+
                   </tbody>
                 </table>
               </div>
@@ -226,8 +258,7 @@ const ProductDetail = () => {
         </section>
 
         <section id='home-div'>
-          <h1 className='or'>Our Recommendations</h1>
-          <div className='flex-row hr'>
+          <div className='flex-row hr fr1'>
             <div className='flex-col hc' onClick={() => { navigate("/products/1") }}>
               <img src={i1} className="body-img-top" alt="T-Shirt Green" />
               <img src={i2} className="body-img-hover" alt="T-Shirt Green Hover" />
@@ -270,6 +301,50 @@ const ProductDetail = () => {
             </div>
           </div>
         </section>
+
+        <section id='footer' className='real'>
+          <div className='mp'>
+            <img src={logo1} alt="logo.png" />
+            <div className='move-p'>
+              <p className='inv-rev'>Born in the hood and praised on the street,<br />
+                True Hood has firmly settled itself as an iconic<br />
+                street wear brand inspired by innovation and style.</p>
+            </div>
+          </div>
+          <div className='mp1'>
+            <h4>Customer</h4>
+            <a href="/customer-care">FAQ</a>
+            <a href="/dashboard">My Orders</a>
+            <a href="/customer-care">Contact Us</a>
+            <a href="/rp">Returns</a>
+          </div>
+          <div className='mp1'>
+            <h4>Navigate</h4>
+            <a href="/login">Login</a>
+            <a href="/tac">Terms & Conditions</a>
+            <a href="/rp">Refund Policy</a>
+            <a href="/register">Register</a>
+          </div>
+          <div className='mp1'>
+            <h4>Follow us at</h4>
+            <div className='flex-row'>
+              <a href="mailto:truehood.business@gmail.com" target="_blank" rel="noopener noreferrer">
+                <FontAwesomeIcon icon={faEnvelope} />
+              </a>
+              <a href="https://www.instagram.com/truehoodclothing" target="_blank" rel="noopener noreferrer">
+                <FontAwesomeIcon icon={faInstagram} />
+              </a>
+              <a href="/tac" target="_blank" rel="noopener noreferrer">
+                <FontAwesomeIcon icon={faFacebook} />
+              </a>
+            </div>
+          </div>
+
+
+        </section>
+        <div className='copyright'>
+          <h3>© Copyright 2024 True Hood</h3>
+        </div>
       </div>
     </>
   )

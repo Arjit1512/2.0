@@ -89,7 +89,7 @@ const Community = () => {
           </form>
         </div>
 
-        <div className='cpage2'>
+        <div className='cpage2 inv-rev'>
           <img src={location} alt='' />
           <div className='contact-text'>
             <h1>Contact</h1>

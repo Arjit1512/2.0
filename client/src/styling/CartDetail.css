@@ -236,11 +236,12 @@
     }
 
     .cart-class1 img {
-        width: 66%;
+        width: 100%;
     }
 
     .calvin1 p {
         margin: 0;
+        font-size: 0.8rem;
     }
 
     .quantity.calvin1 {
@@ -253,11 +254,11 @@
 
     .calvin1 h3 {
         margin: 0;
-        font-size: 1rem;
+        font-size: 0.7rem;
     }
 
     .quantity-buttons {
-        bottom: 0%;
+        bottom: -34%;
     }
 
     .cart-class2 {
@@ -270,7 +271,7 @@
 
     .itemprice {
         position: relative;
-        left: 70%;
+        left: 4%;
         bottom: -20%;
         width: fit-content;
     }

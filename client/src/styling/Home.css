@@ -351,11 +351,11 @@ body {
 
 .mp1 a {
     text-decoration: none;
-    color: white;
+    color: white !important;
 }
 
 .mp1 a:hover {
-    color: brown;
+    color: brown !important;
 }
 
 .mp1 .flex-row {

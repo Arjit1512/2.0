@@ -6,7 +6,7 @@
     position: relative;
     display: inline-block;
     top: 2.75vh;
-    right:3%;
+    right: 3%;
 }
 
 /* Hamburger icon */
@@ -27,6 +27,7 @@
     border-radius: 2px;
     transition: transform 0.3s, opacity 0.3s;
 }
+
 .hamburger-icon1 span {
     background-color: black;
 }
@@ -99,16 +100,17 @@
 }
 
 /*picture*/
-.picture{
+.picture {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 }
-.picture img{
+
+.picture img {
     object-fit: cover;
-    width:100%;
-    height:85vh;
+    width: 100%;
+    height: 85vh;
 }
 
 .over {
@@ -119,15 +121,48 @@
     text-align: center;
 }
 
-.over h1{
+.over h1 {
     font-family: Helvetica Neue LT Std\ 63 Medium Extended, sans-serif !important;
     font-weight: 500;
     font-size: 1.4rem;
 }
 
-.over h2{
+.over h2 {
     line-height: 80px !important;
     font-family: Helvetica Neue LT Std\ 63 Medium Extended, sans-serif !important;
     font-weight: 800;
     font-size: 5rem;
+}
+
+
+@media screen and (min-width:370px) and (max-width:780px) {
+
+    /*PRODUCTS PAGE*/
+    .picture img {
+        height: 27vh;
+    }
+
+    .card-img {
+        width:85%;
+        height: 312px;
+        right: 22%;
+    }
+    .shop h1{
+        font-size: 2.2rem;
+    }
+    .la {
+        text-align: left;
+        line-height: 13px;
+        position: relative;
+        right: 10%;
+    }
+    .db1 {
+        visibility: visible !important;
+        top: 3.75vh !important;
+        right: 15% !important;
+        left: -135% !important;
+    }
+    .main.main1{
+        padding-bottom: 3%;
+    }
 }

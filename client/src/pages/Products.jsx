@@ -2,6 +2,10 @@ import React, { useState } from 'react'
 import logo from "../sources/H-logo.png";
 import Clothes from './Clothes.jsx';
 import { useNavigate, Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
+import { faInstagram, faFacebook, faTwitter } from '@fortawesome/free-brands-svg-icons';
+import logo1 from "../sources/hnigg.png";
 import Card from './Card.jsx';
 import '../styling/Products.css';
 import pic from '../sources/pic1.png';
@@ -35,7 +39,7 @@ const Products = () => {
       </div>
 
       <div className='main main1' >
-        <img src={logo} alt="logo" className='logo' onClick={() => navigate("/")} />
+        <img src={logo} alt="logo" className='inv-rev logo' onClick={() => navigate("/")} />
 
 
         <h3 onClick={refresh}>SHOP</h3>
@@ -43,7 +47,7 @@ const Products = () => {
 
         <h3 onClick={() => navigate("/customer-care")}>CUSTOMER CARE</h3>
 
-        <div className="dropdown">
+        <div className="dropdown db1">
           <div className="hamburger-icon hi" onClick={() => setIsOpen(!isOpen)}>
             <span></span>
             <span></span>
@@ -91,6 +95,51 @@ const Products = () => {
               </div>)
           })}
         </div>
+      </div>
+
+
+      <section id='footer'>
+        <div className='mp'>
+          <img src={logo1} alt="logo.png" />
+          <div className='move-p'>
+            <p className='inv-rev'>Born in the hood and praised on the street,<br />
+              True Hood has firmly settled itself as an iconic<br />
+              street wear brand inspired by innovation and style.</p>
+          </div>
+        </div>
+        <div className='mp1'>
+          <h4>Customer</h4>
+          <a href="/customer-care">FAQ</a>
+          <a href="/dashboard">My Orders</a>
+          <a href="/customer-care">Contact Us</a>
+          <a href="/rp">Returns</a>
+        </div>
+        <div className='mp1'>
+          <h4>Navigate</h4>
+          <a href="/login">Login</a>
+          <a href="/tac">Terms & Conditions</a>
+          <a href="/rp">Refund Policy</a>
+          <a href="/register">Register</a>
+        </div>
+        <div className='mp1'>
+          <h4>Follow us at</h4>
+          <div className='flex-row'>
+            <a href="mailto:truehood.business@gmail.com" target="_blank" rel="noopener noreferrer">
+              <FontAwesomeIcon icon={faEnvelope} />
+            </a>
+            <a href="https://www.instagram.com/truehoodclothing" target="_blank" rel="noopener noreferrer">
+              <FontAwesomeIcon icon={faInstagram} />
+            </a>
+            <a href="/tac" target="_blank" rel="noopener noreferrer">
+              <FontAwesomeIcon icon={faFacebook} />
+            </a>
+          </div>
+        </div>
+
+
+      </section>
+      <div className='copyright'>
+        <h3>© Copyright 2024 True Hood</h3>
       </div>
     </>
   )

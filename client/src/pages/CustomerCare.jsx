@@ -82,7 +82,7 @@ const CustomerCare = () => {
             Hyderabad - 500029</p>
           <p>This is our operational address for correspondence and administrative purposes.</p>
         </div>
-        <div className='c-left'>
+        <div className='c-left inv-rev'>
           <img src={map} alt="map.png" />
         </div>
 

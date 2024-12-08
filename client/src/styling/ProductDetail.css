@@ -1,9 +1,11 @@
 html {
     scroll-behavior: smooth !important;
 }
-.not-fixed{
+
+.not-fixed {
     position: relative !important;
 }
+
 .pd25 {
     padding: 0% 4% 2% 4%;
 }
@@ -12,8 +14,8 @@ html {
     position: relative;
     left: 0%;
     top: 4vh;
-    width:690px;
-    height:590px;
+    width: 690px;
+    height: 590px;
     object-fit: cover;
 }
 
@@ -131,14 +133,16 @@ button.atc:hover {
     font-weight: 800;
     font-family: Aeonik, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Open Sans, Helvetica Neue, san;
 }
-.r-box p{
-    width:104%;
+
+.r-box p {
+    width: 104%;
 }
 
-.bold b{
+.bold b {
     color: gray !important;
 }
-.bold{
+
+.bold {
     padding-top: 3%;
 }
 
@@ -146,7 +150,7 @@ button.atc:hover {
     margin-top: 8%;
     overflow-x: auto;
     font-family: 'Inconsolata', monospace;
-    
+
 }
 
 .size-table {
@@ -184,7 +188,8 @@ button.atc:hover {
     transform: none;
     background-color: white;
 }
-.or{
+
+.or {
     text-align: left !important;
     margin-left: 3% !important;
     font-size: .9875rem !important;
@@ -209,7 +214,8 @@ button.atc:hover {
     align-items: center;
     justify-content: center;
 }
-#middle h3{
+
+#middle h3 {
     color: white;
     font-size: 1.1rem;
     font-weight: 800;
@@ -227,8 +233,8 @@ button.atc:hover {
     color: black;
     z-index: 100;
     top: 7%;
-    left: 90%; 
-    transform: translate(-50%, -50%); 
+    left: 90%;
+    transform: translate(-50%, -50%);
     font-family: 'Inconsolata', monospace;
     font-size: 0.7rem;
     font-weight: 800;
@@ -240,10 +246,11 @@ button.atc:hover {
 
 @keyframes blink {
     50% {
-        color: white; 
+        color: white;
     }
+
     100% {
-        color: black; 
+        color: black;
     }
 }
 
@@ -251,12 +258,90 @@ button.atc:hover {
 .d1 {
     left: 75%;
 }
+
 .hi span {
     background-color: #000 !important;
 }
+
 .m1 {
     position: relative;
     left: -40%;
     bottom: 3vh;
     gap: 205px;
+}
+
+
+
+@media screen and (min-width:370px) and (max-width:780px) {
+    .db {
+        visibility: visible !important;
+        top: 4.75vh !important;
+        right: 15% !important;
+        left: 45% !important
+    }
+
+    .img-div img {
+        width: 350px;
+        height: 300px;
+    }
+
+    .right-box {
+        width: 85%;
+        position: relative;
+        right: 47%;
+        top: 5vh;
+        height: max-content;
+        padding-bottom: 4%;
+    }
+
+    button.atc {
+        padding: 3% 23%;
+        position: relative;
+        left: 9%;
+    }
+
+    .pd25 {
+        padding: 0% 1% 2% 4%;
+    }
+
+    #middle h3 {
+        font-size: 0.8rem;
+        text-align: center;
+    }
+
+    .l-box {
+        align-items: center;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+    }
+
+    .l-box img {
+        width: 120%;
+    }
+
+    .r-box {
+        width: 98%;
+        bottom: 65vh;
+    }
+
+    #size {
+        margin-top: -10%;
+        height: 108vh;
+    }
+
+    .pla {
+        position: relative;
+        width: 40%;
+        left: 55%;
+        bottom: 25vh;
+    }
+
+    .real {
+        margin-top: 330%;
+    }
+    .notification-box{
+        left:65%;
+        font-size: 0.7rem;
+    }
 }

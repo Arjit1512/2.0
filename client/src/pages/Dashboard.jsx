@@ -81,7 +81,7 @@ const Dashboard = () => {
                                                     <div className='flex-col-d inner-box'>
                                                         <h4>Name: {item.productName}</h4>
                                                         <p>Quantity: {item.productQuantity} <b>(Size: {item.productSize})</b></p>
-                                                        <p>₹{item.productEntirePrice}.00</p>
+                                                        <p>Paid: ₹{item.productEntirePrice}.00</p>
                                                     </div>
                                                 </div>
                                             </>
