@@ -286,9 +286,9 @@ button.atc:hover {
     }
 
     .right-box {
-        width: 85%;
+        width: 80%;
         position: relative;
-        right: 47%;
+        right: 43%;
         top: 5vh;
         height: max-content;
         padding-bottom: 4%;
@@ -318,11 +318,13 @@ button.atc:hover {
 
     .l-box img {
         width: 120%;
+        position: relative;
+        top: 12vh;
     }
 
     .r-box {
         width: 98%;
-        bottom: 65vh;
+        bottom: 39vh;
     }
 
     #size {
@@ -343,5 +345,8 @@ button.atc:hover {
     .notification-box{
         left:65%;
         font-size: 0.7rem;
+    }
+    .size-table-container {
+        margin-top: -30%;
     }
 }

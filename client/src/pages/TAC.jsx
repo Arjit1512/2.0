@@ -8,7 +8,7 @@ const TAC = () => {
             <section className="terms-section">
                 <h2>Introduction</h2>
                 <p>
-                    Welcome to True Hood! These terms and conditions outline the rules and regulations for the use of True Hood's website, located at [https://arjit-dream-fashion.vercel.app/].
+                    Welcome to True Hood! These terms and conditions outline the rules and regulations for the use of True Hood's website.
                 </p>
                 <p>
                     By accessing this website we assume you accept these terms and conditions. Do not continue to use True Hood if you do not agree to all of the terms and conditions stated on this page.
