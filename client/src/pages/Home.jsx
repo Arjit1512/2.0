@@ -40,6 +40,15 @@ const Home = () => {
       console.log('Error: ', error);
     }
   }
+
+  const handleClick = (id) => {
+    navigate(`/products/${id}`);
+    window.scrollTo(0, 0);
+    document.body.scrollTop = 0; // For Safari
+    document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE, and Opera
+  };
+
+
   return (
     <div>
       <div className='navbar'>
@@ -88,7 +97,7 @@ const Home = () => {
 
       <section id='home-div'>
         <div className='flex-row hr fr1'>
-          <div className='flex-col hc' onClick={() => { navigate("/products/1") }}>
+          <div className='flex-col hc' onClick={() => handleClick(1)}>
             <img src={i1} className="body-img-top" alt="T-Shirt Green" />
             <img src={i2} className="body-img-hover" alt="T-Shirt Green Hover" />
             <div className="body-body">
@@ -99,7 +108,7 @@ const Home = () => {
             </div>
           </div>
 
-          <div className='flex-col hc' onClick={() => { navigate("/products/3") }}>
+          <div className='flex-col hc' onClick={() => handleClick(3)}>
             <img src={i3} className="body-img-top" alt="T-Shirt Green" />
             <img src={i4} className="body-img-hover" alt="T-Shirt Green Hover" />
             <div className="body-body">
@@ -109,7 +118,7 @@ const Home = () => {
             </div>
           </div>
 
-          <div className='flex-col hc' onClick={() => { navigate("/products/13") }}>
+          <div className='flex-col hc' onClick={() => handleClick(13)}>
             <img src={i13} className="body-img-top" alt="T-Shirt Green" />
             <img src={i14} className="body-img-hover" alt="T-Shirt Green Hover" />
             <div className="body-body">
@@ -119,7 +128,7 @@ const Home = () => {
             </div>
           </div>
 
-          <div className='flex-col hc' onClick={() => { navigate("/products/7") }}>
+          <div className='flex-col hc' onClick={() => handleClick(7)}>
             <img src={i7} className="body-img-top" alt="T-Shirt Green" />
             <img src={i8} className="body-img-hover" alt="T-Shirt Green Hover" />
             <div className="body-body">
@@ -150,7 +159,7 @@ const Home = () => {
             journey seamless and enjoyable.
           </p>
           <div className='move-a'>
-            <Link to="/products" style={{ textDecoration: "none" }}><i>view the collections</i></Link>
+            <a onClick={() => { navigate("/products"); window.scrollTo(0, 0); document.body.scrollTop = 0; document.documentElement.scrollTop = 0; }} style={{ textDecoration: "none" }}><i>view the collections</i></a>
           </div>
         </div>
         <div className='p3-part2'>

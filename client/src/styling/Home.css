@@ -449,6 +449,10 @@ body {
     #home-div{
         padding-bottom: 3%;
     }
+    .p3-part2 img {
+        visibility: hidden;
+        height: 13vh;
+    }
     .inv {
         visibility: visible;
     }
