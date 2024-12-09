@@ -129,11 +129,11 @@ app.post('/register', async (req, res) => {
     try {
         const { userName, email, password } = req.body;
         if (!email || !userName || !password) {
-            return res.status(400).json({ message: "Email, username, and password are required" });
+            return res.status(200).json({ message: "Email, username, and password are required" });
         }
         const existingUser = await User.findOne({ email });
         if (existingUser) {
-            return res.status(400).json({ message: "User already exists!" });
+            return res.status(200).json({ message: "User already exists!" });
         }
         const newUser = new User({
             userName, email, password, tokens: []
@@ -154,15 +154,15 @@ app.post('/login', async (req, res) => {
     try {
         const { email, password } = req.body;
         if (!email || !password) {
-            return res.status(400).json({ message: "Email, username, and password are required" });
+            return res.status(200).json({ message: "Email, username, and password are required" });
         }
         const existingUser = await User.findOne({ email });
         if (!existingUser) {
-            return res.status(400).json({ message: "User does not exists!" });
+            return res.status(200).json({ message: "User does not exists!" });
         }
         const isMatch = existingUser.password === password;
         if (!isMatch) {
-            return res.status(400).json({ message: "Incorrect password!" });
+            return res.status(200).json({ message: "Incorrect password!" });
         }
         const token = jwt.sign({ userId: existingUser._id }, secret, { expiresIn: '30d' });
         existingUser.tokens.push({ token });
