@@ -272,7 +272,7 @@ button.atc:hover {
 
 
 
-@media screen and (min-width:370px) and (max-width:780px) {
+@media screen and (min-width:270px) and (max-width:780px) {
     .db {
         visibility: visible !important;
         top: 4.75vh !important;
