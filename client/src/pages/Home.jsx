@@ -84,6 +84,7 @@ const Home = () => {
                 <a onClick={() => navigate("/products")} className="dropdown-item">SALE</a>
                 <a onClick={() => navigate("/cart")} className="dropdown-item">Cart</a>
                 <a onClick={() => navigate("/dashboard")} className="dropdown-item">My Orders</a>
+                <a onClick={() => navigate("/customer-care")} className="dropdown-item">Customer Care</a>
               </div>
             )}
           </div>
