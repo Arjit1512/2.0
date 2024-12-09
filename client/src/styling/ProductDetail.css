@@ -287,8 +287,8 @@ button.atc:hover {
     .right-box {
         width: 80%;
         position: relative;
-        right: 34%;
-        top: 5vh;
+        right: 22vw;
+        top: 3vh;
         height: max-content;
         padding-bottom: 4%;
     }
@@ -301,6 +301,7 @@ button.atc:hover {
 
     .pd25 {
         padding: 0% 1% 2% 4%;
+        height: 70vh;
     }
 
     #middle h3 {
@@ -312,30 +313,32 @@ button.atc:hover {
         align-items: center;
         text-align: center;
         display: flex;
+        width: 100%;
         justify-content: center;
     }
 
     .l-box img {
-        width: 120%;
-        position: relative;
-        top: 12vh;
+        width: 60%;
     }
 
     .r-box {
         width: 98%;
-        bottom: 39vh;
+        bottom: 55vh;
     }
 
     #size {
-        margin-top: -10%;
+        margin-top: 20%;
         height: 108vh;
+        align-items: center;
+        text-align: center;
     }
 
     .pla {
         position: relative;
-        width: 40%;
+        width: 0%;
         left: 55%;
         bottom: 25vh;
+        visibility: hidden;
     }
 
     .real {
@@ -346,6 +349,12 @@ button.atc:hover {
         font-size: 0.7rem;
     }
     .size-table-container {
-        margin-top: -30%;
+        position: relative;
+        bottom: 110vh;
+        z-index: 100;
+        visibility: visible !important;
+    }
+    .pd h2 {
+        font-size: 1.2rem;
     }
 }

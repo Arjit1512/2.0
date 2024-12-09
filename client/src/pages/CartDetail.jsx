@@ -313,7 +313,7 @@ export const CartDetail = () => {
                     },
                 }
             );
-            //alert(response.data.message);
+            alert(response.data.message);
             console.log(response.data.message);
             if (response.data.message === "Address added successfully!") {
                 // Do not call handleCheckout here
