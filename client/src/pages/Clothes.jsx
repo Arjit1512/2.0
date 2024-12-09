@@ -39,7 +39,7 @@ const Clothes = [
         id: 3,
         imgURL: pro3,
         altURL: alt3,
-        price:1.00,
+        price:2.00,
         name: "True Hood Original",
         description: "I'm a product",
         category: "T-Shirts"
@@ -66,7 +66,7 @@ const Clothes = [
         id: 7,
         imgURL: pro7,
         altURL: alt7,
-        price:1.00,
+        price:3.00,
         name: "The Black Panther Tee",
         description: "I'm a product",
         category: "T-Shirts"
@@ -75,7 +75,7 @@ const Clothes = [
         id: 13,
         imgURL: pro13,
         altURL: alt13,
-        price: 1.00,
+        price: 4.00,
         name: "Hood Over Fear",
         description: "I'm a product",
         category: "T-Shirts"

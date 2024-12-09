@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import logo from "../sources/H-logo.png";
 import '../styling/CartDetail.css'
+import Loader from "./Loader";
 
 export const CartDetail = () => {
     const navigate = useNavigate();
@@ -12,6 +13,7 @@ export const CartDetail = () => {
     const { loggedIn, setLoggedIn } = useMyContext();
     const [popup, setPopup] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const refresh = () => {
         navigate("/");
     }
@@ -35,38 +37,53 @@ export const CartDetail = () => {
     }
     useEffect(() => {
         const getDetails = async () => {
-            if (loggedIn && globalUserID) {
-                const response = await axios.get(`http://localhost:3001/${globalUserID}/get-user-details`, {
-                    headers: {
-                        Authorization: `Bearer ${token}`
+            try {
+                setIsLoading(true);
+                if (loggedIn && globalUserID) {
+                    const response = await axios.get(`http://localhost:3001/${globalUserID}/get-user-details`,
+                        {
+                            headers: {
+                                Authorization: `Bearer ${token}`,
+                            },
+                        }
+                    );
+                    if (response.data.message === "success") {
+                        setUser({ name: response.data.name, email: response.data.email });
                     }
-                });
-                if (response.data.message === "success") {
-                    setUser({
-                        name: response.data.name,
-                        email: response.data.email,
-                    })
                 }
+            } catch (error) {
+                console.error("Error fetching user details:", error);
+            } finally {
+                setIsLoading(false);
             }
-        }
+        };
         getDetails();
-    }, [loggedIn,globalUserID])
+    }, [loggedIn, globalUserID]);
 
     useEffect(() => {
         const handleCart = async () => {
-            if (loggedIn && globalUserID) {
-                const response = await axios.get(`http://localhost:3001/${globalUserID}/get-cart`, {
-                    headers: {
-                        Authorization: `Bearer ${token}`
+            try {
+                setIsLoading(true);
+                if (loggedIn && globalUserID) {
+                    const response = await axios.get(`http://localhost:3001/${globalUserID}/get-cart`,
+                        {
+                            headers: {
+                                Authorization: `Bearer ${token}`,
+                            },
+                        }
+                    );
+                    if (response.data.message === "Cart items fetched!" || response.data.message === "Cart is empty!") {
+                        setItems(response.data.items);
                     }
-                });
-                if (response.data.message === "Cart items fetched!" || response.data.message === "Cart is empty!") {
-                    setItems(response.data.items);
                 }
+            } catch (error) {
+                console.error("Error fetching cart items:", error);
+            } finally {
+                setIsLoading(false);
             }
-        }
+        };
         handleCart();
-    }, [setItems, flagArray, loggedIn])
+    }, [setItems, flagArray, loggedIn]);
 
 
 
@@ -109,6 +126,7 @@ export const CartDetail = () => {
     const loadRazorpaySript = async () => {
         try {
             // Create the script element for Razorpay checkout
+            setIsLoading(true);
             const script = document.createElement("script");
             script.src = "https://checkout.razorpay.com/v1/checkout.js";
             script.async = true;
@@ -179,6 +197,8 @@ export const CartDetail = () => {
             };
         } catch (error) {
             console.log("Error loading Razorpay:", error);
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -278,6 +298,7 @@ export const CartDetail = () => {
 
     const addAddress = async () => {
         try {
+            setIsLoading(true);
             const response = await axios.post(
                 `http://localhost:3001/${globalUserID}/add-address`,
                 {
@@ -292,7 +313,7 @@ export const CartDetail = () => {
                     },
                 }
             );
-            alert(response.data.message);
+            //alert(response.data.message);
             console.log(response.data.message);
             if (response.data.message === "Address added successfully!") {
                 // Do not call handleCheckout here
@@ -301,6 +322,8 @@ export const CartDetail = () => {
             }
         } catch (error) {
             console.log("Error: ", error);
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -330,6 +353,10 @@ export const CartDetail = () => {
                 <p>Please find our new collections <span onClick={() => navigate("/products")}>here</span></p>
             </div>
         )
+    }
+
+    if (isLoading) {
+        return <Loader />;
     }
 
     return (

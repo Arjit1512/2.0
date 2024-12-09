@@ -80,7 +80,7 @@ const Products = () => {
       <div className='products'>
 
         <div className='shop'>
-          <h1>ALL MERCH</h1>
+          <h1>OUR COLLECTIONS</h1>
         </div>
         <div className='grid'>
           {Clothes.map((cloth) => {
