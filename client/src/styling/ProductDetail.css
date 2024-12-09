@@ -301,7 +301,6 @@ button.atc:hover {
 
     .pd25 {
         padding: 0% 1% 2% 4%;
-        height: 70vh;
     }
 
     #middle h3 {
@@ -349,8 +348,7 @@ button.atc:hover {
         font-size: 0.7rem;
     }
     .size-table-container {
-        position: relative;
-        bottom: 110vh;
+        margin-top: -285%;
         z-index: 100;
         visibility: visible !important;
     }
