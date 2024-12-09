@@ -3,12 +3,14 @@ import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 import '../styling/Login.css'
 import { useMyContext } from './CartContext';
+import Loader from "./Loader";
 
 const Login = () => {
   const navigate = useNavigate();
   const {globalUserID,setGlobalUserID,loggedIn,setLoggedIn} = useMyContext();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const [loginError, setLoginError] = useState('');
 
   useEffect(() => {
@@ -21,6 +23,7 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
+      setIsLoading(true);
       const response = await axios.post(`http://localhost:3001/login`, {
         email,
         password
@@ -43,8 +46,15 @@ const Login = () => {
     } catch (error) {
       console.log('Error: ', error);
       setLoginError('Login failed! Please try again');
+    }finally{
+      setIsLoading(false);
     }
+    
   }
+  if (isLoading) {
+    return <Loader />;
+}
+
   return (
     <div>
       <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />

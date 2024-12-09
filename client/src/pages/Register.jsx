@@ -3,25 +3,28 @@ import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 import '../styling/Login.css'
 import { useMyContext } from './CartContext';
+import Loader from "./Loader";
 
 const Register = () => {
   const navigate = useNavigate();
-  const {globalUserID,setGlobalUserID} = useMyContext();
+  const { globalUserID, setGlobalUserID, loggedIn, setLoggedIn } = useMyContext();
   const [userName, setUserName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const [loginError, setLoginError] = useState('');
 
   useEffect(() => {
     const storedUserID = localStorage.getItem('userID');
     if (storedUserID) {
-      setGlobalUserID(storedUserID); 
+      setGlobalUserID(storedUserID);
     }
   }, [setGlobalUserID]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
+      setIsLoading(true);
       const response = await axios.post(`http://localhost:3001/register`, {
         userName,
         email,
@@ -30,8 +33,9 @@ const Register = () => {
 
       if (response.data.message === "Registration successfull!") {
         localStorage.setItem('token', response.data.token);
-        localStorage.setItem('userID', response.data.userID); 
+        localStorage.setItem('userID', response.data.userID);
         setGlobalUserID(response.data.userID);
+        setLoggedIn(true);
         navigate("/");
       }
       else {
@@ -42,7 +46,12 @@ const Register = () => {
     } catch (error) {
       console.log('Error: ', error);
       setLoginError('Registration failed! Please try again');
+    } finally {
+      setIsLoading(false);
     }
+  }
+  if (isLoading) {
+    return <Loader />;
   }
   return (
     <div>
@@ -52,14 +61,14 @@ const Register = () => {
         crossOrigin="anonymous" />
       <link rel="stylesheet" href="Login.css" />
       <section className='header-login'>
-          <p onClick={() => ("/")} style={{ cursor: "pointer" }}>TRUE HOOD</p>
+        <p onClick={() => ("/")} style={{ cursor: "pointer" }}>TRUE HOOD</p>
       </section>
       <div className="wdiv">
         <div className="wrapper">
           <div className="form-box login">
             <h2>This way, to the hood</h2>
             <form onSubmit={handleLogin}>
-            <div className="input-box">
+              <div className="input-box">
                 <input
                   type="text"
                   placeholder="Name"

@@ -5,13 +5,15 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../styling/Feedback.css'
 import { useMyContext } from './CartContext';
+import Loader from "./Loader";
 
 const Community = () => {
   const [message, setMessage] = useState("");
   const [fName, setfName] = useState("");
   const [lName, setlName] = useState("");
   const [subject, setSubject] = useState("");
-  const {globalUserID} = useMyContext();
+  const [isLoading, setIsLoading] = useState(false);
+  const { globalUserID } = useMyContext();
 
   function handleMessage(event) {
     setMessage(event.target.value);
@@ -32,6 +34,7 @@ const Community = () => {
     event.preventDefault();
 
     try {
+      setIsLoading(true);
       const token = localStorage.getItem('token'); // Assuming token is stored in localStorage
 
       if (!token) {
@@ -56,9 +59,13 @@ const Community = () => {
     } catch (error) {
       console.error('Failed to submit message', error);
       alert('An error occurred while submitting the message.');
+    } finally {
+      setIsLoading(false);
     }
   };
-
+  if (isLoading) {
+    return <Loader />;
+  }
   return (
     <>
       <section id='community-page'>
@@ -96,7 +103,7 @@ const Community = () => {
           </div>
           <div className='light-border lb2'></div>
           <div className='address'>
-              <p>truehood.business@gmail.com<br />
+            <p>truehood.business@gmail.com<br />
             </p>
           </div>
 
@@ -105,10 +112,10 @@ const Community = () => {
           </div>
           <div className='light-border lb2'></div>
           <div className='address'>
-              <p className='addr'>Lalitha Nagar,<br />
+            <p className='addr'>Lalitha Nagar,<br />
               Ram Nagar,<br />
               Hyderabad - 500029
-              
+
             </p>
           </div>
 

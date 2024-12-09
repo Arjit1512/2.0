@@ -9,7 +9,7 @@ const Loader = () => {
         <>
 
             <div className="landing-container">
-                <img src={HGif} alt="Loading..." className="landing-gif" />
+                <div className="spinner"></div>
             </div>
 
 

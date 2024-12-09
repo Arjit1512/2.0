@@ -3,10 +3,12 @@ import { useMyContext } from './CartContext'
 import axios from "axios";
 import '../styling/Dashboard.css';
 import { useNavigate } from 'react-router-dom';
+import Loader from "./Loader";
 
 const Dashboard = () => {
     const { globalUserID, setGlobalUserID, loggedIn, setLoggedIn } = useMyContext();
     const [orders, setOrders] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
     const Name = localStorage.getItem('userName');
     const token = localStorage.getItem('token');
     const navigate = useNavigate();
@@ -14,6 +16,7 @@ const Dashboard = () => {
     useEffect(() => {
         const getOrders = async () => {
             try {
+                setIsLoading(true);
                 const response = await axios.get(`http://localhost:3001/${globalUserID}/get-cart`, {
                     headers: {
                         Authorization: `Bearer ${token}`
@@ -26,6 +29,8 @@ const Dashboard = () => {
                 setOrders(response.data.orders);
             } catch (error) {
                 console.log('Error: ', error);
+            }finally{
+                setIsLoading(false);
             }
         }
         if (globalUserID) {
@@ -54,6 +59,12 @@ const Dashboard = () => {
             timeZone: 'Asia/Kolkata',
         }).format(new Date(dateString));
     };
+
+    if (isLoading) {
+        return <Loader />;
+    }
+
+
     return (
         <>
             {!loggedIn && (
