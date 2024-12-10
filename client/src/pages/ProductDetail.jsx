@@ -265,6 +265,7 @@ const ProductDetail = () => {
         </section>
 
         <section id='home-div'>
+          <h1 className='ymal'>You may also like</h1>
           <div className='flex-row hr fr1'>
             <div className='flex-col hc' onClick={() => handleClick(1)}>
               <img src={i1} className="body-img-top" alt="T-Shirt Green" />

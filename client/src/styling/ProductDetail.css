@@ -356,3 +356,14 @@ button.atc:hover {
         font-size: 1.2rem;
     }
 }
+
+
+.ymal{
+    font-size: 1.0875rem;
+    font-family: Aeonik Fono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
+    font-weight: 900;
+    color: black;
+    letter-spacing: .181818181818em;
+    line-height: 1.3636363636363635;
+    text-transform: uppercase    
+}

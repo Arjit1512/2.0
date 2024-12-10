@@ -154,6 +154,7 @@ export const CartDetail = () => {
                     description: "Fashion Product Purchase",
                     order_id: orderId,
                     handler: async function (response) {
+                        const userPhoneNumber = document.querySelector('.razorpay-mobile')?.value; // Razorpay uses this class for the phone input
                         const verificationResponse = await axios.post(`http://localhost:3001/verify-payment`, {
                             razorpay_order_id: response.razorpay_order_id,
                             razorpay_payment_id: response.razorpay_payment_id,
@@ -164,6 +165,7 @@ export const CartDetail = () => {
                             const order = {
                                 items,
                                 totalBill,
+                                userPhoneNumber, // Pass the phone number
                             };
                             await createShiprocketOrder(order);
                             const checkoutResponse = await axios.post(
@@ -185,7 +187,8 @@ export const CartDetail = () => {
                     },
                     prefill: {
                         name: user.name,
-                        email: user.email
+                        email: user.email,
+                        contact: user.phone || "",
                     },
                     theme: {
                         color: "#3399cc",
@@ -249,7 +252,7 @@ export const CartDetail = () => {
                 billing_country: "India",
                 billing_last_name: "",
                 billing_email: user.email,
-                billing_phone: "9618825172",
+                billing_phone: order.userPhoneNumber || "Not Provided",
                 shipping_is_billing: true,
                 shipping_customer_name: user.name || "Not Provided",
                 shipping_address: address.street || "Not Provided",
@@ -258,7 +261,7 @@ export const CartDetail = () => {
                 shipping_country: "India",
                 shipping_state: address.state || "Not Provided",
                 shipping_email: user.email,
-                shipping_phone: "9618825172",
+                shipping_phone: order.userPhoneNumber || "Not Provided",
                 order_items: order.items.map(item => ({
                     name: item.name || "Default Item Name",
                     sku: "SKU" + (item.productId ? item.productId.toString() : "DefaultSKU"),
@@ -420,7 +423,7 @@ export const CartDetail = () => {
                                 <form className='address-form'>
                                     <img src="images/map.png" alt="Random Image" className='address-image' />
                                     <div className='input-container'>
-                                        <input type='text' id='street' value={address.street} name='street' placeholder='Address line*' required onChange={(e) => setAddress({ ...address, street: e.target.value })} />
+                                        <input type='text' id='street' value={address.street} name='street' placeholder='Complete Address*' required onChange={(e) => setAddress({ ...address, street: e.target.value })} />
                                     </div>
                                     <div className='input-container'>
                                         <input type='text' id='city' value={address.city} name='city' placeholder='City*' required onChange={(e) => setAddress({ ...address, city: e.target.value })} />

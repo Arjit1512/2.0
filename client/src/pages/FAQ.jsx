@@ -27,7 +27,7 @@ const FAQ = () => {
     },
     {
       question: "What is your return policy?",
-      answer: "We offer a 3-day return policy for unused and unworn items. Please visit our returns page for more details and instructions on how to return an item."
+      answer: "Currently, we are not taking any returns. Please visit our returns page for more details and instructions on how to return an item."
     }
   ];
 

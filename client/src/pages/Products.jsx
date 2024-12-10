@@ -14,7 +14,7 @@ import { useMyContext } from './CartContext.js';
 const Products = () => {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
-  const { loggedIn, setLoggedIn,setGlobalUserID,globalUserID } = useMyContext();
+  const { loggedIn, setLoggedIn, setGlobalUserID, globalUserID } = useMyContext();
 
   const refresh = () => {
     window.location.reload();
@@ -31,6 +31,12 @@ const Products = () => {
       console.log('Error: ', error);
     }
   }
+  const handleClick = (id) => {
+    navigate(`/products/${id}`);
+    window.scrollTo(0, 0);
+    document.body.scrollTop = 0; // For Safari
+    document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE, and Opera
+  };
 
   return (
     <>
@@ -85,7 +91,7 @@ const Products = () => {
         <div className='grid'>
           {Clothes.map((cloth) => {
             return (
-              <div onClick={() => navigate(`/products/${cloth.id}`)}>
+              <div onClick={() => handleClick(cloth.id)}>
                 <Card
                   id={cloth.id}
                   imgURL={cloth.imgURL}
