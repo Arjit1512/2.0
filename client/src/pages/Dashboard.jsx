@@ -17,7 +17,7 @@ const Dashboard = () => {
         const getOrders = async () => {
             try {
                 setIsLoading(true);
-                const response = await axios.get(`http://localhost:3001/${globalUserID}/get-cart`, {
+                const response = await axios.get(`${process.env.REACT_APP_API_URL}/${globalUserID}/get-cart`, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }

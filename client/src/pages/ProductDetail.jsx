@@ -55,7 +55,7 @@ const ProductDetail = () => {
 
 
       if (action === "increase") {
-        const response = await axios.post(`http://localhost:3001/${globalUserID}/add-item/${id}`, { size: size }, {
+        const response = await axios.post(`${process.env.REACT_APP_API_URL}/${globalUserID}/add-item/${id}`, { size: size }, {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -63,7 +63,7 @@ const ProductDetail = () => {
         console.log(response.message);
       }
       else if (action === "decrease") {
-        const response = await axios.post(`http://localhost:3001/${globalUserID}/remove-item/${id}`, { size: size }, {
+        const response = await axios.post(`${process.env.REACT_APP_API_URL}/${globalUserID}/remove-item/${id}`, { size: size }, {
           headers: {
             Authorization: `Bearer ${token}`
           }

@@ -40,7 +40,7 @@ export const CartDetail = () => {
             try {
                 setIsLoading(true);
                 if (loggedIn && globalUserID) {
-                    const response = await axios.get(`http://localhost:3001/${globalUserID}/get-user-details`,
+                    const response = await axios.get(`${process.env.REACT_APP_API_URL}/${globalUserID}/get-user-details`,
                         {
                             headers: {
                                 Authorization: `Bearer ${token}`,
@@ -65,7 +65,7 @@ export const CartDetail = () => {
             try {
                 setIsLoading(true);
                 if (loggedIn && globalUserID) {
-                    const response = await axios.get(`http://localhost:3001/${globalUserID}/get-cart`,
+                    const response = await axios.get(`${process.env.REACT_APP_API_URL}/${globalUserID}/get-cart`,
                         {
                             headers: {
                                 Authorization: `Bearer ${token}`,
@@ -94,7 +94,7 @@ export const CartDetail = () => {
             console.log('Size: ', size);
 
             if (action === "increase") {
-                const response = await axios.post(`http://localhost:3001/${globalUserID}/add-item/${id}`, { size: size }, {
+                const response = await axios.post(`${process.env.REACT_APP_API_URL}/${globalUserID}/add-item/${id}`, { size: size }, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
@@ -103,7 +103,7 @@ export const CartDetail = () => {
                 setFlagArray([...flagArray, 1]);
             }
             else if (action === "decrease") {
-                const response = await axios.post(`http://localhost:3001/${globalUserID}/remove-item/${id}`, { size: size }, {
+                const response = await axios.post(`${process.env.REACT_APP_API_URL}/${globalUserID}/remove-item/${id}`, { size: size }, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
@@ -140,7 +140,7 @@ export const CartDetail = () => {
                     return;
                 }
 
-                const response = await axios.post(`http://localhost:3001/create-order`, {
+                const response = await axios.post(`${process.env.REACT_APP_API_URL}/create-order`, {
                     amount: totalBill * 100, //AMOUNT IN PAISE  
                 });
 
@@ -155,7 +155,7 @@ export const CartDetail = () => {
                     order_id: orderId,
                     handler: async function (response) {
                         const userPhoneNumber = document.querySelector('.razorpay-mobile')?.value; // Razorpay uses this class for the phone input
-                        const verificationResponse = await axios.post(`http://localhost:3001/verify-payment`, {
+                        const verificationResponse = await axios.post(`${process.env.REACT_APP_API_URL}/verify-payment`, {
                             razorpay_order_id: response.razorpay_order_id,
                             razorpay_payment_id: response.razorpay_payment_id,
                             razorpay_signature: response.razorpay_signature,
@@ -169,7 +169,7 @@ export const CartDetail = () => {
                             };
                             await createShiprocketOrder(order);
                             const checkoutResponse = await axios.post(
-                                `http://localhost:3001/${globalUserID}/checkout`,
+                                `${process.env.REACT_APP_API_URL}/${globalUserID}/checkout`,
                                 {},
                                 {
                                     headers: {
@@ -303,7 +303,7 @@ export const CartDetail = () => {
         try {
             setIsLoading(true);
             const response = await axios.post(
-                `http://localhost:3001/${globalUserID}/add-address`,
+                `${process.env.REACT_APP_API_URL}/${globalUserID}/add-address`,
                 {
                     street: address.street,
                     city: address.city,
