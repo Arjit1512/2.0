@@ -123,29 +123,34 @@ export const CartDetail = () => {
 
     const totalBill = items.reduce((acc, item) => (acc + item.product_price * item.product_quantity), 0);
 
-    const loadRazorpaySript = async () => {
+    const loadRazorpayScript = async () => {
         try {
-            // Create the script element for Razorpay checkout
             setIsLoading(true);
+
+            // Dynamically load the Razorpay script
             const script = document.createElement("script");
             script.src = "https://checkout.razorpay.com/v1/checkout.js";
             script.async = true;
             document.body.appendChild(script);
 
-            // Handle script loading
+            // Handle script load
             script.onload = async () => {
-                // Confirm Razorpay is loaded
                 if (!window.Razorpay) {
-                    console.error("Razorpay script is not loaded or failed to initialize!");
+                    console.error("Razorpay script failed to load!");
                     return;
                 }
 
+                console.log("Razorpay script loaded successfully.");
+
+                // Create an order on your backend
                 const response = await axios.post(`${process.env.REACT_APP_API_URL}/create-order`, {
-                    amount: totalBill * 100, //AMOUNT IN PAISE  
+                    amount: totalBill * 100, // Amount in paise
                 });
 
                 const orderId = response.data.orderId;
+                console.log("Order ID received from server:", orderId);
 
+                // Razorpay options
                 const razorpayOptions = {
                     key: process.env.REACT_APP_RAZORPAY_KEY_ID,
                     amount: totalBill,
@@ -154,20 +159,43 @@ export const CartDetail = () => {
                     description: "Fashion Product Purchase",
                     order_id: orderId,
                     handler: async function (response) {
-                        const userPhoneNumber = document.querySelector('.razorpay-mobile')?.value; // Razorpay uses this class for the phone input
+                        console.log("Razorpay Payment Response:", response);
+
+                        // Retrieve the phone number
+                        const userPhoneNumber = document.querySelector('.razorpay-mobile')?.value || user.phone || "9618825172";
+                        console.log("Retrieved phone number:", userPhoneNumber);
+
+                        // Validate the phone number after payment
+                        if (!userPhoneNumber || userPhoneNumber.length !== 10) {
+                            console.error("Invalid phone number detected:", userPhoneNumber);
+                            alert("Invalid phone number. Please provide a valid 10-digit phone number.");
+                            return;
+                        }
+
+                        console.log("Phone number validated successfully:", userPhoneNumber);
+
+                        // Verify payment on your backend
                         const verificationResponse = await axios.post(`${process.env.REACT_APP_API_URL}/verify-payment`, {
                             razorpay_order_id: response.razorpay_order_id,
                             razorpay_payment_id: response.razorpay_payment_id,
                             razorpay_signature: response.razorpay_signature,
                         });
 
+                        console.log("Payment verification response:", verificationResponse.data);
+
                         if (verificationResponse.data.success) {
+                            console.log("Payment verified successfully.");
+
+                            // Create Shiprocket order
                             const order = {
                                 items,
                                 totalBill,
-                                userPhoneNumber, // Pass the phone number
+                                userPhoneNumber,
                             };
+
                             await createShiprocketOrder(order);
+
+                            // Perform checkout
                             const checkoutResponse = await axios.post(
                                 `${process.env.REACT_APP_API_URL}/${globalUserID}/checkout`,
                                 {},
@@ -177,8 +205,11 @@ export const CartDetail = () => {
                                     },
                                 }
                             );
+
+                            console.log("Checkout response:", checkoutResponse.data);
+
                             if (checkoutResponse.data.message === "Checkout successful!") {
-                                alert("Payment and order creation Successful!");
+                                alert("Payment and order creation successful!");
                                 navigate("/dashboard");
                             }
                         } else {
@@ -186,8 +217,8 @@ export const CartDetail = () => {
                         }
                     },
                     prefill: {
-                        name: user.name,
-                        email: user.email,
+                        name: user.name || "Guest User",
+                        email: user.email || "guest@example.com",
                         contact: user.phone || "",
                     },
                     theme: {
@@ -195,15 +226,26 @@ export const CartDetail = () => {
                     },
                 };
 
+                console.log("Razorpay options configured:", razorpayOptions);
+
+                // Open Razorpay checkout
                 const razorpay = new window.Razorpay(razorpayOptions);
                 razorpay.open();
             };
+
+            // Error handling if the script fails to load
+            script.onerror = () => {
+                console.error("Failed to load Razorpay script.");
+                alert("Failed to load Razorpay. Please refresh and try again.");
+            };
         } catch (error) {
-            console.log("Error loading Razorpay:", error);
+            console.error("Error in loadRazorpayScript:", error);
         } finally {
             setIsLoading(false);
         }
     };
+
+
 
     const generateShiprocketToken = async () => {
         try {
@@ -263,8 +305,8 @@ export const CartDetail = () => {
                 shipping_email: user.email,
                 shipping_phone: order.userPhoneNumber || "Not Provided",
                 order_items: order.items.map(item => ({
-                    name: item.name || "Default Item Name",
-                    sku: "SKU" + (item.productId ? item.productId.toString() : "DefaultSKU"),
+                    name: `${item.name || "Default Item Name"} - Size: ${item.size || "Default Size"}`,
+                    sku: `SKU${item.productId ? item.productId.toString() : "DefaultSKU"}-${item.size || "DefaultSize"}`,
                     units: item.product_quantity || 1,
                     selling_price: Number(item.product_price) || 0,
                     discount: 0,
@@ -321,7 +363,7 @@ export const CartDetail = () => {
             if (response.data.message === "Address added successfully!") {
                 // Do not call handleCheckout here
                 showAddressPopup(false); // Close the address popup
-                loadRazorpaySript(); // Now call Razorpay after address submission
+                loadRazorpayScript(); // Now call Razorpay after address submission
             }
         } catch (error) {
             console.log("Error: ", error);
@@ -348,6 +390,9 @@ export const CartDetail = () => {
             console.log('Error: ', error);
         }
     }
+    if (isLoading) {
+        return <Loader />;
+    }
 
     if (items.length === 0) {
         return (
@@ -358,9 +403,6 @@ export const CartDetail = () => {
         )
     }
 
-    if (isLoading) {
-        return <Loader />;
-    }
 
     return (
         <>
