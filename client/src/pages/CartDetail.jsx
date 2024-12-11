@@ -332,6 +332,7 @@ export const CartDetail = () => {
 
             const data = await response.json();
             if (!response.ok) {
+                alert(`${data.message}`|| 'UNKNOWN ERROR');
                 throw new Error(`Shiprocket API Error: ${data.message || 'Unknown error'}`);
             }
             console.log('Shiprocket order created successfully:', data);
