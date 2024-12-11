@@ -193,17 +193,17 @@ const Home = () => {
         </div>
         <div className='mp1'>
           <h4>Customer</h4>
-          <a href="/customer-care">FAQ</a>
-          <a href="/dashboard">My Orders</a>
-          <a href="/customer-care">Contact Us</a>
-          <a href="/rp">Returns</a>
+          <a onClick={() => navigate("/customer-care")}>FAQ</a>
+          <a onClick={() => navigate("/dashboard")}>My Orders</a>
+          <a onClick={() => navigate("/customer-care")}>Contact Us</a>
+          <a onClick={() => navigate("/rp")}>Returns</a>
         </div>
         <div className='mp1'>
           <h4>Navigate</h4>
-          <a href="/login">Login</a>
-          <a href="/tac">Terms & Conditions</a>
-          <a href="/rp">Refund Policy</a>
-          <a href="/register">Register</a>
+          <a onClick={() => navigate("/login")}>Login</a>
+          <a onClick={() => navigate("/tac")}>Terms & Conditions</a>
+          <a onClick={() => navigate("/rp")}>Refund Policy</a>
+          <a onClick={() => navigate("/register")}>Register</a>
         </div>
         <div className='mp1'>
           <h4>Follow us at</h4>

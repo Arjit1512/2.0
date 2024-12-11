@@ -310,46 +310,46 @@ const ProductDetail = () => {
           </div>
         </section>
 
-        <section id='footer' className='real'>
-          <div className='mp'>
-            <img src={logo1} alt="logo.png" />
-            <div className='move-p'>
-              <p className='inv-rev'>Born in the hood and praised on the street,<br />
-                True Hood has firmly settled itself as an iconic<br />
-                street wear brand inspired by innovation and style.</p>
-            </div>
+        <section id='footer'>
+        <div className='mp'>
+          <img src={logo1} alt="logo.png" />
+          <div className='move-p'>
+            <p className='inv-rev'>Born in the hood and praised on the street,<br />
+              True Hood has firmly settled itself as an iconic<br />
+              street wear brand inspired by innovation and style.</p>
           </div>
-          <div className='mp1'>
-            <h4>Customer</h4>
-            <a href="/customer-care">FAQ</a>
-            <a href="/dashboard">My Orders</a>
-            <a href="/customer-care">Contact Us</a>
-            <a href="/rp">Returns</a>
+        </div>
+        <div className='mp1'>
+          <h4>Customer</h4>
+          <a onClick={() => navigate("/customer-care")}>FAQ</a>
+          <a onClick={() => navigate("/dashboard")}>My Orders</a>
+          <a onClick={() => navigate("/customer-care")}>Contact Us</a>
+          <a onClick={() => navigate("/rp")}>Returns</a>
+        </div>
+        <div className='mp1'>
+          <h4>Navigate</h4>
+          <a onClick={() => navigate("/login")}>Login</a>
+          <a onClick={() => navigate("/tac")}>Terms & Conditions</a>
+          <a onClick={() => navigate("/rp")}>Refund Policy</a>
+          <a onClick={() => navigate("/register")}>Register</a>
+        </div>
+        <div className='mp1'>
+          <h4>Follow us at</h4>
+          <div className='flex-row'>
+            <a href="mailto:truehood.business@gmail.com" target="_blank" rel="noopener noreferrer">
+              <FontAwesomeIcon icon={faEnvelope} />
+            </a>
+            <a href="https://www.instagram.com/truehoodclothing" target="_blank" rel="noopener noreferrer">
+              <FontAwesomeIcon icon={faInstagram} />
+            </a>
+            <a href="/tac" target="_blank" rel="noopener noreferrer">
+              <FontAwesomeIcon icon={faFacebook} />
+            </a>
           </div>
-          <div className='mp1'>
-            <h4>Navigate</h4>
-            <a href="/login">Login</a>
-            <a href="/tac">Terms & Conditions</a>
-            <a href="/rp">Refund Policy</a>
-            <a href="/register">Register</a>
-          </div>
-          <div className='mp1'>
-            <h4>Follow us at</h4>
-            <div className='flex-row'>
-              <a href="mailto:truehood.business@gmail.com" target="_blank" rel="noopener noreferrer">
-                <FontAwesomeIcon icon={faEnvelope} />
-              </a>
-              <a href="https://www.instagram.com/truehoodclothing" target="_blank" rel="noopener noreferrer">
-                <FontAwesomeIcon icon={faInstagram} />
-              </a>
-              <a href="/tac" target="_blank" rel="noopener noreferrer">
-                <FontAwesomeIcon icon={faFacebook} />
-              </a>
-            </div>
-          </div>
+        </div>
 
 
-        </section>
+      </section>
         <div className='copyright'>
           <h3>© Copyright 2024 True Hood</h3>
         </div>

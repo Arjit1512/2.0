@@ -305,20 +305,20 @@ export const CartDetail = () => {
                 shipping_email: user.email,
                 shipping_phone: order.userPhoneNumber || "Not Provided",
                 order_items: order.items.map(item => ({
-                    name: `${item.name || "Default Item Name"} - Size: ${item.size || "Default Size"}`,
-                    sku: `SKU${item.productId ? item.productId.toString() : "DefaultSKU"}-${item.size || "DefaultSize"}`,
+                    name: `${item.product_name || "Default Item Name"} - Size: ${item.size || "Default Size"}`,
+                    sku: `SKU${item.product_id ? item.product_id.toString() : "DefaultSKU"}-${item.size || "DefaultSize"}`,
                     units: item.product_quantity || 1,
                     selling_price: Number(item.product_price) || 0,
                     discount: 0,
                     tax: 0,
-                    hsn: 123456,
+                    hsn: 61091000,
                 })),
                 payment_method: "Prepaid",
                 sub_total: Number(order.totalBill) || 0,
                 length: totalQuantity * 30,
                 breadth: totalQuantity * 25,
                 height: totalQuantity * 2,
-                weight: totalQuantity * 0.2,
+                weight: totalQuantity * 0.25,
             };
 
             const response = await fetch('https://apiv2.shiprocket.in/v1/external/orders/create/adhoc', {
