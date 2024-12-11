@@ -219,7 +219,7 @@ export const CartDetail = () => {
                     prefill: {
                         name: user.name || "Guest User",
                         email: user.email || "guest@example.com",
-                        contact: user.phone || "",
+                        contact: user.phone || "9618825172",
                     },
                     theme: {
                         color: "#3399cc",
