@@ -159,53 +159,58 @@ export const CartDetail = () => {
                     description: "Fashion Product Purchase",
                     order_id: orderId,
                     handler: async function (response) {
-                        console.log("Razorpay Payment Response:", response);
+                        try {
+                            console.log("Full Razorpay Payment Response:", JSON.stringify(response, null, 2));
 
-                        // Verify payment on your backend
-                        const verificationResponse = await axios.post(`${process.env.REACT_APP_API_URL}/verify-payment`, {
-                            razorpay_order_id: response.razorpay_order_id,
-                            razorpay_payment_id: response.razorpay_payment_id,
-                            razorpay_signature: response.razorpay_signature,
-                        });
+                            const verificationResponse = await axios.post(`${process.env.REACT_APP_API_URL}/verify-payment`, {
+                                razorpay_order_id: response.razorpay_order_id,
+                                razorpay_payment_id: response.razorpay_payment_id,
+                                razorpay_signature: response.razorpay_signature,
+                            });
 
-                        console.log("Payment verification response:", verificationResponse.data);
+                            console.log("Full Payment Verification Response:", JSON.stringify(verificationResponse.data, null, 2));
 
-                        if (verificationResponse.data.success) {
-                            console.log("Payment verified successfully.");
+                            // Rest of your existing code...
+                            if (verificationResponse.data.success) {
+                                console.log("Payment verified successfully.");
 
-                            // Create Shiprocket order
-                            const order = {
-                                items,
-                                totalBill,
-                            };
+                                // Create Shiprocket order
+                                const order = {
+                                    items,
+                                    totalBill,
+                                };
 
-                            await createShiprocketOrder(order);
+                                await createShiprocketOrder(order);
 
-                            // Perform checkout
-                            const checkoutResponse = await axios.post(
-                                `${process.env.REACT_APP_API_URL}/${globalUserID}/checkout`,
-                                {},
-                                {
-                                    headers: {
-                                        Authorization: `Bearer ${token}`,
-                                    },
+                                // Perform checkout
+                                const checkoutResponse = await axios.post(
+                                    `${process.env.REACT_APP_API_URL}/${globalUserID}/checkout`,
+                                    {},
+                                    {
+                                        headers: {
+                                            Authorization: `Bearer ${token}`,
+                                        },
+                                    }
+                                );
+
+                                console.log("Checkout response:", checkoutResponse.data);
+
+                                if (checkoutResponse.data.message === "Checkout successful!") {
+                                    alert("Payment and order creation successful!");
+                                    navigate("/dashboard");
                                 }
-                            );
-
-                            console.log("Checkout response:", checkoutResponse.data);
-
-                            if (checkoutResponse.data.message === "Checkout successful!") {
-                                alert("Payment and order creation successful!");
-                                navigate("/dashboard");
+                            } else {
+                                alert("Payment verification failed. Please try again!");
                             }
-                        } else {
-                            alert("Payment verification failed. Please try again!");
+                        } catch (error) {
+                            console.error("Complete Verification Error:", error);
+                            alert(`Payment verification failed: ${error.message}`);
                         }
                     },
                     prefill: {
                         name: user.name || "Guest User",
                         email: user.email || "guest@example.com",
-                        contact: '',
+                        contact: "",
                     },
                     theme: {
                         color: "#3399cc",
@@ -235,6 +240,11 @@ export const CartDetail = () => {
 
     const generateShiprocketToken = async () => {
         try {
+            console.log('Shiprocket Login Payload:', {
+                email: process.env.REACT_APP_SHIPROCKET_EMAIL,
+                password: process.env.REACT_APP_SHIPROCKET_PASSWORD
+            });
+
             const response = await fetch('https://apiv2.shiprocket.in/v1/external/auth/login', {
                 method: 'POST',
                 headers: {
@@ -242,19 +252,29 @@ export const CartDetail = () => {
                 },
                 body: JSON.stringify({
                     email: process.env.REACT_APP_SHIPROCKET_EMAIL,
-                    password: process.env.REACT_APP_SHIPROCKET_EMAIL,
+                    password: process.env.REACT_APP_SHIPROCKET_PASSWORD
                 }),
             });
+
             const data = await response.json();
+            console.log('Shiprocket Token Response:', data);
+
+            if (!data.token) {
+                throw new Error('Failed to generate Shiprocket token');
+            }
+
             return data.token;
         } catch (error) {
-            console.error('Error generating Shiprocket token:', error);
+            console.error('Detailed Shiprocket Token Error:', error);
             throw error;
         }
     };
 
+
     const createShiprocketOrder = async (order) => {
         try {
+            console.log('Creating Shiprocket Order with Details:', JSON.stringify(order, null, 2));
+
             const shiprocketToken = await generateShiprocketToken();
 
             // Validate `order.items`
@@ -318,12 +338,13 @@ export const CartDetail = () => {
 
             const data = await response.json();
             if (!response.ok) {
-                alert(`${data.message}`|| 'UNKNOWN ERROR');
+                alert(`${data.message}` || 'UNKNOWN ERROR');
                 throw new Error(`Shiprocket API Error: ${data.message || 'Unknown error'}`);
             }
             console.log('Shiprocket order created successfully:', data);
         } catch (error) {
-            console.error('Error creating Shiprocket order:', error);
+            console.error('Detailed Shiprocket Order Creation Error:', error);
+            alert(`Shiprocket Order Creation Failed: ${error.message}`);
         }
     };
 
