@@ -240,10 +240,6 @@ export const CartDetail = () => {
 
     const generateShiprocketToken = async () => {
         try {
-            console.log('Shiprocket Login Payload:', {
-                email: "hemanth.a21@iiits.in",
-                password: "Hemanth#2003"
-            });
 
             const response = await fetch('https://apiv2.shiprocket.in/v1/external/auth/login', {
                 method: 'POST',
@@ -292,40 +288,41 @@ export const CartDetail = () => {
                 order_date: new Date().toISOString(),
                 pickup_location: "warehouse",
                 comment: "Customer Order",
-                billing_customer_name: user.name || "Not Provided",
-                billing_address: address.street || "Not Provided",
-                billing_city: address.city || "Not Provided",
-                billing_pincode: Number(address.pincode) || 111111,
-                billing_state: address.state || "Not Provided",
+                billing_customer_name: user?.name || "Not Provided",
+                billing_address: address?.street || "Not Provided",
+                billing_city: address?.city || "Not Provided",
+                billing_pincode: Number(address?.pincode) || 111111,
+                billing_state: address?.state || "Not Provided",
                 billing_country: "India",
                 billing_last_name: "",
-                billing_email: user.email,
+                billing_email: user?.email || "Not Provided",
                 billing_phone: "9618825172",
                 shipping_is_billing: true,
-                shipping_customer_name: user.name || "Not Provided",
-                shipping_address: address.street || "Not Provided",
-                shipping_city: address.city || "Not Provided",
-                shipping_pincode: Number(address.pincode) || 111111,
+                shipping_customer_name: user?.name || "Not Provided",
+                shipping_address: address?.street || "Not Provided",
+                shipping_city: address?.city || "Not Provided",
+                shipping_pincode: Number(address?.pincode) || 111111,
                 shipping_country: "India",
-                shipping_state: address.state || "Not Provided",
-                shipping_email: user.email,
+                shipping_state: address?.state || "Not Provided",
+                shipping_email: user?.email || "Not Provided",
                 shipping_phone: "9618825172",
-                order_items: order.items.map(item => ({
-                    name: `${item.product_name || "Default Item Name"} - Size: ${item.size || "Default Size"}`,
-                    sku: `SKU${item.product_id ? item.product_id.toString() : "DefaultSKU"}-${item.size || "DefaultSize"}`,
-                    units: item.product_quantity || 1,
-                    selling_price: Number(item.product_price) || 0,
+                order_items: order?.items?.map(item => ({
+                    name: `${item?.product_name || "Default Item Name"} - Size: ${item?.size || "Default Size"}`,
+                    sku: `SKU${item?.product_id ? item.product_id.toString() : "DefaultSKU"}-${item?.size || "DefaultSize"}`,
+                    units: item?.product_quantity || 1,
+                    selling_price: Number(item?.product_price) || 0,
                     discount: 0,
                     tax: 0,
                     hsn: 61091000,
-                })),
+                })) || [],
                 payment_method: "Prepaid",
-                sub_total: Number(order.totalBill) || 0,
-                length: totalQuantity * 30,
-                breadth: totalQuantity * 25,
-                height: totalQuantity * 2,
-                weight: totalQuantity * 0.25,
+                sub_total: Number(order?.totalBill) || 0,
+                length: (totalQuantity || 0) * 30,
+                breadth: (totalQuantity || 0) * 25,
+                height: (totalQuantity || 0) * 2,
+                weight: (totalQuantity || 0) * 0.25,
             };
+            
 
             const response = await fetch('https://apiv2.shiprocket.in/v1/external/orders/create/adhoc', {
                 method: 'POST',
