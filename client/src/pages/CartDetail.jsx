@@ -341,7 +341,7 @@ export const CartDetail = () => {
             console.log('Shiprocket order created successfully:', data);
         } catch (error) {
             console.error('Detailed Shiprocket Order Creation Error:', error);
-            alert(`Shiprocket Order Creation Failed: ${error.message}`);
+            alert(`Shiprocket Order Creation Failed: ${error}`);
         }
     };
 
