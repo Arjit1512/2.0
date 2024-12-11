@@ -255,8 +255,8 @@ export const CartDetail = () => {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    email: "hemanth.a21@iiits.in",
-                    password: "Hemanth#2003",
+                    email: process.env.REACT_APP_SHIPROCKET_EMAIL,
+                    password: process.env.REACT_APP_SHIPROCKET_EMAIL,
                 }),
             });
             const data = await response.json();
