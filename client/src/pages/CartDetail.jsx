@@ -241,8 +241,8 @@ export const CartDetail = () => {
     const generateShiprocketToken = async () => {
         try {
             console.log('Shiprocket Login Payload:', {
-                email: process.env.REACT_APP_SHIPROCKET_EMAIL,
-                password: process.env.REACT_APP_SHIPROCKET_PASSWORD
+                email: 'hemanth.a21@iiits.in',
+                password: 'Hemanth#2003'
             });
 
             const response = await fetch('https://apiv2.shiprocket.in/v1/external/auth/login', {
