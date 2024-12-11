@@ -126,120 +126,131 @@ export const CartDetail = () => {
     const loadRazorpayScript = async () => {
         try {
             setIsLoading(true);
-
+    
             // Dynamically load the Razorpay script
             const script = document.createElement("script");
             script.src = "https://checkout.razorpay.com/v1/checkout.js";
             script.async = true;
             document.body.appendChild(script);
-
-            // Handle script load
+    
             script.onload = async () => {
                 if (!window.Razorpay) {
                     console.error("Razorpay script failed to load!");
+                    alert("Razorpay script failed to load. Please try again later.");
                     return;
                 }
-
+    
                 console.log("Razorpay script loaded successfully.");
-
-                // Create an order on your backend
-                const response = await axios.post(`${process.env.REACT_APP_API_URL}/create-order`, {
-                    amount: totalBill * 100, // Amount in paise
-                });
-
-                const orderId = response.data.orderId;
-                console.log("Order ID received from server:", orderId);
-
-                // Razorpay options
-                const razorpayOptions = {
-                    key: process.env.REACT_APP_RAZORPAY_KEY_ID,
-                    amount: totalBill,
-                    currency: "INR",
-                    name: "True Hood",
-                    description: "Fashion Product Purchase",
-                    order_id: orderId,
-                    handler: async function (response) {
-                        console.log("Razorpay Payment Response:", response);
-
-                        // Retrieve the phone number
-                        const userPhoneNumber = document.querySelector('.razorpay-mobile')?.value || user.phone || "9618825172";
-                        console.log("Retrieved phone number:", userPhoneNumber);
-
-                        // Validate the phone number after payment
-                        if (!userPhoneNumber || userPhoneNumber.length !== 10) {
-                            console.error("Invalid phone number detected:", userPhoneNumber);
-                            alert("Invalid phone number. Please provide a valid 10-digit phone number.");
-                            return;
-                        }
-
-                        console.log("Phone number validated successfully:", userPhoneNumber);
-
-                        // Verify payment on your backend
-                        const verificationResponse = await axios.post(`${process.env.REACT_APP_API_URL}/verify-payment`, {
-                            razorpay_order_id: response.razorpay_order_id,
-                            razorpay_payment_id: response.razorpay_payment_id,
-                            razorpay_signature: response.razorpay_signature,
-                        });
-
-                        console.log("Payment verification response:", verificationResponse.data);
-
-                        if (verificationResponse.data.success) {
-                            console.log("Payment verified successfully.");
-
-                            // Create Shiprocket order
-                            const order = {
-                                items,
-                                totalBill,
-                                userPhoneNumber,
-                            };
-
-                            await createShiprocketOrder(order);
-
-                            // Perform checkout
-                            const checkoutResponse = await axios.post(
-                                `${process.env.REACT_APP_API_URL}/${globalUserID}/checkout`,
-                                {},
-                                {
-                                    headers: {
-                                        Authorization: `Bearer ${token}`,
-                                    },
+    
+                try {
+                    // Create an order on your backend
+                    const response = await axios.post(`${process.env.REACT_APP_API_URL}/create-order`, {
+                        amount: totalBill * 100, // Amount in paise
+                    });
+    
+                    const orderId = response.data.orderId;
+                    console.log("Order ID received from server:", orderId);
+    
+                    const razorpayOptions = {
+                        key: process.env.REACT_APP_RAZORPAY_KEY_ID,
+                        amount: totalBill,
+                        currency: "INR",
+                        name: "True Hood",
+                        description: "Fashion Product Purchase",
+                        order_id: orderId,
+                        handler: async function (response) {
+                            console.log("Razorpay Payment Response:", response);
+    
+                            try {
+                                // Retrieve and validate the phone number
+                                const userPhoneNumber = document.querySelector('.razorpay-mobile')?.value || user.phone || "9618825172";
+                                if (!userPhoneNumber || userPhoneNumber.length !== 10) {
+                                    console.error("Invalid phone number detected:", userPhoneNumber);
+                                    alert("Invalid phone number. Please provide a valid 10-digit phone number.");
+                                    return;
                                 }
-                            );
-
-                            console.log("Checkout response:", checkoutResponse.data);
-
-                            if (checkoutResponse.data.message === "Checkout successful!") {
-                                alert("Payment and order creation successful!");
-                                navigate("/dashboard");
+    
+                                console.log("Phone number validated successfully:", userPhoneNumber);
+    
+                                // Verify payment on your backend
+                                const verificationResponse = await axios.post(`${process.env.REACT_APP_API_URL}/verify-payment`, {
+                                    razorpay_order_id: response.razorpay_order_id,
+                                    razorpay_payment_id: response.razorpay_payment_id,
+                                    razorpay_signature: response.razorpay_signature,
+                                });
+    
+                                console.log("Payment verification response:", verificationResponse.data);
+    
+                                if (verificationResponse.data.success) {
+                                    console.log("Payment verified successfully.");
+    
+                                    // Create Shiprocket order
+                                    const order = {
+                                        items,
+                                        totalBill,
+                                        userPhoneNumber,
+                                    };
+    
+                                    await createShiprocketOrder(order);
+    
+                                    // Perform checkout
+                                    const checkoutResponse = await axios.post(
+                                        `${process.env.REACT_APP_API_URL}/${globalUserID}/checkout`,
+                                        {},
+                                        {
+                                            headers: {
+                                                Authorization: `Bearer ${token}`,
+                                            },
+                                        }
+                                    );
+    
+                                    console.log("Checkout response:", checkoutResponse.data);
+    
+                                    if (checkoutResponse.data.message === "Checkout successful!") {
+                                        alert("Payment and order creation successful!");
+                                        navigate("/dashboard");
+                                    }
+                                } else {
+                                    console.error("Payment verification failed:", verificationResponse.data);
+                                    alert("Payment verification failed. Please try again!");
+                                }
+                            } catch (error) {
+                                console.error("Error in payment handler:", error);
+                                alert("An error occurred while processing your payment. Please contact support.");
                             }
-                        } else {
-                            alert("Payment verification failed. Please try again!");
-                        }
-                    },
-                    prefill: {
-                        name: user.name || "Guest User",
-                        email: user.email || "guest@example.com",
-                        contact: user.phone || "",
-                    },
-                    theme: {
-                        color: "#3399cc",
-                    },
-                };
-
-                console.log("Razorpay options configured:", razorpayOptions);
-
-                // Open Razorpay checkout
-                const razorpay = new window.Razorpay(razorpayOptions);
-                razorpay.open();
+                        },
+                        prefill: {
+                            name: user.name || "Guest User",
+                            email: user.email || "guest@example.com",
+                            contact: user.phone || "",
+                        },
+                        theme: {
+                            color: "#3399cc",
+                        },
+                    };
+    
+                    console.log("Razorpay options configured:", razorpayOptions);
+    
+                    const razorpay = new window.Razorpay(razorpayOptions);
+                    razorpay.on('payment.failed', function (response) {
+                        console.error("Payment failed:", response);
+                        alert(`Payment failed: ${response.error.description || "Unknown error"}. Please try again.`);
+                    });
+    
+                    razorpay.open();
+                } catch (error) {
+                    console.error("Error during Razorpay order creation or initialization:", error);
+                    alert("An error occurred while initiating the payment. Please try again.");
+                }
             };
-
-            // Error handling if the script fails to load
+    
             script.onerror = () => {
                 console.error("Failed to load Razorpay script.");
                 alert("Failed to load Razorpay. Please refresh and try again.");
             };
         } catch (error) {
             console.error("Error in loadRazorpayScript:", error);
+            alert("An unexpected error occurred. Please try again later.");
         } finally {
             setIsLoading(false);
         }
