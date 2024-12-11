@@ -54,7 +54,7 @@ app.post('/create-order', async (req, res) => {
     try {
         const { amount } = req.body; // Amount in the smallest currency unit (e.g., paise for INR)
         if (!amount) {
-            return res.status(400).json({ message: "Amount required!" });
+            return res.status(200).json({ message: "Amount required!" });
         }
         const razorpay = new Razorpay({
             key_id: process.env.RAZORPAY_KEY_ID,
@@ -82,7 +82,7 @@ app.post('/create-order', async (req, res) => {
 app.post('/verify-payment', async (req, res) => {
     const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
     if (!razorpay_order_id || !razorpay_payment_id || !razorpay_signature) {
-        return res.status(400).json({ success: false, message: "Missing required payment details!" });
+        return res.status(200).json({ success: false, message: "Missing required payment details!" });
     }
 
     const hmac = crypto.createHmac('sha256', process.env.RAZORPAY_KEY_SECRET);
@@ -93,7 +93,7 @@ app.post('/verify-payment', async (req, res) => {
         // Payment is verified
         return res.status(200).json({ success: true, message: "Payment verified!" });
     } else {
-        return res.status(400).json({ success: false, message: "Invalid payment signature!" });
+        return res.status(200).json({ success: false, message: "Invalid payment signature!" });
     }
 });
 
