@@ -12,23 +12,38 @@ import products from './products.js';
 
 dotenv.config();
 const app = express();
+
 const allowedOrigins = [
-    "http://localhost:3000",  // Your local frontend origin
-    "https://2-0-ochre.vercel.app",  // Your Vercel domain
+    "http://localhost:3000",
+    "https://2-0-ochre.vercel.app"
 ];
 
-app.use(cors({
+// Remove the duplicate cors() middleware
+const corsOptions = {
     origin: function (origin, callback) {
-        if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+        if (!origin || allowedOrigins.includes(origin)) {
             callback(null, true);
         } else {
             callback(new Error('Not allowed by CORS'));
         }
     },
-    methods: ["GET", "POST"],
-    credentials: true  // Enable sending cookies across domains
-}));
-app.use(cors());
+    methods: ["GET", "POST", "OPTIONS"],  // Added OPTIONS method
+    allowedHeaders: [
+        "Origin", 
+        "X-Requested-With", 
+        "Content-Type", 
+        "Accept", 
+        "Authorization",
+        "x-rtb-fingerprint-id"  // Explicitly allow this header if needed
+    ],
+    credentials: true,
+    maxAge: 86400  // Optional: cache preflight response for 24 hours
+};
+
+// Apply CORS middleware ONCE
+app.use(cors(corsOptions));
+
+
 app.use(express.json());
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: "true" }));
