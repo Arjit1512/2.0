@@ -161,19 +161,6 @@ export const CartDetail = () => {
                     handler: async function (response) {
                         console.log("Razorpay Payment Response:", response);
 
-                        // Retrieve the phone number
-                        const userPhoneNumber = document.querySelector('.razorpay-mobile')?.value || user.phone || "9618825172";
-                        console.log("Retrieved phone number:", userPhoneNumber);
-
-                        // Validate the phone number after payment
-                        if (!userPhoneNumber || userPhoneNumber.length !== 10) {
-                            console.error("Invalid phone number detected:", userPhoneNumber);
-                            alert("Invalid phone number. Please provide a valid 10-digit phone number.");
-                            return;
-                        }
-
-                        console.log("Phone number validated successfully:", userPhoneNumber);
-
                         // Verify payment on your backend
                         const verificationResponse = await axios.post(`${process.env.REACT_APP_API_URL}/verify-payment`, {
                             razorpay_order_id: response.razorpay_order_id,
@@ -190,7 +177,6 @@ export const CartDetail = () => {
                             const order = {
                                 items,
                                 totalBill,
-                                userPhoneNumber,
                             };
 
                             await createShiprocketOrder(order);
@@ -219,7 +205,7 @@ export const CartDetail = () => {
                     prefill: {
                         name: user.name || "Guest User",
                         email: user.email || "guest@example.com",
-                        contact: user.phone || "9618825172",
+                        contact: '',
                     },
                     theme: {
                         color: "#3399cc",
@@ -294,7 +280,7 @@ export const CartDetail = () => {
                 billing_country: "India",
                 billing_last_name: "",
                 billing_email: user.email,
-                billing_phone: order.userPhoneNumber || "9618825172",
+                billing_phone: "9618825172",
                 shipping_is_billing: true,
                 shipping_customer_name: user.name || "Not Provided",
                 shipping_address: address.street || "Not Provided",
@@ -303,7 +289,7 @@ export const CartDetail = () => {
                 shipping_country: "India",
                 shipping_state: address.state || "Not Provided",
                 shipping_email: user.email,
-                shipping_phone: order.userPhoneNumber || "9618825172",
+                shipping_phone: "9618825172",
                 order_items: order.items.map(item => ({
                     name: `${item.product_name || "Default Item Name"} - Size: ${item.size || "Default Size"}`,
                     sku: `SKU${item.product_id ? item.product_id.toString() : "DefaultSKU"}-${item.size || "DefaultSize"}`,
