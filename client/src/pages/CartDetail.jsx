@@ -161,7 +161,19 @@ export const CartDetail = () => {
                     handler: async function (response) {
                         console.log("Razorpay Payment Response:", response);
 
-                        
+                        // Retrieve the phone number
+                        const userPhoneNumber = document.querySelector('.razorpay-mobile')?.value || user.phone || "9618825172";
+                        console.log("Retrieved phone number:", userPhoneNumber);
+
+                        // Validate the phone number after payment
+                        if (!userPhoneNumber || userPhoneNumber.length !== 10) {
+                            console.error("Invalid phone number detected:", userPhoneNumber);
+                            alert("Invalid phone number. Please provide a valid 10-digit phone number.");
+                            return;
+                        }
+
+                        console.log("Phone number validated successfully:", userPhoneNumber);
+
                         // Verify payment on your backend
                         const verificationResponse = await axios.post(`${process.env.REACT_APP_API_URL}/verify-payment`, {
                             razorpay_order_id: response.razorpay_order_id,
@@ -177,7 +189,8 @@ export const CartDetail = () => {
                             // Create Shiprocket order
                             const order = {
                                 items,
-                                totalBill
+                                totalBill,
+                                userPhoneNumber,
                             };
 
                             await createShiprocketOrder(order);
@@ -205,7 +218,8 @@ export const CartDetail = () => {
                     },
                     prefill: {
                         name: user.name || "Guest User",
-                        email: user.email || "guest@example.com"
+                        email: user.email || "guest@example.com",
+                        contact: user.phone || "",
                     },
                     theme: {
                         color: "#3399cc",
