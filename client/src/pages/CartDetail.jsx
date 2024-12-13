@@ -35,7 +35,56 @@ export const CartDetail = () => {
     if (globalUserID == null) {
         navigate("/login");
     }
-    
+    useEffect(() => {
+        const getDetails = async () => {
+            try {
+                setIsLoading(true);
+                if (loggedIn && globalUserID) {
+                    const response = await axios.get(`${process.env.REACT_APP_API_URL}/${globalUserID}/get-user-details`,
+                        {
+                            headers: {
+                                Authorization: `Bearer ${token}`,
+                            },
+                        }
+                    );
+                    if (response.data.message === "success") {
+                        setUser({ name: response.data.name, email: response.data.email });
+                    }
+                }
+            } catch (error) {
+                console.error("Error fetching user details:", error);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+        getDetails();
+    }, [loggedIn, globalUserID]);
+
+    useEffect(() => {
+        const handleCart = async () => {
+            try {
+                setIsLoading(true);
+                if (loggedIn && globalUserID) {
+                    const response = await axios.get(`${process.env.REACT_APP_API_URL}/${globalUserID}/get-cart`,
+                        {
+                            headers: {
+                                Authorization: `Bearer ${token}`,
+                            },
+                        }
+                    );
+                    if (response.data.message === "Cart items fetched!" || response.data.message === "Cart is empty!") {
+                        setItems(response.data.items);
+                    }
+                }
+            } catch (error) {
+                console.error("Error fetching cart items:", error);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+        handleCart();
+    }, [setItems, flagArray, loggedIn]);
+
 
 
     const handleQuantityChange = async (id, action, size) => {
