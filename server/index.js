@@ -112,6 +112,38 @@ app.post('/verify-payment', async (req, res) => {
     }
 });
 
+// Webhook endpoint
+app.post("/webhook", (req, res) => {
+    const webhookSecret = process.env.RAZORPAY_WEBHOOK_SECRET;
+
+    const receivedSignature = req.headers["x-razorpay-signature"];
+    const generatedSignature = crypto
+        .createHmac("sha256", webhookSecret)
+        .update(JSON.stringify(req.body))
+        .digest("hex");
+
+    if (receivedSignature === generatedSignature) {
+        console.log("Webhook verified successfully!");
+
+        const event = req.body.event;
+        const payload = req.body.payload;
+
+        if (event === "payment.captured") {
+            const paymentId = payload.payment.entity.id;
+            const orderId = payload.payment.entity.order_id;
+            console.log("Payment captured:", paymentId);
+
+            // Process order based on orderId or paymentId
+            // Update your database, notify the user, etc.
+        }
+
+        res.status(200).json({ status: "success" });
+    } else {
+        console.error("Invalid webhook signature!");
+        res.status(400).json({ error: "Invalid signature" });
+    }
+});
+
 app.post('/:userId/checkout', verifyToken, async (req, res) => {
     try {
         const { userId } = req.params;
