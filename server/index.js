@@ -82,7 +82,6 @@ app.post('/create-order', async (req, res) => {
             receipt: `receipt_${Date.now()}`,
         };
 
-
         const order = await razorpay.orders.create(options);
         res.status(200).json({
             success: true,
