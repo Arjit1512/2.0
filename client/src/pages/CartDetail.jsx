@@ -241,7 +241,7 @@ export const CartDetail = () => {
     const generateShiprocketToken = async () => {
         try {
             console.log('Starting Shiprocket Token Generation...');
-    
+
             const response = await fetch('https://apiv2.shiprocket.in/v1/external/auth/login', {
                 method: 'POST',
                 headers: {
@@ -252,17 +252,17 @@ export const CartDetail = () => {
                     password: "Hemanth#2003"
                 }),
             });
-    
+
             console.log('Shiprocket Token Response Status:', response.status);
-    
+
             const data = await response.json();
             console.log('Shiprocket Token Response Data:', JSON.stringify(data, null, 2));
-    
+
             if (!data.token) {
                 console.error('Failed to generate Shiprocket token: No token in response');
                 throw new Error('Failed to generate Shiprocket token');
             }
-    
+
             console.log('Shiprocket Token Generated Successfully:', data.token);
             return data.token;
         } catch (error) {
@@ -270,25 +270,23 @@ export const CartDetail = () => {
             throw error;
         }
     };
-    
+
     const createShiprocketOrder = async (order) => {
         try {
-            console.log('Starting Shiprocket Order Creation...');
-            console.log('Received Order Details:', JSON.stringify(order, null, 2));
-    
+            console.log('Creating Shiprocket Order with Details:', JSON.stringify(order, null, 2));
+
             const shiprocketToken = await generateShiprocketToken();
-    
+
+            // Validate order.items
             if (!order.items || !Array.isArray(order.items) || order.items.length === 0) {
-                console.error('Order items validation failed. Order Items:', JSON.stringify(order.items, null, 2));
                 throw new Error('Order items are missing or invalid.');
             }
-    
-            console.log('Validated Order Items:', JSON.stringify(order.items, null, 2));
-    
+
+            // Log items for debugging
+            console.log('Order Items:', JSON.stringify(order.items, null, 2));
+
             const totalQuantity = order.items.reduce((acc, item) => acc + (item.product_quantity || 0), 0);
-    
-            console.log('Total Quantity Calculated:', totalQuantity);
-    
+
             const orderDetails = {
                 order_id: `order_${Date.now()}`,
                 order_date: new Date().toISOString(),
@@ -328,30 +326,31 @@ export const CartDetail = () => {
                 height: (totalQuantity || 0) * 2,
                 weight: (totalQuantity || 0) * 0.25,
             };
-    
-            console.log('Order Details Prepared for Shiprocket:', JSON.stringify(orderDetails, null, 2));
-    
-            const response = await fetch('/api/shiprocket/create-order', {
+            
+
+            const response = await fetch('https://apiv2.shiprocket.in/v1/external/orders/create/adhoc', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    Authorization: `Bearer ${shiprocketToken}`,
                 },
-                body: JSON.stringify({ token: shiprocketToken, orderDetails }),
+                body: JSON.stringify(orderDetails),
             });
-    
+
             const data = await response.json();
             if (!response.ok) {
-                alert(`${data.error || 'UNKNOWN ERROR'}`);
-                throw new Error(`Backend API Error: ${data.error || 'Unknown error'}`);
+                alert(`${data.message}` || 'UNKNOWN ERROR');
+                throw new Error(`Shiprocket API Error: ${data.message}` || 'Unknown error');
             }
-    
-            console.log('Order created successfully via backend:', data);
+            console.log('Shiprocket order created successfully:', data);
         } catch (error) {
-            console.error('Backend API error:', error);
-            alert(`Shiprocket Order Creation Failed: ${error.message}`);
+            console.error('Detailed Shiprocket Order Creation Error:', error);
+            alert(`Shiprocket Order Creation Failed: ${error}`);
         }
     };
-    
+
+
+
 
     const addAddress = async () => {
         try {

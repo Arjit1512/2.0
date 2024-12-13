@@ -144,29 +144,33 @@ app.post('/verify-payment', async (req, res) => {
 //     }
 // });
 
+// app.post('/api/shiprocket/create-order', async (req, res) => {
+//     const { token, orderDetails } = req.body;
+//     try {
+//         const response = await fetch('https://apiv2.shiprocket.in/v1/external/orders/create/adhoc', {
+//             method: 'POST',
+//             headers: {
+//                 'Content-Type': 'application/json',
+//                 Authorization: `Bearer ${token}`,
+//             },
+//             body: orderDetails,
+//         });
 
-app.post('/api/shiprocket/create-order', async (req, res) => {
-    const { token, orderDetails } = req.body;
-    try {
-        const response = await fetch('https://apiv2.shiprocket.in/v1/external/orders/create/adhoc', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify(orderDetails),
-        });
+//         const data = await response.json();
+//         console.log('Shiprocket Response Data:', data);
 
-        const data = await response.json();
-        if (!response.ok) {
-            return res.status(response.status).json({ error: data.message });
-        }
-        res.status(200).json(data);
-    } catch (error) {
-        console.error('Error creating Shiprocket order:', error);
-        res.status(500).json({ error: 'Internal server error' });
-    }
-});
+//         if (!response.ok) {
+//             return res.status(response.status).json({ error: data.message || 'Error from Shiprocket API' });
+//         }
+
+//         return res.status(200).json(data);
+//     } catch (error) {
+//         console.error('Error creating Shiprocket order:', error);
+//         return res.status(500).json({ error: 'Internal server error' });
+//     }
+// });
+
+
 
 app.post('/:userId/checkout', verifyToken, async (req, res) => {
     try {
