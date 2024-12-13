@@ -15,11 +15,9 @@ const app = express();
 
 const allowedOrigins = [
     "http://localhost:3000",
-    "https://2-0-ochre.vercel.app",
-    "https://arjit-dream-fashion.vercel.app"
+    "https://2-0-ochre.vercel.app"
 ];
 
-// Remove the duplicate cors() middleware
 const corsOptions = {
     origin: function (origin, callback) {
         if (!origin || allowedOrigins.includes(origin)) {
@@ -28,17 +26,8 @@ const corsOptions = {
             callback(new Error('Not allowed by CORS'));
         }
     },
-    methods: ["GET", "POST", "OPTIONS"],  // Added OPTIONS method
-    allowedHeaders: [
-        "Origin", 
-        "X-Requested-With", 
-        "Content-Type", 
-        "Accept", 
-        "Authorization",
-        "x-rtb-fingerprint-id"  // Explicitly allow this header if needed
-    ],
-    credentials: true,
-    maxAge: 86400  // Optional: cache preflight response for 24 hours
+    methods: ["GET", "POST", "OPTIONS"],  
+    credentials: true
 };
 
 // Apply CORS middleware ONCE
