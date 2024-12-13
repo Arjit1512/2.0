@@ -29,6 +29,7 @@ const corsOptions = {
         }
     },
     methods: ["GET", "POST", "OPTIONS"],
+    allowedHeaders: ['Content-Type', 'Origin', 'X-Requested-With', 'Accept', 'x-client-key', 'x-client-token', 'x-client-secret', 'Authorization'],
     credentials: true
 };
 app.use(cors(corsOptions));
@@ -37,7 +38,13 @@ app.use(cors(corsOptions));
 app.use(express.json());
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: "true" }));
-
+app.all('', function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", allowedOrigins);
+    res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
+    res.header('Access-Control-Allow-Headers', "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+    //Auth Each API Request created by user.
+    next();
+});
 const secret = process.env.JWT_SECRET;
 
 const verifyToken = (req, res, next) => {

@@ -331,7 +331,7 @@ export const CartDetail = () => {
 
             
 
-            const response = await fetch('https://apiv2.shiprocket.in/v1/external/orders/create/adhoc', {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/shiprocket/create-order`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
