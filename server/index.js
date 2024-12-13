@@ -15,7 +15,8 @@ const app = express();
 
 const allowedOrigins = [
     "http://localhost:3000",
-    "https://2-0-ochre.vercel.app"
+    "https://2-0-ochre.vercel.app",
+    "https://arjit-dream-fashion.vercel.app"
 ];
 
 // Remove the duplicate cors() middleware
