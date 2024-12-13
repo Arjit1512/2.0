@@ -29,12 +29,9 @@ const corsOptions = {
         }
     },
     methods: ["GET", "POST", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true
 };
-
-// Apply CORS middleware ONCE
-app.options('*', cors(corsOptions)); // Handle preflight requests
+app.use(cors(corsOptions));
 
 
 app.use(express.json());
