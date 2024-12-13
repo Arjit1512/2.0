@@ -9,6 +9,7 @@ import jwt from 'jsonwebtoken';
 import Cart from './models/Cart.js';
 import crypto from 'crypto';
 import products from './products.js';
+import axios from 'axios';
 
 dotenv.config();
 const app = express();
@@ -18,6 +19,7 @@ const allowedOrigins = [
     "https://2-0-ochre.vercel.app"
 ];
 
+// Remove the duplicate cors() middleware
 const corsOptions = {
     origin: function (origin, callback) {
         if (!origin || allowedOrigins.includes(origin)) {
@@ -26,12 +28,13 @@ const corsOptions = {
             callback(new Error('Not allowed by CORS'));
         }
     },
-    methods: ["GET", "POST", "OPTIONS"],  
+    methods: ["GET", "POST", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true
 };
 
 // Apply CORS middleware ONCE
-app.use(cors(corsOptions));
+app.options('*', cors(corsOptions)); // Handle preflight requests
 
 
 app.use(express.json());
@@ -132,32 +135,60 @@ app.post('/verify-payment', async (req, res) => {
 //         res.status(400).json({ error: "Invalid signature" });
 //     }
 // });
+const generateShiprocketToken = async () => {
+    try {
+        const response = await axios.post('https://apiv2.shiprocket.in/v1/external/auth/login', {
+            email: "hemanth.a21@iiits.in",
+            password: "Hemanth#2003"
+        }, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
 
-// app.post('/api/shiprocket/create-order', async (req, res) => {
-//     const { token, orderDetails } = req.body;
-//     try {
-//         const response = await fetch('https://apiv2.shiprocket.in/v1/external/orders/create/adhoc', {
-//             method: 'POST',
-//             headers: {
-//                 'Content-Type': 'application/json',
-//                 Authorization: `Bearer ${token}`,
-//             },
-//             body: orderDetails,
-//         });
+        if (!response.data.token) {
+            throw new Error('Failed to generate Shiprocket token');
+        }
 
-//         const data = await response.json();
-//         console.log('Shiprocket Response Data:', data);
+        return response.data.token;
+    } catch (error) {
+        console.error('Shiprocket Token Generation Error:', error.response ? error.response.data : error.message);
+        throw new Error('Failed to generate Shiprocket authentication token');
+    }
+};
+app.post('/api/shiprocket/create-order', async (req, res) => {
+    try {
+        console.log("Received Order Details:", JSON.stringify(req.body, null, 2));
 
-//         if (!response.ok) {
-//             return res.status(response.status).json({ error: data.message || 'Error from Shiprocket API' });
-//         }
+        const shiprocketToken = await generateShiprocketToken();
+        console.log('Generated Shiprocket Token:', shiprocketToken);
 
-//         return res.status(200).json(data);
-//     } catch (error) {
-//         console.error('Error creating Shiprocket order:', error);
-//         return res.status(500).json({ error: 'Internal server error' });
-//     }
-// });
+
+        const response = await fetch('https://apiv2.shiprocket.in/v1/external/orders/create/adhoc', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${shiprocketToken}`
+            },
+            body: JSON.stringify(req.body)
+        });
+
+        const responseData = await response.json();
+
+        console.log("Shiprocket Response:", JSON.stringify(responseData, null, 2));
+
+        if (!response.ok) {
+            return res.status(response.status).json({
+                error: responseData.message || "Unknown Shiprocket API error"
+            });
+        }
+
+        res.json(responseData);
+    } catch (error) {
+        console.error("Detailed Shiprocket Order Creation Error:", error);
+        res.status(500).json({ error: error.message });
+    }
+});
 
 
 
@@ -264,7 +295,7 @@ app.get('/:userId/get-user-details', verifyToken, async (req, res) => {
         if (!user) {
             return res.status(200).json({ message: "User does not exisits!" });
         }
-        return res.status(200).json({ name: user.userName, email: user.email, message:"success" });
+        return res.status(200).json({ name: user.userName, email: user.email, message: "success" });
     }
     catch (error) {
         console.log('Error: ', error);
@@ -464,10 +495,10 @@ app.post('/:userId/remove-address/:addressId', verifyToken, async (req, res) => 
     }
 })
 
-app.post('/:userId/feedback', verifyToken, async(req,res)=> {
-    try{
+app.post('/:userId/feedback', verifyToken, async (req, res) => {
+    try {
         const { userId } = req.params;
-        const {fName,lName,subject,message} = req.body;
+        const { fName, lName, subject, message } = req.body;
         if (req.userId !== userId) {
             return res.status(403).json({ message: "You are not authorized to perform this action" });
         }
@@ -483,13 +514,13 @@ app.post('/:userId/feedback', verifyToken, async(req,res)=> {
             return res.status(200).json({ message: "Message is required!" });
         }
         user.feedback.push({
-            fName,lName,subject,message
+            fName, lName, subject, message
         });
         await user.save();
-        return res.status(200).json({message:'Feedback taken succesfully'});
+        return res.status(200).json({ message: 'Feedback taken succesfully' });
 
-    }catch(error){
-        console.log('Error: ',error);
+    } catch (error) {
+        console.log('Error: ', error);
     }
 })
 

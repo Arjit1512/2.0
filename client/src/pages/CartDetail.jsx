@@ -326,26 +326,24 @@ export const CartDetail = () => {
                 height: (totalQuantity || 0) * 2,
                 weight: (totalQuantity || 0) * 0.25,
             };
-            
 
-            const response = await fetch('https://apiv2.shiprocket.in/v1/external/orders/create/adhoc', {
+
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/shiprocket/create-order`, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${shiprocketToken}`,
-                },
-                body: JSON.stringify(orderDetails),
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ token: shiprocketToken, orderDetails }),
             });
 
-            const data = await response.json();
+            const data = await response.json(); // Ensure to check if it's valid JSON
+
             if (!response.ok) {
-                alert(`${data.message}` || 'UNKNOWN ERROR');
-                throw new Error(`Shiprocket API Error: ${data.message}` || 'Unknown error');
+                throw new Error(data.error || 'Unknown backend error');
             }
-            console.log('Shiprocket order created successfully:', data);
+
+            console.log('Order created successfully:', data);
         } catch (error) {
-            console.error('Detailed Shiprocket Order Creation Error:', error);
-            alert(`Shiprocket Order Creation Failed: ${error}`);
+            console.error('Shiprocket Order Creation Failed:', error);
+            alert(`Shiprocket Order Creation Failed: ${error.message}`);
         }
     };
 
