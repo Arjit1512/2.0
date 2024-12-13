@@ -331,32 +331,24 @@ export const CartDetail = () => {
     
             console.log('Order Details Prepared for Shiprocket:', JSON.stringify(orderDetails, null, 2));
     
-            const response = await fetch('https://apiv2.shiprocket.in/v1/external/orders/create/adhoc', {
+            const response = await fetch('/api/shiprocket/create-order', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    Authorization: `Bearer ${shiprocketToken}`,
                 },
-                body: JSON.stringify(orderDetails),
+                body: JSON.stringify({ token: shiprocketToken, orderDetails }),
             });
     
-            console.log('Shiprocket Order API Response Status:', response.status);
-    
             const data = await response.json();
-            console.log('Shiprocket Order API Response Data:', JSON.stringify(data, null, 2));
-    
             if (!response.ok) {
-                console.error('Shiprocket Order API Error:', JSON.stringify(data, null, 2));
-                alert(`${data.message}` || 'UNKNOWN ERROR');
-                throw new Error(`Shiprocket API Error: ${data.message || 'Unknown error'}`);
+                alert(`${data.error || 'UNKNOWN ERROR'}`);
+                throw new Error(`Backend API Error: ${data.error || 'Unknown error'}`);
             }
     
-            console.log('Shiprocket order created successfully:', data);
-            return data;
+            console.log('Order created successfully via backend:', data);
         } catch (error) {
-            console.error('Detailed Shiprocket Order Creation Error:', error);
-            alert(`Shiprocket Order Creation Failed: ${error.message || error}`);
-            throw error;
+            console.error('Backend API error:', error);
+            alert(`Shiprocket Order Creation Failed: ${error.message}`);
         }
     };
     

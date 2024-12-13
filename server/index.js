@@ -113,34 +113,58 @@ app.post('/verify-payment', async (req, res) => {
 });
 
 // Webhook endpoint
-app.post("/webhook", (req, res) => {
-    const webhookSecret = process.env.RAZORPAY_WEBHOOK_SECRET;
+// app.post("/webhook", (req, res) => {
+//     const webhookSecret = process.env.RAZORPAY_WEBHOOK_SECRET;
 
-    const receivedSignature = req.headers["x-razorpay-signature"];
-    const generatedSignature = crypto
-        .createHmac("sha256", webhookSecret)
-        .update(JSON.stringify(req.body))
-        .digest("hex");
+//     const receivedSignature = req.headers["x-razorpay-signature"];
+//     const generatedSignature = crypto
+//         .createHmac("sha256", webhookSecret)
+//         .update(JSON.stringify(req.body))
+//         .digest("hex");
 
-    if (receivedSignature === generatedSignature) {
-        console.log("Webhook verified successfully!");
+//     if (receivedSignature === generatedSignature) {
+//         console.log("Webhook verified successfully!");
 
-        const event = req.body.event;
-        const payload = req.body.payload;
+//         const event = req.body.event;
+//         const payload = req.body.payload;
 
-        if (event === "payment.captured") {
-            const paymentId = payload.payment.entity.id;
-            const orderId = payload.payment.entity.order_id;
-            console.log("Payment captured:", paymentId);
+//         if (event === "payment.captured") {
+//             const paymentId = payload.payment.entity.id;
+//             const orderId = payload.payment.entity.order_id;
+//             console.log("Payment captured:", paymentId);
 
-            // Process order based on orderId or paymentId
-            // Update your database, notify the user, etc.
+//             // Process order based on orderId or paymentId
+//             // Update your database, notify the user, etc.
+//         }
+
+//         res.status(200).json({ status: "success" });
+//     } else {
+//         console.error("Invalid webhook signature!");
+//         res.status(400).json({ error: "Invalid signature" });
+//     }
+// });
+
+
+app.post('/api/shiprocket/create-order', async (req, res) => {
+    const { token, orderDetails } = req.body;
+    try {
+        const response = await fetch('https://apiv2.shiprocket.in/v1/external/orders/create/adhoc', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(orderDetails),
+        });
+
+        const data = await response.json();
+        if (!response.ok) {
+            return res.status(response.status).json({ error: data.message });
         }
-
-        res.status(200).json({ status: "success" });
-    } else {
-        console.error("Invalid webhook signature!");
-        res.status(400).json({ error: "Invalid signature" });
+        res.status(200).json(data);
+    } catch (error) {
+        console.error('Error creating Shiprocket order:', error);
+        res.status(500).json({ error: 'Internal server error' });
     }
 });
 
