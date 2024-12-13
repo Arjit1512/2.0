@@ -36,6 +36,15 @@ const Clothes = [
     //     category: "T-Shirts"
     // },
     {
+        id: 13,
+        imgURL: pro13,
+        altURL: alt13,
+        price: 4.00,
+        name: "Hood Over Fear",
+        description: "I'm a product",
+        category: "T-Shirts"
+    },
+    {
         id: 3,
         imgURL: pro3,
         altURL: alt3,
@@ -71,15 +80,7 @@ const Clothes = [
         description: "I'm a product",
         category: "T-Shirts"
     },
-    {
-        id: 13,
-        imgURL: pro13,
-        altURL: alt13,
-        price: 4.00,
-        name: "Hood Over Fear",
-        description: "I'm a product",
-        category: "T-Shirts"
-    },
+    
     // {
     //     id: 17,
     //     imgURL: pro17,

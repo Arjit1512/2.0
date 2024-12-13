@@ -513,6 +513,9 @@ body {
     #footer {
         gap: 18%;
     }
+    #footer.priv{
+        margin-top: 340% !important;
+    }
 
     .mp1 a {
         font-size: 0.6rem;

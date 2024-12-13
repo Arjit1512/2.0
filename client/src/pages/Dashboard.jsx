@@ -29,13 +29,11 @@ const Dashboard = () => {
                 setOrders(response.data.orders);
             } catch (error) {
                 console.log('Error: ', error);
-            }finally{
+            } finally {
                 setIsLoading(false);
             }
         }
-        if (globalUserID) {
-            getOrders();
-        }
+        getOrders();
 
     }, [globalUserID])
     console.log('Orders: ---> ', orders);

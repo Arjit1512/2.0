@@ -77,7 +77,56 @@
 .shop {
     font-size: 2.2rem;
     font-weight: 800;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #ddd;
+    font-family: Aeonik Fono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
+    font-weight: 500;
+    letter-spacing: .181818181818em;
+    line-height: 1.3636363636363635;
+    text-transform: uppercase;
 }
+
+.shop h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #333;
+}
+
+.sort-dropdown {
+    position: relative;
+}
+
+.sort-dropdown select {
+    padding: 10px 15px;
+    font-size: 0.8rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f8f8f8;
+    color: #333;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    font-family: Aeonik Fono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
+    font-weight: 600;
+    letter-spacing: .181818181818em;
+    line-height: 1.3636363636363635;
+    text-transform: uppercase;
+}
+
+.sort-dropdown select:hover {
+    border-color: #666;
+    background-color: #fff;
+}
+
+.sort-dropdown select:focus {
+    outline: none;
+    border-color: #333;
+    box-shadow: 0 0 5px rgba(51, 51, 51, 0.5);
+}
+
 
 .blink {
     color: red;
@@ -144,26 +193,56 @@
     }
 
     .card-img {
-        width:85%;
+        width: 85%;
         height: 312px;
         right: 22%;
     }
-    .shop h1{
-        font-size: 2.2rem;
+
+    .shop {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
     }
+
+    .shop h1 {
+        font-size: 1.6rem;
+    }
+
+    .sort-dropdown select {
+        font-size: 0.9rem;
+        padding: 8px 10px;
+    }
+
     .la {
         text-align: left;
         line-height: 13px;
         position: relative;
         right: 10%;
     }
+
     .db1 {
         visibility: visible !important;
         top: 3.75vh !important;
         right: 15% !important;
         left: -135% !important;
     }
-    .main.main1{
+
+    .main.main1 {
         padding-bottom: 3%;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .shop {
+        gap: 10px;
+    }
+
+    .shop h1 {
+        font-size: 1.6rem;
+    }
+
+    .sort-dropdown select {
+        font-size: 0.8rem;
+        padding: 5px 8px;
     }
 }

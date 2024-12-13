@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import logo from "../sources/H-logo.png";
-import Clothes from './Clothes.jsx';
+import Clothes from './Clothes.jsx'; // Assuming this contains your products array
 import { useNavigate, Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
@@ -15,10 +15,13 @@ const Products = () => {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const { loggedIn, setLoggedIn, setGlobalUserID, globalUserID } = useMyContext();
+  const [sortOption, setSortOption] = useState("recommended");
+  const [sortedClothes, setSortedClothes] = useState(Clothes); // Assuming Clothes is an array of objects
 
   const refresh = () => {
     window.location.reload();
-  }
+  };
+
   const handleLogout = async () => {
     try {
       localStorage.removeItem("token");
@@ -30,12 +33,30 @@ const Products = () => {
     } catch (error) {
       console.log('Error: ', error);
     }
-  }
+  };
+
   const handleClick = (id) => {
     navigate(`/products/${id}`);
     window.scrollTo(0, 0);
     document.body.scrollTop = 0; // For Safari
     document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE, and Opera
+  };
+
+  // Sort function
+  const handleSortChange = (e) => {
+    const option = e.target.value;
+    setSortOption(option);
+
+    let sorted = [...Clothes];
+    if (option === "lowToHigh") {
+      sorted.sort((a, b) => a.price - b.price);
+    } else if (option === "highToLow") {
+      sorted.sort((a, b) => b.price - a.price);
+    } else {
+      // Default sorting (e.g., recommended)
+      sorted = Clothes;
+    }
+    setSortedClothes(sorted);
   };
 
   return (
@@ -44,13 +65,10 @@ const Products = () => {
         <p>THE <span className='blink'>SALE</span> IS LIVE NOW!</p>
       </div>
 
-      <div className='main main1' >
+      <div className='main main1'>
         <img src={logo} alt="logo" className='inv-rev logo' onClick={() => navigate("/")} />
-
-
         <h3 onClick={refresh}>SHOP</h3>
         <h3 onClick={refresh}>COLLECTIONS</h3>
-
         <h3 onClick={() => navigate("/customer-care")}>CUSTOMER CARE</h3>
 
         <div className="dropdown db1">
@@ -75,34 +93,33 @@ const Products = () => {
       </div>
 
       <div className='picture'>
-        {/* <div className='over'>
-          <h1 style={{visibility:"hidden"}}>LIMITED EDITION</h1>
-          <h2 style={{visibility:"hidden"}}>TRUE HOOD COLLECTION</h2>
-        </div> */}
         <img src={pic} alt="img.png" />
       </div>
 
-
       <div className='products'>
-
-        <div className='shop'>
+        <div className='shop flex-row'>
           <h1>OUR COLLECTIONS</h1>
+          <div className="sort-dropdown">
+            <select value={sortOption} onChange={handleSortChange}>
+              <option value="recommended">Recommended</option>
+              <option value="lowToHigh">Price: Low to High</option>
+              <option value="highToLow">Price: High to Low</option>
+            </select>
+          </div>
         </div>
         <div className='grid'>
-          {Clothes.map((cloth) => {
-            return (
-              <div onClick={() => handleClick(cloth.id)}>
-                <Card
-                  id={cloth.id}
-                  imgURL={cloth.imgURL}
-                  name={cloth.name}
-                  price={cloth.price}
-                />
-              </div>)
-          })}
+          {sortedClothes.map((cloth) => (
+            <div key={cloth.id} onClick={() => handleClick(cloth.id)}>
+              <Card
+                id={cloth.id}
+                imgURL={cloth.imgURL}
+                name={cloth.name}
+                price={cloth.price}
+              />
+            </div>
+          ))}
         </div>
       </div>
-
 
       <section id='footer'>
         <div className='mp'>
@@ -141,14 +158,12 @@ const Products = () => {
             </a>
           </div>
         </div>
-
-
       </section>
       <div className='copyright'>
         <h3>© Copyright 2024 True Hood</h3>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default Products
+export default Products;

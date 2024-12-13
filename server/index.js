@@ -38,7 +38,7 @@ app.use(cors(corsOptions));
 app.use(express.json());
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: "true" }));
-app.all('', function(req, res, next) {
+app.all('', function (req, res, next) {
     res.header("Access-Control-Allow-Origin", allowedOrigins);
     res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
     res.header('Access-Control-Allow-Headers', "Origin, X-Requested-With, Content-Type, Accept, Authorization");
@@ -162,10 +162,8 @@ const generateShiprocketToken = async () => {
 };
 app.post('/api/shiprocket/create-order', async (req, res) => {
     try {
-        console.log("Received Order Details:", JSON.stringify(req.body, null, 2));
 
         const shiprocketToken = await generateShiprocketToken();
-        console.log('Generated Shiprocket Token:', shiprocketToken);
 
 
         const response = await fetch('https://apiv2.shiprocket.in/v1/external/orders/create/adhoc', {
@@ -179,7 +177,6 @@ app.post('/api/shiprocket/create-order', async (req, res) => {
 
         const responseData = await response.json();
 
-        console.log("Shiprocket Response:", JSON.stringify(responseData, null, 2));
 
         if (!response.ok) {
             return res.status(response.status).json({

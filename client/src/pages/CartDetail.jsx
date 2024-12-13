@@ -241,8 +241,6 @@ export const CartDetail = () => {
 
     const generateShiprocketToken = async () => {
         try {
-            console.log('Starting Shiprocket Token Generation...');
-
             const response = await fetch('https://apiv2.shiprocket.in/v1/external/auth/login', {
                 method: 'POST',
                 headers: {
@@ -254,17 +252,13 @@ export const CartDetail = () => {
                 }),
             });
 
-            console.log('Shiprocket Token Response Status:', response.status);
-
             const data = await response.json();
-            console.log('Shiprocket Token Response Data:', JSON.stringify(data, null, 2));
-
+           
             if (!data.token) {
                 console.error('Failed to generate Shiprocket token: No token in response');
                 throw new Error('Failed to generate Shiprocket token');
             }
 
-            console.log('Shiprocket Token Generated Successfully:', data.token);
             return data.token;
         } catch (error) {
             console.error('Detailed Shiprocket Token Error:', error);
@@ -282,9 +276,6 @@ export const CartDetail = () => {
             if (!order.items || !Array.isArray(order.items) || order.items.length === 0) {
                 throw new Error('Order items are missing or invalid.');
             }
-
-            // Log items for debugging
-            console.log('Order Items:', JSON.stringify(order.items, null, 2));
 
             const totalQuantity = order.items.reduce((acc, item) => acc + (item.product_quantity || 0), 0);
 
@@ -349,11 +340,6 @@ export const CartDetail = () => {
             console.error('Detailed Shiprocket Order Creation Error:', error);
         }
     };
-
-
-
-
-
 
     const addAddress = async () => {
         try {

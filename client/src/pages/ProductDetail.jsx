@@ -167,7 +167,7 @@ const ProductDetail = () => {
           </div>
 
           <div className='right-box'>
-            <h3>Oversized t-shirt</h3>
+            <h3>Oversized black t-shirt</h3>
             <h2>{cloth.name}</h2>
             <p className='black'>₹{cloth.price}.00</p>
             <div className='boxes'>
@@ -310,7 +310,7 @@ const ProductDetail = () => {
           </div>
         </section>
 
-        <section id='footer'>
+        <section id='footer' className='priv'>
         <div className='mp'>
           <img src={logo1} alt="logo.png" />
           <div className='move-p'>
