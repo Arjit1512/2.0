@@ -14,6 +14,9 @@ export const CartDetail = () => {
     const [popup, setPopup] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+    const refresh = () => {
+        navigate("/");
+    }
     const [flagArray, setFlagArray] = useState([]);
     const [items, setItems] = useState([]);
     const [addressPopup, showAddressPopup] = useState(false);
@@ -22,65 +25,17 @@ export const CartDetail = () => {
         city: '',
         state: '',
         pincode: ''
-    });
-    const refresh = () => {
-        navigate("/");
-    }
+    })
+
     const [user, setUser] = useState({
         name: '',
         email: ''
-    });
+    })
 
     if (globalUserID == null) {
         navigate("/login");
     }
-
-    useEffect(() => {
-        const getDetails = async () => {
-            try {
-                setIsLoading(true);
-                if (loggedIn && globalUserID) {
-                    const response = await axios.get(`${process.env.REACT_APP_API_URL}/${globalUserID}/get-user-details`, {
-                        headers: {
-                            Authorization: `Bearer ${token}`,
-                        },
-                    });
-                    if (response.data.message === "success") {
-                        setUser({ name: response.data.name, email: response.data.email });
-                    }
-                }
-            } catch (error) {
-                console.error("Error fetching user details:", error);
-            } finally {
-                setIsLoading(false);
-            }
-        };
-        getDetails();
-    }, [loggedIn, globalUserID]);
-
-    useEffect(() => {
-        const handleCart = async () => {
-            try {
-                setIsLoading(true);
-                if (loggedIn && globalUserID) {
-                    const response = await axios.get(`${process.env.REACT_APP_API_URL}/${globalUserID}/get-cart`, {
-                        headers: {
-                            Authorization: `Bearer ${token}`,
-                        },
-                    });
-                    if (response.data.message === "Cart items fetched!" || response.data.message === "Cart is empty!") {
-                        setItems(response.data.items);
-                    }
-                }
-            } catch (error) {
-                console.error("Error fetching cart items:", error);
-            } finally {
-                setIsLoading(false);
-            }
-        };
-        handleCart();
-    }, [setItems, flagArray, loggedIn]);
-
+    
 
 
     const handleQuantityChange = async (id, action, size) => {
@@ -116,17 +71,20 @@ export const CartDetail = () => {
 
 
 
-    const totalBill = items.reduce((acc, item) => acc + item.product_price * item.product_quantity, 0);
+
+    const totalBill = items.reduce((acc, item) => (acc + item.product_price * item.product_quantity), 0);
 
     const loadRazorpayScript = async () => {
         try {
             setIsLoading(true);
 
+            // Dynamically load the Razorpay script
             const script = document.createElement("script");
             script.src = "https://checkout.razorpay.com/v1/checkout.js";
             script.async = true;
             document.body.appendChild(script);
 
+            // Handle script load
             script.onload = async () => {
                 if (!window.Razorpay) {
                     console.error("Razorpay script failed to load!");
@@ -135,12 +93,15 @@ export const CartDetail = () => {
 
                 console.log("Razorpay script loaded successfully.");
 
+                // Create an order on your backend
                 const response = await axios.post(`${process.env.REACT_APP_API_URL}/create-order`, {
                     amount: totalBill * 100, // Amount in paise
                 });
 
                 const orderId = response.data.orderId;
+                console.log("Order ID received from server:", orderId);
 
+                // Razorpay options
                 const razorpayOptions = {
                     key: process.env.REACT_APP_RAZORPAY_KEY_ID,
                     amount: totalBill,
@@ -151,10 +112,50 @@ export const CartDetail = () => {
                     handler: async function (response) {
                         try {
                             console.log("Full Razorpay Payment Response:", JSON.stringify(response, null, 2));
-                            alert("Payment initiated successfully! Please wait for confirmation.");
+
+                            const verificationResponse = await axios.post(`${process.env.REACT_APP_API_URL}/verify-payment`, {
+                                razorpay_order_id: response.razorpay_order_id,
+                                razorpay_payment_id: response.razorpay_payment_id,
+                                razorpay_signature: response.razorpay_signature,
+                            });
+
+                            console.log("Full Payment Verification Response:", JSON.stringify(verificationResponse.data, null, 2));
+
+                            // Rest of your existing code...
+                            if (verificationResponse.data.success) {
+                                console.log("Payment verified successfully.");
+
+                                // Create Shiprocket order
+                                const order = {
+                                    items,
+                                    totalBill,
+                                };
+
+                                await createShiprocketOrder(order);
+
+                                // Perform checkout
+                                const checkoutResponse = await axios.post(
+                                    `${process.env.REACT_APP_API_URL}/${globalUserID}/checkout`,
+                                    {},
+                                    {
+                                        headers: {
+                                            Authorization: `Bearer ${token}`,
+                                        },
+                                    }
+                                );
+
+                                console.log("Checkout response:", checkoutResponse.data);
+
+                                if (checkoutResponse.data.message === "Checkout successful!") {
+                                    alert("Payment and order creation successful!");
+                                    navigate("/dashboard");
+                                }
+                            } else {
+                                alert("Payment verification failed. Please try again!");
+                            }
                         } catch (error) {
-                            console.error("Handler Error:", error);
-                            alert(`Payment processing failed: ${error.message}`);
+                            console.error("Complete Verification Error:", error);
+                            alert(`Payment verification failed: ${error.message}`);
                         }
                     },
                     prefill: {
@@ -167,10 +168,14 @@ export const CartDetail = () => {
                     },
                 };
 
+                console.log("Razorpay options configured:", razorpayOptions);
+
+                // Open Razorpay checkout
                 const razorpay = new window.Razorpay(razorpayOptions);
                 razorpay.open();
             };
 
+            // Error handling if the script fails to load
             script.onerror = () => {
                 console.error("Failed to load Razorpay script.");
                 alert("Failed to load Razorpay. Please refresh and try again.");
@@ -181,6 +186,7 @@ export const CartDetail = () => {
             setIsLoading(false);
         }
     };
+
 
 
     const generateShiprocketToken = async () => {
@@ -267,7 +273,7 @@ export const CartDetail = () => {
                 height: (totalQuantity || 0) * 2,
                 weight: (totalQuantity || 0) * 0.25,
             };
-
+            
 
             const response = await fetch('https://apiv2.shiprocket.in/v1/external/orders/create/adhoc', {
                 method: 'POST',
