@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useMyContext } from './CartContext';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { Buffer } from 'buffer';
 import logo from "../sources/H-logo.png";
 import '../styling/CartDetail.css'
 import Loader from "./Loader";
@@ -287,6 +288,7 @@ export const CartDetail = () => {
 
             const totalQuantity = order.items.reduce((acc, item) => acc + (item.product_quantity || 0), 0);
 
+           
             const orderDetails = {
                 order_id: `order_${Date.now()}`,
                 order_date: new Date().toISOString(),
@@ -327,25 +329,28 @@ export const CartDetail = () => {
                 weight: (totalQuantity || 0) * 0.25,
             };
 
+            
 
-            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/shiprocket/create-order`, {
+            const response = await fetch('https://apiv2.shiprocket.in/v1/external/orders/create/adhoc', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ token: shiprocketToken, orderDetails }),
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${shiprocketToken}`,
+                },
+                body: JSON.stringify(orderDetails),
             });
 
-            const data = await response.json(); // Ensure to check if it's valid JSON
-
+            const data = await response.json();
             if (!response.ok) {
-                throw new Error(data.error || 'Unknown backend error');
+                throw new Error(`Shiprocket API Error: ${data.message || 'Unknown error'}`);
             }
-
-            console.log('Order created successfully:', data);
+            console.log('Shiprocket order created successfully:', data);
         } catch (error) {
-            console.error('Shiprocket Order Creation Failed:', error);
-            alert(`Shiprocket Order Creation Failed: ${error.message}`);
+            console.error('Detailed Shiprocket Order Creation Error:', error);
         }
     };
+
+
 
 
 
