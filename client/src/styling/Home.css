@@ -511,7 +511,7 @@ body {
     }
 
     #footer {
-        gap: 18%;
+        gap: 16%;
     }
     #footer.priv{
         margin-top: 340% !important;

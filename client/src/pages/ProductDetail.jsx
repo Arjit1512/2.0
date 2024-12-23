@@ -6,7 +6,8 @@ import '../styling/ProductDetail.css';
 import logo from "../sources/H-logo.png";
 import axios from 'axios';
 import size from "../sources/size.png";
-import athlete from "../sources/athlete.jpg"; import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import athlete from "../sources/athlete.jpg";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { faInstagram, faFacebook, faTwitter } from '@fortawesome/free-brands-svg-icons';
 import logo1 from "../sources/hnigg.png";
@@ -162,8 +163,9 @@ const ProductDetail = () => {
             <h2>{cloth.name}</h2>
             <p>Experience ultimate comfort and style with our premium True Hood T-shirt. Crafted from 100% soft,
               breathable cotton. Whether you' re dressing up for a special occasion or keeping it casual, our
-              True Hood T-shirt is the perfect choice for any wardrobe. Elevate your everyday look with the
-              perfect blend of comfort and style.</p>
+              True Hood T-shirt is the perfect choice for any wardrobe.</p>
+              <p>Details: Product is of 240GSM (Oversized) with a 9 x 12 inch design on it. 
+              </p>
           </div>
 
           <div className='right-box'>
