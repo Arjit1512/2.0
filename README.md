@@ -7,7 +7,7 @@ TRUE HOOD is a clothing accesories platform where users can browse, select, and 
 
 ## Features
 - User registration and authentication
-- Product catalog and filter functionality
+- Product catalog and sorting functionality
 - Add products to the shopping cart and checkout
 - Payment gateway integration (Razorpay)
 - Order history and status tracking (Shiprocket integration)
@@ -32,7 +32,7 @@ TRUE HOOD is a clothing accesories platform where users can browse, select, and 
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/Arjit1512/arjit-sociopedia.git
+   git clone https://github.com/Arjit1512/2.0.git
 2. Navigate to the project directory:
 
    Install the required dependencies:
