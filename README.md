@@ -36,14 +36,13 @@ TRUE HOOD is a clothing accessories platform where users can browse, select, and
 2. Navigate to the project directory:
 
    Install the required dependencies:
-   Set up the environment variables in a .env file (refer to .env.example for the required variables).
+   (Set up the environment variables in a .env file)
    ```bash
    npm install
 
 3. Start the application:
    ```bash
    npm start
-
    
 ### Acknowledgments
 
