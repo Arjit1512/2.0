@@ -1,6 +1,6 @@
 # TRUE HOOD - E-Commerce Clothing App
 
-TRUE HOOD is a clothing accesories platform where users can browse, select, and purchase fashion items. The app is designed with a seamless user experience for shopping and integrates payment gateways for easy transactions.
+TRUE HOOD is a clothing accessories platform where users can browse, select, and purchase fashion items. The app is designed with a seamless user experience for shopping and integrates payment gateways for easy transactions.
 
 ## Deployment
 1. On Vercel: https://2-0-ochre.vercel.app
