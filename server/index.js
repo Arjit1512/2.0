@@ -245,7 +245,7 @@ app.post('/register', async (req, res) => {
         }
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(email)) {
-            return res.status(400).json({ message: "Invalid email format" });
+            return res.status(200).json({ message: "Invalid email format" });
         }
         const existingUser = await User.findOne({ email });
         if (existingUser) {
