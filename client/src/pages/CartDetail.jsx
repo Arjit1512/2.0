@@ -420,7 +420,7 @@ export const CartDetail = () => {
 
     return (
         <>
-            {(isLoggedIn=="false") && (
+            {(isLoggedIn=="false" || (isLoggedIn==null)) && (
                 <div className='oops'>
                     <h3>Please login to add items in your cart.</h3>
                     <p>Click <span onClick={() => navigate("/login")}>here</span> to login</p>

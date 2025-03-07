@@ -142,7 +142,7 @@ const ProductDetail = () => {
               {(isLoggedIn=="true") && (
                 <a onClick={handleLogout} className="dropdown-item">Logout</a>
               )}
-              {(isLoggedIn=="false") && (
+              {(isLoggedIn=="false" || (isLoggedIn==null)) && (
                 <a onClick={() => navigate("/login")} className="dropdown-item">Login</a>
               )}
               <a onClick={() => navigate("/cart")} className="dropdown-item">Cart</a>

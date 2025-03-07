@@ -78,7 +78,7 @@ const Products = () => {
           </div>
           {isOpen && (
             <div className="dropdown-menu black">
-              {(isLoggedIn=="false") && (
+              {(isLoggedIn=="false" || (isLoggedIn==null)) && (
                 <a onClick={() => navigate("/login")} className="dropdown-item">Login</a>
               )}
               {(isLoggedIn=="true") && (

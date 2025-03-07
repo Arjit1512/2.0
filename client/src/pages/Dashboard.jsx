@@ -77,7 +77,7 @@ const Dashboard = () => {
     
     return (
         <>
-            {(isLoggedIn=="false") && (
+            {(isLoggedIn=="false" || (isLoggedIn==null)) && (
                 <div className='oops'>
                     <h3>Please login to view your orders.</h3>
                     <p>Click <span onClick={() => navigate("/login")}>here</span> to login</p>

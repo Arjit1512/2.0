@@ -45,7 +45,7 @@ const CustomerCare = () => {
           </div>
           {isOpen && (
             <div className="dropdown-menu black">
-              {(isLoggedIn=="false") && (
+              {(isLoggedIn=="false" || (isLoggedIn==null)) && (
                 <a onClick={handleLogout} className="dropdown-item">Logout</a>
               )}
               {(isLoggedIn=="true") && (
