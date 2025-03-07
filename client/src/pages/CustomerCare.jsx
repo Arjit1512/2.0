@@ -2,7 +2,6 @@ import '../styling/CustomerCare.css'
 import React, { useState } from 'react'
 import Clothes from './Clothes.jsx'
 import { useNavigate, useParams } from 'react-router-dom';
-import { useMyContext } from './CartContext';
 import logo from "../sources/H-logo.png";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInstagram } from '@fortawesome/free-brands-svg-icons';
@@ -12,19 +11,19 @@ import map from '../sources/map.png';
 const CustomerCare = () => {
   const navigate = useNavigate();
   const refresh = () => {
+
     navigate("/");
   }
   const [isOpen, setIsOpen] = useState(false);
-  const { globalUserID, setGlobalUserID } = useMyContext();
-  const { loggedIn, setLoggedIn } = useMyContext();
+  const userID = localStorage.getItem('userID');
+  const isLoggedIn = localStorage.getItem('isLoggedIn');
 
 
   const handleLogout = async () => {
     try {
       localStorage.removeItem("token");
-      localStorage.removeItem("userId");
-      setLoggedIn(false);
-      setGlobalUserID(null);
+      localStorage.removeItem("userID");
+      localStorage.setItem("isLoggedIn",false);
       window.location.reload();
       console.log('User logged out successfully.');
     } catch (error) {
@@ -46,10 +45,10 @@ const CustomerCare = () => {
           </div>
           {isOpen && (
             <div className="dropdown-menu black">
-              {loggedIn && (
+              {(isLoggedIn=="false") && (
                 <a onClick={handleLogout} className="dropdown-item">Logout</a>
               )}
-              {!loggedIn && (
+              {(isLoggedIn=="true") && (
                 <a onClick={() => navigate("/login")} className="dropdown-item">Login</a>
               )}
               <a onClick={() => navigate("/cart")} className="dropdown-item">Cart</a>

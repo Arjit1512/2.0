@@ -1,32 +1,34 @@
 import React, { useEffect, useState } from 'react'
-import { useMyContext } from './CartContext'
 import axios from "axios";
 import '../styling/Dashboard.css';
 import { useNavigate } from 'react-router-dom';
 import Loader from "./Loader";
 
 const Dashboard = () => {
-    const { globalUserID, setGlobalUserID, loggedIn, setLoggedIn } = useMyContext();
     const [orders, setOrders] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const Name = localStorage.getItem('userName');
     const token = localStorage.getItem('token');
+    const userID = localStorage.getItem('userID');
+    const isLoggedIn = localStorage.getItem('isLoggedIn');
     const navigate = useNavigate();
 
     useEffect(() => {
         const getOrders = async () => {
             try {
                 setIsLoading(true);
-                const response = await axios.get(`${process.env.REACT_APP_API_URL}/${globalUserID}/get-cart`, {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                });
-                console.log(response.data.orders);
-                console.log('Full Response: ', response.data);
-                console.log('Orders Field: ', response.data.orders);
-                console.log('globalUserID: ', globalUserID);
-                setOrders(response.data.orders);
+                if (userID) {
+                    const response = await axios.get(`${process.env.REACT_APP_API_URL}/${userID}/get-cart`, {
+                        headers: {
+                            Authorization: `Bearer ${token}`
+                        }
+                    });
+                    console.log(response.data.orders);
+                    console.log('Full Response: ', response.data);
+                    console.log('Orders Field: ', response.data.orders);
+                    console.log('userID: ', userID);
+                    setOrders(response.data.orders);
+                }
             } catch (error) {
                 console.log('Error: ', error);
             } finally {
@@ -35,11 +37,12 @@ const Dashboard = () => {
         }
         getOrders();
 
-    }, [globalUserID])
+    }, [userID])
     console.log('Orders: ---> ', orders);
     const sortedOrders = [...orders].sort((a, b) => new Date(b.date) - new Date(a.date));
+    console.log('FINAL ISLOGGEDIN STATUS : ', isLoggedIn)
 
-    if (sortedOrders.length === 0) {
+    if ((isLoggedIn=="true") && sortedOrders.length === 0) {
         return (
             <div className='oops'>
                 <h3>You did not order any product yet.</h3>
@@ -62,16 +65,25 @@ const Dashboard = () => {
         return <Loader />;
     }
 
-
+    if (!userID) {
+        return (
+            <div className='oops'>
+                <h3>Please login to add items in your cart.</h3>
+                <p>Click <span onClick={() => navigate("/login")}>here</span> to login</p>
+            </div>
+        )
+    }
+    
+    
     return (
         <>
-            {!loggedIn && (
+            {(isLoggedIn=="false") && (
                 <div className='oops'>
                     <h3>Please login to view your orders.</h3>
                     <p>Click <span onClick={() => navigate("/login")}>here</span> to login</p>
                 </div>
             )}
-            {loggedIn && (
+            {(isLoggedIn=="true") && (
                 <div>
                     <div className='navbar'>
                         <p>Thank you <span className='blink'>{Name}</span> for being part of our hood</p>

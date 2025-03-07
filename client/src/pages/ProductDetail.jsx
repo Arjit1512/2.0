@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import Clothes from './Clothes.jsx'
 import { useNavigate, useParams } from 'react-router-dom';
-import { useMyContext } from './CartContext';
 import '../styling/ProductDetail.css';
 import logo from "../sources/H-logo.png";
 import axios from 'axios';
@@ -23,10 +22,10 @@ import i8 from "../sources/i8.png";
 const ProductDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { globalUserID, setGlobalUserID } = useMyContext();
   const token = localStorage.getItem('token');
-  const { loggedIn, setLoggedIn } = useMyContext();
   const [selectedSize, setSelectedSize] = useState('');
+  const userID = localStorage.getItem('userID');
+  const isLoggedIn = localStorage.getItem('isLoggedIn');
   const [popup, setPopup] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const refresh = () => {
@@ -42,21 +41,24 @@ const ProductDetail = () => {
         return;
       }
 
-      console.log('Button clicked');
+      setTimeout(() => {
+        setPopup(false);
+      }, 2000)
+
+      if(!userID){
+        alert('Please login to add items!')
+        navigate('/login');
+        return;
+      }
+      
       setPopup(true);
 
       console.log('Action: ', action);
       console.log('id: ', id);
       console.log('Size: ', size);
 
-      setTimeout(() => {
-        setPopup(false);
-      }, 2000)
-
-
-
       if (action === "increase") {
-        const response = await axios.post(`${process.env.REACT_APP_API_URL}/${globalUserID}/add-item/${id}`, { size: size }, {
+        const response = await axios.post(`${process.env.REACT_APP_API_URL}/${userID}/add-item/${id}`, { size: size }, {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -64,7 +66,7 @@ const ProductDetail = () => {
         console.log(response.message);
       }
       else if (action === "decrease") {
-        const response = await axios.post(`${process.env.REACT_APP_API_URL}/${globalUserID}/remove-item/${id}`, { size: size }, {
+        const response = await axios.post(`${process.env.REACT_APP_API_URL}/${userID}/remove-item/${id}`, { size: size }, {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -78,10 +80,10 @@ const ProductDetail = () => {
 
   const handleSize = async (size) => {
     try {
-      if (loggedIn) {
+      if (isLoggedIn) {
         setSelectedSize(size);
       }
-      if (!loggedIn) {
+      if (!isLoggedIn) {
         alert("Please login to add items!");
         navigate("/login");
       }
@@ -92,9 +94,8 @@ const ProductDetail = () => {
   const handleLogout = async () => {
     try {
       localStorage.removeItem("token");
-      localStorage.removeItem("userId");
-      setLoggedIn(false);
-      setGlobalUserID(null);
+      localStorage.removeItem("userID");
+      localStorage.setItem("isLoggedIn", false);
       window.location.reload();
       console.log('User logged out successfully.');
     } catch (error) {
@@ -108,7 +109,6 @@ const ProductDetail = () => {
     document.body.scrollTop = 0; // For Safari
     document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE, and Opera
   };
-
   if (!cloth) {
     return (
       <>
@@ -139,10 +139,10 @@ const ProductDetail = () => {
           </div>
           {isOpen && (
             <div className="dropdown-menu black">
-              {loggedIn && (
+              {(isLoggedIn=="true") && (
                 <a onClick={handleLogout} className="dropdown-item">Logout</a>
               )}
-              {!loggedIn && (
+              {(isLoggedIn=="false") && (
                 <a onClick={() => navigate("/login")} className="dropdown-item">Login</a>
               )}
               <a onClick={() => navigate("/cart")} className="dropdown-item">Cart</a>
@@ -164,8 +164,8 @@ const ProductDetail = () => {
             <p>Experience ultimate comfort and style with our premium True Hood T-shirt. Crafted from 100% soft,
               breathable cotton. Whether you' re dressing up for a special occasion or keeping it casual, our
               True Hood T-shirt is the perfect choice for any wardrobe.</p>
-              <p>Details: Product is of 240GSM (Oversized) with a 9 x 12 inch design on it. 
-              </p>
+            <p>Details: Product is of 240GSM (Oversized) with a 9 x 12 inch design on it.
+            </p>
           </div>
 
           <div className='right-box'>
@@ -313,45 +313,45 @@ const ProductDetail = () => {
         </section>
 
         <section id='footer' className='priv'>
-        <div className='mp'>
-          <img src={logo1} alt="logo.png" />
-          <div className='move-p'>
-            <p className='inv-rev'>Born in the hood and praised on the street,<br />
-              True Hood has firmly settled itself as an iconic<br />
-              street wear brand inspired by innovation and style.</p>
+          <div className='mp'>
+            <img src={logo1} alt="logo.png" />
+            <div className='move-p'>
+              <p className='inv-rev'>Born in the hood and praised on the street,<br />
+                True Hood has firmly settled itself as an iconic<br />
+                street wear brand inspired by innovation and style.</p>
+            </div>
           </div>
-        </div>
-        <div className='mp1'>
-          <h4>Customer</h4>
-          <a onClick={() => navigate("/customer-care")}>FAQ</a>
-          <a onClick={() => navigate("/dashboard")}>My Orders</a>
-          <a onClick={() => navigate("/customer-care")}>Contact Us</a>
-          <a onClick={() => navigate("/rp")}>Returns</a>
-        </div>
-        <div className='mp1'>
-          <h4>Navigate</h4>
-          <a onClick={() => navigate("/login")}>Login</a>
-          <a onClick={() => navigate("/tac")}>Terms & Conditions</a>
-          <a onClick={() => navigate("/rp")}>Refund Policy</a>
-          <a onClick={() => navigate("/register")}>Register</a>
-        </div>
-        <div className='mp1'>
-          <h4>Follow us at</h4>
-          <div className='flex-row'>
-            <a href="mailto:truehood.business@gmail.com" target="_blank" rel="noopener noreferrer">
-              <FontAwesomeIcon icon={faEnvelope} />
-            </a>
-            <a href="https://www.instagram.com/truehoodclothing" target="_blank" rel="noopener noreferrer">
-              <FontAwesomeIcon icon={faInstagram} />
-            </a>
-            <a href="/tac" target="_blank" rel="noopener noreferrer">
-              <FontAwesomeIcon icon={faFacebook} />
-            </a>
+          <div className='mp1'>
+            <h4>Customer</h4>
+            <a onClick={() => navigate("/customer-care")}>FAQ</a>
+            <a onClick={() => navigate("/dashboard")}>My Orders</a>
+            <a onClick={() => navigate("/customer-care")}>Contact Us</a>
+            <a onClick={() => navigate("/rp")}>Returns</a>
           </div>
-        </div>
+          <div className='mp1'>
+            <h4>Navigate</h4>
+            <a onClick={() => navigate("/login")}>Login</a>
+            <a onClick={() => navigate("/tac")}>Terms & Conditions</a>
+            <a onClick={() => navigate("/rp")}>Refund Policy</a>
+            <a onClick={() => navigate("/register")}>Register</a>
+          </div>
+          <div className='mp1'>
+            <h4>Follow us at</h4>
+            <div className='flex-row'>
+              <a href="mailto:truehood.business@gmail.com" target="_blank" rel="noopener noreferrer">
+                <FontAwesomeIcon icon={faEnvelope} />
+              </a>
+              <a href="https://www.instagram.com/truehoodclothing" target="_blank" rel="noopener noreferrer">
+                <FontAwesomeIcon icon={faInstagram} />
+              </a>
+              <a href="/tac" target="_blank" rel="noopener noreferrer">
+                <FontAwesomeIcon icon={faFacebook} />
+              </a>
+            </div>
+          </div>
 
 
-      </section>
+        </section>
         <div className='copyright'>
           <h3>© Copyright 2024 True Hood</h3>
         </div>

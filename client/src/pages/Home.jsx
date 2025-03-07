@@ -7,7 +7,6 @@ import vid from "../sources/thunder.mp4";
 import videoSource from '../sources/Hstar.gif';
 import ts from '../sources/ts.jpg';
 import { useState } from 'react';
-import { useMyContext } from './CartContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { faInstagram, faFacebook, faTwitter } from '@fortawesome/free-brands-svg-icons';
@@ -22,18 +21,17 @@ import i8 from "../sources/i8.png";
 
 const Home = () => {
   const navigate = useNavigate();
-  const { globalUserID, setGlobalUserID } = useMyContext();
   const [isOpen, setIsOpen] = useState(false);
-  const { loggedIn, setLoggedIn } = useMyContext();
+  const userID = localStorage.getItem('userID');
+  const isLoggedIn = localStorage.getItem('isLoggedIn');
   const refresh = () => {
     window.location.reload();
   }
   const handleLogout = async () => {
     try {
       localStorage.removeItem("token");
-      localStorage.removeItem("userId");
-      setLoggedIn(false);
-      setGlobalUserID(null);
+      localStorage.removeItem("userID");
+      localStorage.setItem("isLoggedIn",false);
       window.location.reload();
       console.log('User logged out successfully.');
     } catch (error) {
@@ -48,7 +46,8 @@ const Home = () => {
     document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE, and Opera
   };
 
-
+  
+  console.log('FINAL ISLOGGEDIN STATUS : ', isLoggedIn)
   return (
     <div>
       <div className='navbar'>
@@ -75,10 +74,10 @@ const Home = () => {
             </div>
             {isOpen && (
               <div className="dropdown-menu black">
-                {loggedIn && (
+                {(isLoggedIn=='true') && (
                   <a onClick={handleLogout} className="dropdown-item">Logout</a>
                 )}
-                {!loggedIn && (
+                {(isLoggedIn=='false') && (
                   <a onClick={() => navigate("/login")} className="dropdown-item">Login</a>
                 )}
                 <a onClick={() => navigate("/products")} className="dropdown-item">SALE</a>

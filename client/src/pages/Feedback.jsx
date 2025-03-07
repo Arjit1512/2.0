@@ -4,7 +4,6 @@ import location from '../sources/map.png';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../styling/Feedback.css'
-import { useMyContext } from './CartContext';
 import Loader from "./Loader";
 
 const Community = () => {
@@ -13,7 +12,7 @@ const Community = () => {
   const [lName, setlName] = useState("");
   const [subject, setSubject] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const { globalUserID } = useMyContext();
+  const userID = localStorage.getItem('userID');
 
   function handleMessage(event) {
     setMessage(event.target.value);
@@ -35,7 +34,7 @@ const Community = () => {
 
     try {
       setIsLoading(true);
-      const token = localStorage.getItem('token'); // Assuming token is stored in localStorage
+      const token = localStorage.getItem('token'); 
 
       if (!token) {
         alert('Please login to give the feedback!');
@@ -43,7 +42,7 @@ const Community = () => {
         return;
       }
 
-      const response = await axios.post(`${process.env.REACT_APP_API_URL}/${globalUserID}/feedback`, {
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/${userID}/feedback`, {
         fName, lName, subject, message
       }, {
         headers: {

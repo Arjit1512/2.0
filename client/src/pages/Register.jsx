@@ -2,24 +2,15 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 import '../styling/Login.css'
-import { useMyContext } from './CartContext';
 import Loader from "./Loader";
 
 const Register = () => {
   const navigate = useNavigate();
-  const { globalUserID, setGlobalUserID, loggedIn, setLoggedIn } = useMyContext();
   const [userName, setUserName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [loginError, setLoginError] = useState('');
-
-  useEffect(() => {
-    const storedUserID = localStorage.getItem('userID');
-    if (storedUserID) {
-      setGlobalUserID(storedUserID);
-    }
-  }, [setGlobalUserID]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -35,8 +26,7 @@ const Register = () => {
         localStorage.setItem('token', response.data.token);
         localStorage.setItem('userID', response.data.userID);
         localStorage.setItem('userName', response.data.userName); 
-        setGlobalUserID(response.data.userID);
-        setLoggedIn(true);
+        localStorage.setItem('isLoggedIn',true);
         navigate("/");
       }
       else {

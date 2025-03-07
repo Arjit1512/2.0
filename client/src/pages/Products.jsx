@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import logo from "../sources/H-logo.png";
-import Clothes from './Clothes.jsx'; // Assuming this contains your products array
+import Clothes from './Clothes.jsx'; 
 import { useNavigate, Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
@@ -9,14 +9,14 @@ import logo1 from "../sources/hnigg.png";
 import Card from './Card.jsx';
 import '../styling/Products.css';
 import pic from '../sources/pic1.png';
-import { useMyContext } from './CartContext.js';
 
 const Products = () => {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
-  const { loggedIn, setLoggedIn, setGlobalUserID, globalUserID } = useMyContext();
+  const userID = localStorage.getItem('userID');
+  const isLoggedIn = localStorage.getItem('isLoggedIn');
   const [sortOption, setSortOption] = useState("recommended");
-  const [sortedClothes, setSortedClothes] = useState(Clothes); // Assuming Clothes is an array of objects
+  const [sortedClothes, setSortedClothes] = useState(Clothes); 
 
   const refresh = () => {
     window.location.reload();
@@ -25,9 +25,8 @@ const Products = () => {
   const handleLogout = async () => {
     try {
       localStorage.removeItem("token");
-      localStorage.removeItem("userId");
-      setLoggedIn(false);
-      setGlobalUserID(null);
+      localStorage.removeItem("userID");
+      localStorage.setItem("isLoggedIn",false);
       window.location.reload();
       console.log('User logged out successfully.');
     } catch (error) {
@@ -53,12 +52,12 @@ const Products = () => {
     } else if (option === "highToLow") {
       sorted.sort((a, b) => b.price - a.price);
     } else {
-      // Default sorting (e.g., recommended)
       sorted = Clothes;
     }
     setSortedClothes(sorted);
   };
 
+  console.log('FINAL ISLOGGEDIN STATUS : ', isLoggedIn)
   return (
     <>
       <div className='navbar'>
@@ -79,10 +78,10 @@ const Products = () => {
           </div>
           {isOpen && (
             <div className="dropdown-menu black">
-              {!loggedIn && (
+              {(isLoggedIn=="false") && (
                 <a onClick={() => navigate("/login")} className="dropdown-item">Login</a>
               )}
-              {loggedIn && (
+              {(isLoggedIn=="true") && (
                 <a onClick={handleLogout} className="dropdown-item">Logout</a>
               )}
               <a onClick={() => navigate("/cart")} className="dropdown-item">Cart</a>

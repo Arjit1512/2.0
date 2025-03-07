@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { useMyContext } from './CartContext';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Buffer } from 'buffer';
@@ -10,8 +9,8 @@ import Loader from "./Loader";
 export const CartDetail = () => {
     const navigate = useNavigate();
     const token = localStorage.getItem('token');
-    const { globalUserID, setGlobalUserID } = useMyContext();
-    const { loggedIn, setLoggedIn } = useMyContext();
+    const userID = localStorage.getItem('userID');
+    const isLoggedIn = localStorage.getItem('isLoggedIn');
     const [popup, setPopup] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
@@ -28,20 +27,18 @@ export const CartDetail = () => {
         pincode: ''
     })
 
+
     const [user, setUser] = useState({
         name: '',
         email: ''
     })
 
-    if (globalUserID == null) {
-        navigate("/login");
-    }
     useEffect(() => {
         const getDetails = async () => {
             try {
                 setIsLoading(true);
-                if (loggedIn && globalUserID) {
-                    const response = await axios.get(`${process.env.REACT_APP_API_URL}/${globalUserID}/get-user-details`,
+                if (userID) {
+                    const response = await axios.get(`${process.env.REACT_APP_API_URL}/${userID}/get-user-details`,
                         {
                             headers: {
                                 Authorization: `Bearer ${token}`,
@@ -59,14 +56,16 @@ export const CartDetail = () => {
             }
         };
         getDetails();
-    }, [loggedIn, globalUserID]);
+    }, [isLoggedIn, userID]);
 
     useEffect(() => {
         const handleCart = async () => {
             try {
                 setIsLoading(true);
-                if (loggedIn && globalUserID) {
-                    const response = await axios.get(`${process.env.REACT_APP_API_URL}/${globalUserID}/get-cart`,
+                console.log('Loggedin status: ', isLoggedIn);
+                console.log('global userID: ', userID);
+                if (userID) {
+                    const response = await axios.get(`${process.env.REACT_APP_API_URL}/${userID}/get-cart`,
                         {
                             headers: {
                                 Authorization: `Bearer ${token}`,
@@ -76,6 +75,7 @@ export const CartDetail = () => {
                     if (response.data.message === "Cart items fetched!" || response.data.message === "Cart is empty!") {
                         setItems(response.data.items);
                     }
+                    console.log('I want to know the response: ', response.data);
                 }
             } catch (error) {
                 console.error("Error fetching cart items:", error);
@@ -84,7 +84,7 @@ export const CartDetail = () => {
             }
         };
         handleCart();
-    }, [setItems, flagArray, loggedIn]);
+    }, [setItems, flagArray, isLoggedIn]);
 
 
 
@@ -95,7 +95,7 @@ export const CartDetail = () => {
             console.log('Size: ', size);
 
             if (action === "increase") {
-                const response = await axios.post(`${process.env.REACT_APP_API_URL}/${globalUserID}/add-item/${id}`, { size: size }, {
+                const response = await axios.post(`${process.env.REACT_APP_API_URL}/${userID}/add-item/${id}`, { size: size }, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
@@ -104,7 +104,7 @@ export const CartDetail = () => {
                 setFlagArray([...flagArray, 1]);
             }
             else if (action === "decrease") {
-                const response = await axios.post(`${process.env.REACT_APP_API_URL}/${globalUserID}/remove-item/${id}`, { size: size }, {
+                const response = await axios.post(`${process.env.REACT_APP_API_URL}/${userID}/remove-item/${id}`, { size: size }, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
@@ -116,7 +116,7 @@ export const CartDetail = () => {
             console.log('Error: ', error);
         }
     }
-
+    console.log('User: ', user)
     console.log("items: ", items);
 
 
@@ -171,7 +171,6 @@ export const CartDetail = () => {
 
                             console.log("Full Payment Verification Response:", JSON.stringify(verificationResponse.data, null, 2));
 
-                            // Rest of your existing code...
                             if (verificationResponse.data.success) {
                                 console.log("Payment verified successfully.");
 
@@ -185,7 +184,7 @@ export const CartDetail = () => {
 
                                 // Perform checkout
                                 const checkoutResponse = await axios.post(
-                                    `${process.env.REACT_APP_API_URL}/${globalUserID}/checkout`,
+                                    `${process.env.REACT_APP_API_URL}/${userID}/checkout`,
                                     {},
                                     {
                                         headers: {
@@ -241,6 +240,8 @@ export const CartDetail = () => {
 
     const generateShiprocketToken = async () => {
         try {
+            setIsLoading(true);
+
             const response = await fetch('https://apiv2.shiprocket.in/v1/external/auth/login', {
                 method: 'POST',
                 headers: {
@@ -253,7 +254,7 @@ export const CartDetail = () => {
             });
 
             const data = await response.json();
-           
+
             if (!data.token) {
                 console.error('Failed to generate Shiprocket token: No token in response');
                 throw new Error('Failed to generate Shiprocket token');
@@ -263,11 +264,15 @@ export const CartDetail = () => {
         } catch (error) {
             console.error('Detailed Shiprocket Token Error:', error);
             throw error;
+        } finally {
+            setIsLoading(false);
         }
     };
 
     const createShiprocketOrder = async (order) => {
         try {
+            setIsLoading(true);
+
             console.log('Creating Shiprocket Order with Details:', JSON.stringify(order, null, 2));
 
             const shiprocketToken = await generateShiprocketToken();
@@ -279,7 +284,7 @@ export const CartDetail = () => {
 
             const totalQuantity = order.items.reduce((acc, item) => acc + (item.product_quantity || 0), 0);
 
-           
+
             const orderDetails = {
                 order_id: `order_${Date.now()}`,
                 order_date: new Date().toISOString(),
@@ -316,11 +321,11 @@ export const CartDetail = () => {
                 sub_total: Number(order?.totalBill) || 0,
                 length: 30,
                 breadth: 25,
-                height: 2 + (1.5*((totalQuantity || 0) - 1)),
+                height: 2 + (1.5 * ((totalQuantity || 0) - 1)),
                 weight: (totalQuantity || 0) * 0.25,
             };
 
-            
+
 
             const response = await fetch(`${process.env.REACT_APP_API_URL}/api/shiprocket/create-order`, {
                 method: 'POST',
@@ -338,6 +343,8 @@ export const CartDetail = () => {
             console.log('Shiprocket order created successfully:', data);
         } catch (error) {
             console.error('Detailed Shiprocket Order Creation Error:', error);
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -345,7 +352,7 @@ export const CartDetail = () => {
         try {
             setIsLoading(true);
             const response = await axios.post(
-                `${process.env.REACT_APP_API_URL}/${globalUserID}/add-address`,
+                `${process.env.REACT_APP_API_URL}/${userID}/add-address`,
                 {
                     street: address.street,
                     city: address.city,
@@ -381,9 +388,8 @@ export const CartDetail = () => {
     const handleLogout = async () => {
         try {
             localStorage.removeItem("token");
-            localStorage.removeItem("userId");
-            setLoggedIn(false);
-            setGlobalUserID(null);
+            localStorage.removeItem("userID");
+            localStorage.setItem("isLoggedIn", false);
             window.location.reload();
             console.log('User logged out successfully.');
         } catch (error) {
@@ -394,7 +400,7 @@ export const CartDetail = () => {
         return <Loader />;
     }
 
-    if (items.length === 0) {
+    if (userID && items.length === 0) {
         return (
             <div className='oops'>
                 <h3>Oops, you don't have anything in your cart.</h3>
@@ -402,17 +408,25 @@ export const CartDetail = () => {
             </div>
         )
     }
-
+    console.log('FINAL ISLOGGEDIN STATUS : ', isLoggedIn)
+    if (!userID) {
+        return (
+            <div className='oops'>
+                <h3>Please login to add items in your cart.</h3>
+                <p>Click <span onClick={() => navigate("/login")}>here</span> to login</p>
+            </div>
+        )
+    }
 
     return (
         <>
-            {!loggedIn && (
+            {(isLoggedIn=="false") && (
                 <div className='oops'>
                     <h3>Please login to add items in your cart.</h3>
                     <p>Click <span onClick={() => navigate("/login")}>here</span> to login</p>
                 </div>
             )}
-            {loggedIn && (
+            {(isLoggedIn=="true") && (
                 <div>
                     <div className='navbar true'>
                         <p>WE THE INDEPENDENT</p>
@@ -427,10 +441,10 @@ export const CartDetail = () => {
                             </div>
                             {isOpen && (
                                 <div className="dropdown-menu black">
-                                    {loggedIn && (
+                                    {isLoggedIn && (
                                         <a onClick={handleLogout} className="dropdown-item">Logout</a>
                                     )}
-                                    {!loggedIn && (
+                                    {!isLoggedIn && (
                                         <a onClick={() => navigate("/login")} className="dropdown-item">Login</a>
                                     )}
                                     <a onClick={() => navigate("/cart")} className="dropdown-item">Cart</a>

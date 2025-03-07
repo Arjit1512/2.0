@@ -530,7 +530,6 @@ app.post('/:userId/feedback', verifyToken, async (req, res) => {
 })
 
 const PORT = process.env.PORT || 5001;
-console.log(process.env.MONGO_URL);
 mongoose.connect(process.env.MONGO_URL)
     .then(() => {
         app.listen(PORT, () => console.log(`Server running on port: ${PORT}`))
