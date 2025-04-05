@@ -17,15 +17,15 @@ import alt15 from "../sources/i16.png";
 import alt17 from "../sources/i17.png";
 
 const Clothes = [
-    // {
-    //     id: 1,
-    //     imgURL: pro1,
-    //     altURL: alt1,
-    //     price: 1.00,
-    //     name: "Vengeance of the Hood",
-    //     description: "I'm a product",
-    //     category: "T-Shirts"
-    // },
+    {
+        id: 1,
+        imgURL: pro1,
+        altURL: alt1,
+        price: 1.00,
+        name: "Vengeance of the Hood",
+        description: "I'm a product",
+        category: "T-Shirts"
+    },
     // {
     //     id: 5,
     //     imgURL: pro5,
@@ -44,15 +44,15 @@ const Clothes = [
         description: "I'm a product",
         category: "T-Shirts"
     },
-    // {
-    //     id: 3,
-    //     imgURL: pro3,
-    //     altURL: alt3,
-    //     price:2.00,
-    //     name: "True Hood Original",
-    //     description: "I'm a product",
-    //     category: "T-Shirts"
-    // },
+    {
+        id: 3,
+        imgURL: pro3,
+        altURL: alt3,
+        price:2.00,
+        name: "True Hood Original",
+        description: "I'm a product",
+        category: "T-Shirts"
+    },
     // {
     //     id: 15,
     //     imgURL: pro15,
@@ -71,15 +71,15 @@ const Clothes = [
     //     description: "I'm a product",
     //     category: "T-Shirts"
     // },
-    // {
-    //     id: 7,
-    //     imgURL: pro7,
-    //     altURL: alt7,
-    //     price:3.00,
-    //     name: "The Black Panther Tee",
-    //     description: "I'm a product",
-    //     category: "T-Shirts"
-    // },
+    {
+        id: 7,
+        imgURL: pro7,
+        altURL: alt7,
+        price:3.00,
+        name: "The Black Panther Tee",
+        description: "I'm a product",
+        category: "T-Shirts"
+    },
     
     // {
     //     id: 17,
