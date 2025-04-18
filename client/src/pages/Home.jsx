@@ -3,7 +3,7 @@ import logo from "../sources/H-logo.png";
 import logo1 from "../sources/hnigg.png";
 import '../styling/Home.css';
 import { useNavigate, Link } from 'react-router-dom';
-import vid from "../sources/thunder.mp4";
+import vid from "../sources/thunder.gif";
 import videoSource from '../sources/Hstar.gif';
 import ts from '../sources/ts.jpg';
 import { useState } from 'react';
@@ -31,7 +31,7 @@ const Home = () => {
     try {
       localStorage.removeItem("token");
       localStorage.removeItem("userID");
-      localStorage.setItem("isLoggedIn",false);
+      localStorage.setItem("isLoggedIn", false);
       window.location.reload();
       console.log('User logged out successfully.');
     } catch (error) {
@@ -46,7 +46,7 @@ const Home = () => {
     document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE, and Opera
   };
 
-  
+
   console.log('FINAL ISLOGGEDIN STATUS : ', isLoggedIn)
   return (
     <div>
@@ -55,15 +55,13 @@ const Home = () => {
       </div>
 
       <section className="video-background">
-        <video autoPlay muted loop className="background-video">
-          <source src={vid} type="video/mp4" alt="video" />
-        </video>
-        <div className='main' >
-          <img src={logo} alt="logo" className='logo' onClick={refresh} />
+        <img src={vid} alt="background" className="background-gif" />
+
+        <div className="main">
+          <img src={logo} alt="logo" className="logo" onClick={refresh} />
 
           <h3 onClick={() => navigate("/products")}>SHOP</h3>
           <h3 onClick={() => navigate("/products")}>COLLECTIONS</h3>
-
           <h3 onClick={() => navigate("/customer-care")}>CUSTOMER CARE</h3>
 
           <div className="dropdown">
@@ -72,12 +70,13 @@ const Home = () => {
               <span></span>
               <span></span>
             </div>
+
             {isOpen && (
               <div className="dropdown-menu black">
-                {(isLoggedIn=='true') && (
+                {(isLoggedIn === 'true') && (
                   <a onClick={handleLogout} className="dropdown-item">Logout</a>
                 )}
-                {(isLoggedIn=='false' || (isLoggedIn==null)) && (
+                {(isLoggedIn === 'false' || isLoggedIn == null) && (
                   <a onClick={() => navigate("/login")} className="dropdown-item">Login</a>
                 )}
                 <a onClick={() => navigate("/products")} className="dropdown-item">SALE</a>
@@ -89,13 +88,12 @@ const Home = () => {
           </div>
         </div>
 
-
-        <div className='th'>
+        <div className="th">
           <h1>TRUE<span>&nbsp;H</span>OOD</h1>
         </div>
       </section>
 
-      
+
       {/* <section id='home-div'>
         <div className='flex-row hr fr1'>
           <div className='flex-col hc' onClick={() => handleClick(1)}>

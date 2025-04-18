@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import HGif from '../sources/H.gif';
+import HGif from '../sources/loading-gif.gif';
 import '../styling/Landing.css';
 import Home from './Home';
 
@@ -9,9 +9,8 @@ const Loader = () => {
         <>
 
             <div className="landing-container">
-                <div className="spinner"></div>
+                <img src={HGif} alt="Loading..." className="loader-gif" />
             </div>
-
 
         </>
     )

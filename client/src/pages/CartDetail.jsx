@@ -90,6 +90,7 @@ export const CartDetail = () => {
 
     const handleQuantityChange = async (id, action, size) => {
         try {
+            setIsLoading(true);
             console.log('Action: ', action);
             console.log('id: ', id);
             console.log('Size: ', size);
@@ -114,6 +115,8 @@ export const CartDetail = () => {
             }
         } catch (error) {
             console.log('Error: ', error);
+        } finally {
+            setIsLoading(false);
         }
     }
     console.log('User: ', user)
