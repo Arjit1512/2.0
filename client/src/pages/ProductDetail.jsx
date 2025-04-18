@@ -266,7 +266,7 @@ const ProductDetail = () => {
           </div>
         </section>
 
-        <section id='home-div'>
+        {/* <section id='home-div'>
           <h1 className='ymal'>You may also like</h1>
           <div className='flex-row hr fr1'>
             <div className='flex-col hc' onClick={() => handleClick(1)}>
@@ -276,7 +276,6 @@ const ProductDetail = () => {
                 <p className='gray-text'>OVERSIZED T-SHIRT</p>
                 <h5 className="body-title">Vengeance of the Hood</h5>
                 <p className="body-text"> ₹699.00</p>
-                {/* <div className='discount'>-21%</div> */}
               </div>
             </div>
 
@@ -310,7 +309,7 @@ const ProductDetail = () => {
               </div>
             </div>
           </div>
-        </section>
+        </section> */}
 
         <section id='footer' className='priv'>
           <div className='mp'>
@@ -344,7 +343,7 @@ const ProductDetail = () => {
               <a href="https://www.instagram.com/truehoodclothing" target="_blank" rel="noopener noreferrer">
                 <FontAwesomeIcon icon={faInstagram} />
               </a>
-              <a href="/tac" target="_blank" rel="noopener noreferrer">
+              <a href="/customer-care" target="_blank" rel="noopener noreferrer">
                 <FontAwesomeIcon icon={faFacebook} />
               </a>
             </div>
@@ -353,7 +352,7 @@ const ProductDetail = () => {
 
         </section>
         <div className='copyright'>
-          <h3>© Copyright 2024 True Hood</h3>
+          <h3>© Copyright 2025 True Hood</h3>
         </div>
       </div>
     </>

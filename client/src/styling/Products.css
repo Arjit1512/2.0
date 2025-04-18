@@ -1,5 +1,6 @@
 .products {
     padding: 0% 5%;
+    border-top: 1px solid grey;
 }
 
 .dropdown {
@@ -222,13 +223,19 @@
 
     .db1 {
         visibility: visible !important;
-        top: 3.75vh !important;
-        right: 15% !important;
-        left: -135% !important;
+        position: absolute;
+        top: 5.75vh !important;
+        right: 5% !important;
     }
 
     .main.main1 {
         padding-bottom: 3%;
+        position: relative;
+          
+    }
+    
+    .card {
+        width: 420px;
     }
 }
 
@@ -244,5 +251,9 @@
     .sort-dropdown select {
         font-size: 0.8rem;
         padding: 5px 8px;
+    }
+    
+    .card {
+        width: 420px;
     }
 }

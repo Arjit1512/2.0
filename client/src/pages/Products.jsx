@@ -91,9 +91,9 @@ const Products = () => {
         </div>
       </div>
 
-      <div className='picture'>
+      {/* <div className='picture'>
         <img src={pic} alt="img.png" />
-      </div>
+      </div> */}
 
       <div className='products'>
         <div className='shop flex-row'>
@@ -152,14 +152,14 @@ const Products = () => {
             <a href="https://www.instagram.com/truehoodclothing" target="_blank" rel="noopener noreferrer">
               <FontAwesomeIcon icon={faInstagram} />
             </a>
-            <a href="/tac" target="_blank" rel="noopener noreferrer">
+            <a href="/customer-care" target="_blank" rel="noopener noreferrer">
               <FontAwesomeIcon icon={faFacebook} />
             </a>
           </div>
         </div>
       </section>
       <div className='copyright'>
-        <h3>© Copyright 2024 True Hood</h3>
+        <h3>© Copyright 2025 True Hood</h3>
       </div>
     </>
   );

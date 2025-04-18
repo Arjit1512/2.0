@@ -95,7 +95,8 @@ const Home = () => {
         </div>
       </section>
 
-      <section id='home-div'>
+      
+      {/* <section id='home-div'>
         <div className='flex-row hr fr1'>
           <div className='flex-col hc' onClick={() => handleClick(1)}>
             <img src={i1} className="body-img-top" alt="T-Shirt Green" />
@@ -104,7 +105,6 @@ const Home = () => {
               <p className='gray-text'>OVERSIZED T-SHIRT</p>
               <h5 className="body-title">Vengeance of the Hood</h5>
               <p className="body-text"> ₹699.00</p>
-              {/* <div className='discount'>-21%</div> */}
             </div>
           </div>
 
@@ -138,7 +138,7 @@ const Home = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       <section id="part-3">
         <div className='p3-part1'>
@@ -213,7 +213,7 @@ const Home = () => {
             <a href="https://www.instagram.com/truehoodclothing" target="_blank" rel="noopener noreferrer">
               <FontAwesomeIcon icon={faInstagram} />
             </a>
-            <a href="/tac" target="_blank" rel="noopener noreferrer">
+            <a href="/customer-care" target="_blank" rel="noopener noreferrer">
               <FontAwesomeIcon icon={faFacebook} />
             </a>
           </div>
@@ -222,7 +222,7 @@ const Home = () => {
 
       </section>
       <div className='copyright'>
-        <h3>© Copyright 2024 True Hood</h3>
+        <h3>© Copyright 2025 True Hood</h3>
       </div>
     </div>
   )

@@ -286,9 +286,6 @@ button.atc:hover {
 
     .right-box {
         width: 80%;
-        position: relative;
-        right: 22vw;
-        top: 3vh;
         height: max-content;
         padding-bottom: 4%;
     }
@@ -301,6 +298,9 @@ button.atc:hover {
 
     .pd25 {
         padding: 0% 1% 2% 4%;
+        height: 545px;
+        align-items: center;
+        align-self: center;
     }
 
     #middle h3 {
@@ -322,7 +322,6 @@ button.atc:hover {
 
     .r-box {
         width: 98%;
-        bottom: 55vh;
     }
 
     #size {
@@ -348,13 +347,26 @@ button.atc:hover {
         font-size: 0.7rem;
     }
     .size-table-container {
-        margin-top: -285%;
-        z-index: 100;
+        position: relative;
         visibility: visible !important;
     }
     .pd h2 {
         font-size: 1.2rem;
     }
+    .pla{
+        height:0px;
+        width:0px;
+    }
+    .r-box p {
+        width: 0px;
+        height: 0px;
+    }
+    .r-box h1 {
+        height: 0px;
+    }
+    .size-table-container {
+        margin-top: 0%;
+    }    
 }
 
 

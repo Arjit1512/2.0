@@ -255,7 +255,8 @@ body {
     justify-content: space-between;
     background-size: cover;
     background-position: center;
-    margin-top: 20px;
+    /* margin-top: 20px; */
+    margin-top: -5px;
 }
 
 .p3-part1 {
@@ -461,6 +462,7 @@ body {
 
     .inv-rev {
         visibility: hidden;
+        width: 0px;
     }
     .body-img-top {
         width: 102vw;    
@@ -492,7 +494,7 @@ body {
     }
 
     #part-3 {
-        margin-top: 326%;
+        /* margin-top: 326%; */
         height: 60vh;
     }
 
@@ -500,6 +502,9 @@ body {
         font-size: 30px;
         width: 60vw;
     }
+    .p3-part1 {
+        left: 13%;
+    }    
 
     .p3-part1 p {
         font-size: 10px;
@@ -513,8 +518,11 @@ body {
     #footer {
         gap: 16%;
     }
-    #footer.priv{
+    /* #footer.priv{
         margin-top: 340% !important;
+    } */
+    #footer.priv {
+        margin-top: 20% !important;
     }
 
     .mp1 a {
@@ -538,4 +546,5 @@ body {
         line-height: 12px;
         z-index:100;
     }
+        
 }
