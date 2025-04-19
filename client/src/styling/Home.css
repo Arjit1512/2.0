@@ -488,9 +488,16 @@ body {
 
     .dropdown {
         visibility: visible !important;
-        top: -2.25vh !important;
-        right: 140% !important;
+        position: absolute;
+        display: inline-block;
         z-index: 1 !important;
+        top: 0.75vh;
+        right: 3%;
+    }
+    
+    .dropdown-menu{
+        position: absolute;
+        right:100% !important;
     }
 
     .th h1 {

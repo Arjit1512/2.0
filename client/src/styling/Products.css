@@ -3,13 +3,6 @@
     border-top: 1px solid grey;
 }
 
-.dropdown {
-    position: relative;
-    display: inline-block;
-    top: 2.75vh;
-    right: 3%;
-}
-
 /* Hamburger icon */
 .hamburger-icon {
     display: flex;
