@@ -170,6 +170,7 @@
     align-items: center;
     font-weight: 600;
     cursor: pointer;
+    align-self: center;
 }
 
 
@@ -193,7 +194,8 @@
     line-height: 1.3636363636363635;
     text-transform: uppercase;
 }
-.oops h3{
+
+.oops h3 {
     font-size: 1.2rem;
 }
 
@@ -253,9 +255,11 @@
     display: flex;
     flex-direction: column;
 }
+
 .row .input-container {
-    width:46%;
+    width: 46%;
 }
+
 .input-container input {
     padding: 0.5rem 0.75rem;
     border: 1px solid #d1d5db;
@@ -303,7 +307,6 @@
     /* Apply blur effect */
     z-index: 999;
 }
-
 
 @media (min-width:700px) and (max-width:1385px) {
     .cart-class1 {
@@ -362,8 +365,20 @@
 }
 
 @media (min-width:270px) and (max-width:700px) {
+
+
+    .main-center-div {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        width: 100%;
+    }
+
     .cart-class1 {
-        left: 1%;
+        left: 0%;
+        margin-right: 30.5%;
         height: fit-content;
     }
 
@@ -398,7 +413,7 @@
         width: 90vw;
         height: fit-content;
         margin-bottom: 3%;
-        margin-left: 2%;
+        align-items: center;
     }
 
     .itemprice {
@@ -408,13 +423,21 @@
         width: fit-content;
     }
 
-    .inside {
-        width: 95vw;
+    .last-button {
+        width: 100%;
+        align-self: center;
+        margin-bottom: 5%;
     }
 
-    .last-button {
-        width: 75%;
+    .inside h2 {
+        text-align: center;
     }
+
+    .inside h4 {
+        position: relative;
+        right: 12%;
+    }
+
     .row .input-container {
         width: 45%;
     }

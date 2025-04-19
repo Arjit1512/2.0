@@ -403,14 +403,6 @@ export const CartDetail = () => {
         return <Loader />;
     }
 
-    if (userID && items.length === 0) {
-        return (
-            <div className='oops'>
-                <h3>Oops, you don't have anything in your cart.</h3>
-                <p>Please find our new collections <span onClick={() => navigate("/products")}>here</span></p>
-            </div>
-        )
-    }
     console.log('FINAL ISLOGGEDIN STATUS : ', isLoggedIn)
     if (!userID) {
         return (
@@ -420,7 +412,16 @@ export const CartDetail = () => {
             </div>
         )
     }
-
+    
+    if (items.length === 0 && userID) {
+        return (
+            <div className='oops'>
+                <h3>Oops, you don't have anything in your cart.</h3>
+                <p>Please find our new collections <span onClick={() => navigate("/products")}>here</span></p>
+            </div>
+        )
+    }
+    
     return (
         <>
             {(isLoggedIn=="false" || (isLoggedIn==null)) && (
@@ -430,7 +431,7 @@ export const CartDetail = () => {
                 </div>
             )}
             {(isLoggedIn=="true") && (
-                <div>
+                <div className='main-center-div'>
                     <div className='navbar true'>
                         <p>WE THE INDEPENDENT</p>
                     </div>

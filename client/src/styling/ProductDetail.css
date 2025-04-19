@@ -269,7 +269,8 @@ button.atc:hover {
 }
 
 /* Fix for unnecessary white space */
-html, body {
+html,
+body {
     margin: 0;
     padding: 0;
     overflow-x: hidden;
@@ -323,7 +324,7 @@ html, body {
         font-size: 0.8rem;
         text-align: center;
     }
-    
+
     #middle {
         height: 400px;
     }
@@ -359,44 +360,49 @@ html, body {
     .real {
         margin-top: 30%;
     }
-    
+
     .notification-box {
         left: 65%;
         font-size: 0.7rem;
     }
-    
+
     .size-table-container {
         position: relative;
         visibility: visible !important;
         margin-bottom: 0;
         padding-bottom: 0;
     }
-    
+
     .pd h2 {
         font-size: 1.2rem;
     }
-    
+
     .r-box p {
         display: none;
     }
-    
+
     .r-box h1 {
         display: none;
     }
-    
+
     .size-table-container {
         margin-top: 0;
     }
-    
+
     /* Fix for footer on mobile */
-    #footer, .copyright {
+    #footer,
+    .copyright {
         margin-top: 0;
         margin-bottom: 0;
         padding-bottom: 0;
     }
-    
+
     .priv {
         margin-bottom: 0;
+    }
+
+    .boxes {
+        gap: 20px;
     }
 }
 
@@ -407,5 +413,5 @@ html, body {
     color: black;
     letter-spacing: .181818181818em;
     line-height: 1.3636363636363635;
-    text-transform: uppercase    
+    text-transform: uppercase
 }
