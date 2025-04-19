@@ -131,14 +131,14 @@ const ProductDetail = () => {
       )}
       <div className='main m1 black' >
         <img src={logo} alt="logo" className='logo' onClick={refresh} />
-        <div className="dropdown db d1 black">
+        <div className="dropdown db d1 black new-dropdown">
           <div className="hamburger-icon hi" onClick={() => setIsOpen(!isOpen)}>
             <span></span>
             <span></span>
             <span></span>
           </div>
           {isOpen && (
-            <div className="dropdown-menu black new-dropdown">
+            <div className="dropdown-menu black new-dropdown-inside">
               {(isLoggedIn=="true") && (
                 <a onClick={handleLogout} className="dropdown-item">Logout</a>
               )}

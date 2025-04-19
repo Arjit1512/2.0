@@ -308,9 +308,11 @@
     z-index: 999;
 }
 
-.d1.ld{
+.d1.ld {
     position: relative;
+    left: 91%;
 }
+
 @media (min-width:700px) and (max-width:1385px) {
     .cart-class1 {
         left: 15%;
@@ -443,5 +445,9 @@
 
     .row .input-container {
         width: 45%;
+    }
+
+    .d1.ld {
+        display: none;
     }
 }

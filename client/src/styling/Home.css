@@ -37,13 +37,14 @@ body {
     background-color: transparent;
     margin: 0;
     padding: 0;
-    width: 102%;
+    width: 91%;
     display: flex;
     height: max-content;
     flex-direction: row;
-    gap: 275px;
+    gap: 310px;
     align-items: center;
     justify-content: center;
+    position: relative;
 }
 
 .logo {
@@ -453,6 +454,15 @@ body {
     z-index: -1;
 }
 
+.dropdown{
+    position: absolute;
+    margin-top: 36px;
+    left: 106%;
+}
+
+.dropdown-menu{
+    top:30%;
+}
 
 
 
@@ -496,6 +506,8 @@ body {
         z-index: 1 !important;
         top: 0.75vh;
         right: 3%;
+        margin-top: 2px;
+        left: 98%;
     }
     
     .th h1 {

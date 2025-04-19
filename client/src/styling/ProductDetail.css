@@ -287,14 +287,23 @@ body {
     padding-bottom: 0;
 }
 
+.new-dropdown {
+    left: 149%;
+}
+
+.new-dropdown-inside{
+    position: absolute;
+}
+
 @media screen and (min-width:270px) and (max-width:780px) {
     .db {
         visibility: visible !important;
         top: 4.75vh !important;
         left: 125% !important;
     }
-    .new-dropdown{
+    .new-dropdown {
         margin-right: -27px;
+        left: 138% !important;
     }
 
     .img-div img {
