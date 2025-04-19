@@ -291,8 +291,10 @@ body {
     .db {
         visibility: visible !important;
         top: 4.75vh !important;
-        right: 15% !important;
-        left: 45% !important
+        left: 125% !important;
+    }
+    .new-dropdown{
+        margin-right: -27px;
     }
 
     .img-div img {

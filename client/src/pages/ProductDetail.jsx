@@ -138,7 +138,7 @@ const ProductDetail = () => {
             <span></span>
           </div>
           {isOpen && (
-            <div className="dropdown-menu black">
+            <div className="dropdown-menu black new-dropdown">
               {(isLoggedIn=="true") && (
                 <a onClick={handleLogout} className="dropdown-item">Logout</a>
               )}
