@@ -149,7 +149,6 @@ button.atc:hover {
     margin-top: 8%;
     overflow-x: auto;
     font-family: 'Inconsolata', monospace;
-
 }
 
 .size-table {
@@ -269,7 +268,23 @@ button.atc:hover {
     gap: 205px;
 }
 
+/* Fix for unnecessary white space */
+html, body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
 
+/* Footer styling to ensure it sticks to content */
+#footer {
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.copyright {
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
 
 @media screen and (min-width:270px) and (max-width:780px) {
     .db {
@@ -298,14 +313,19 @@ button.atc:hover {
 
     .pd25 {
         padding: 0% 1% 2% 4%;
-        height: 545px;
+        height: auto;
         align-items: center;
         align-self: center;
+        height: 530px;
     }
 
     #middle h3 {
         font-size: 0.8rem;
         text-align: center;
+    }
+    
+    #middle {
+        height: 400px;
     }
 
     .l-box {
@@ -326,49 +346,61 @@ button.atc:hover {
 
     #size {
         margin-top: 20%;
-        height: 108vh;
         align-items: center;
         text-align: center;
+        margin-bottom: 0;
+        padding-bottom: 0;
     }
 
     .pla {
-        visibility: hidden;
-        height:0px;
-        width:0px;
+        display: none;
     }
 
     .real {
         margin-top: 30%;
     }
-    .notification-box{
-        left:65%;
+    
+    .notification-box {
+        left: 65%;
         font-size: 0.7rem;
     }
+    
     .size-table-container {
         position: relative;
         visibility: visible !important;
+        margin-bottom: 0;
+        padding-bottom: 0;
     }
+    
     .pd h2 {
         font-size: 1.2rem;
     }
-    .pla{
-        height:0px;
-        width:0px;
-    }
+    
     .r-box p {
-        width: 0px;
-        height: 0px;
+        display: none;
     }
+    
     .r-box h1 {
-        height: 0px;
+        display: none;
     }
+    
     .size-table-container {
-        margin-top: 0%;
-    }    
+        margin-top: 0;
+    }
+    
+    /* Fix for footer on mobile */
+    #footer, .copyright {
+        margin-top: 0;
+        margin-bottom: 0;
+        padding-bottom: 0;
+    }
+    
+    .priv {
+        margin-bottom: 0;
+    }
 }
 
-
-.ymal{
+.ymal {
     font-size: 1.0875rem;
     font-family: Aeonik Fono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
     font-weight: 900;

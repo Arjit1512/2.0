@@ -125,7 +125,7 @@ const ProductDetail = () => {
       {popup && (
         <>
           <div className='notification-box'>
-            <h3 className='blinking-text'>Item added to cart succesfully!</h3>
+            <h3 className='blinking-text'>Item added to cart successfully!</h3>
           </div>
         </>
       )}

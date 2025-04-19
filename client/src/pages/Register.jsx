@@ -10,7 +10,18 @@ const Register = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [Doubt, setDoubt] = useState(false);
   const [loginError, setLoginError] = useState('');
+
+  useEffect(() => {
+    const perform = async () => {
+      const doubt = await localStorage.getItem('isLoggedIn');
+      if (doubt === 'true') {
+        setDoubt(true);
+      }
+    }
+    perform();
+  }, []);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -25,8 +36,8 @@ const Register = () => {
       if (response.data.message === "Registration successfull!") {
         localStorage.setItem('token', response.data.token);
         localStorage.setItem('userID', response.data.userID);
-        localStorage.setItem('userName', response.data.userName); 
-        localStorage.setItem('isLoggedIn',true);
+        localStorage.setItem('userName', response.data.userName);
+        localStorage.setItem('isLoggedIn', true);
         navigate("/");
       }
       else {
@@ -43,6 +54,14 @@ const Register = () => {
   }
   if (isLoading) {
     return <Loader />;
+  }
+
+  if (Doubt) {
+    return (
+      <div className='center-all'>
+        <h1>You are already logged in.</h1>
+      </div>
+    )
   }
   return (
     <div>
