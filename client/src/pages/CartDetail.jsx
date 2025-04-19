@@ -437,7 +437,7 @@ export const CartDetail = () => {
                     </div>
                     <div className='main m1 black' >
                         <img src={logo} alt="logo" className='logo' onClick={refresh} />
-                        <div className="dropdown d1 black">
+                        <div className="dropdown d1 black ld">
                             <div className="hamburger-icon hi" onClick={() => setIsOpen(!isOpen)}>
                                 <span></span>
                                 <span></span>

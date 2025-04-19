@@ -308,6 +308,9 @@
     z-index: 999;
 }
 
+.d1.ld{
+    position: relative;
+}
 @media (min-width:700px) and (max-width:1385px) {
     .cart-class1 {
         left: 15%;
