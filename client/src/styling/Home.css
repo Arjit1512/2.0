@@ -462,6 +462,9 @@ body {
     .main {
         visibility: hidden;
     }
+    .navbar{
+        padding-bottom: 1%;
+    }
 
     #home-div {
         padding-bottom: 3%;
@@ -495,10 +498,6 @@ body {
         right: 3%;
     }
     
-    .dropdown-menu{
-        position: absolute;
-        right:100% !important;
-    }
 
     .th h1 {
         font-size: 2rem;
