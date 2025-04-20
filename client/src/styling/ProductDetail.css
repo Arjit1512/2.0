@@ -242,6 +242,64 @@ button.atc:hover {
     animation: blink 1s step-start infinite;
 }
 
+/*more section*/
+#more-about {
+    background-color: black;
+    width: 100%;
+    height: max-content;
+    overflow: hidden;
+}
+
+#more-about h1 {
+    color: white;
+    font-family: 'Inconsolata', monospace;
+    font-size: 1rem;
+    padding: 0.5%;
+    text-align: center;
+}
+
+.more {
+    display: flex;
+    flex-direction: row;
+    gap: 15%;
+    animation: scroll-left 20s linear infinite;
+    width: max-content;
+}
+
+@keyframes scroll-left {
+    0% {
+        transform: translateX(0%);
+    }
+
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+.each-review {
+    display: flex;
+    flex-direction: column;
+    padding: 1%;
+    border-radius: 10px;
+    font-size: 0.8rem;
+}
+
+.each-review p {
+    width: 120%;
+}
+
+.each-review img {
+    width: 200px;
+    height: 200px;
+    padding:1%;
+    border: 1px solid grey;
+    border-radius: 10px;
+}
+
+.new-priv {
+    margin-top: 2%;
+}
+
 @keyframes blink {
     50% {
         color: white;
@@ -291,7 +349,7 @@ body {
     left: 149%;
 }
 
-.new-dropdown-inside{
+.new-dropdown-inside {
     position: absolute;
 }
 
@@ -301,6 +359,7 @@ body {
         top: 4.75vh !important;
         left: 125% !important;
     }
+
     .new-dropdown {
         margin-right: -27px;
         left: 138% !important;
@@ -414,6 +473,10 @@ body {
 
     .boxes {
         gap: 20px;
+    }
+
+    #more-about{
+        margin-top: 60%;
     }
 }
 

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import logo from "../sources/H-logo.png";
-import Clothes from './Clothes.jsx'; 
+import Clothes from './Clothes.jsx';
 import { useNavigate, Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
@@ -13,11 +13,11 @@ import pic from '../sources/pic1.png';
 const Products = () => {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
-  const [hovered, setHovered] = useState(null);
+  // const [hovered, setHovered] = useState(null);
   const userID = localStorage.getItem('userID');
   const isLoggedIn = localStorage.getItem('isLoggedIn');
   const [sortOption, setSortOption] = useState("recommended");
-  const [sortedClothes, setSortedClothes] = useState(Clothes); 
+  const [sortedClothes, setSortedClothes] = useState(Clothes);
 
   const refresh = () => {
     window.location.reload();
@@ -27,7 +27,7 @@ const Products = () => {
     try {
       localStorage.removeItem("token");
       localStorage.removeItem("userID");
-      localStorage.setItem("isLoggedIn",false);
+      localStorage.setItem("isLoggedIn", false);
       window.location.reload();
       console.log('User logged out successfully.');
     } catch (error) {
@@ -79,10 +79,10 @@ const Products = () => {
           </div>
           {isOpen && (
             <div className="dropdown-menu black">
-              {(isLoggedIn=="false" || (isLoggedIn==null)) && (
+              {(isLoggedIn == "false" || (isLoggedIn == null)) && (
                 <a onClick={() => navigate("/login")} className="dropdown-item">Login</a>
               )}
-              {(isLoggedIn=="true") && (
+              {(isLoggedIn == "true") && (
                 <a onClick={handleLogout} className="dropdown-item">Logout</a>
               )}
               <a onClick={() => navigate("/cart")} className="dropdown-item">Cart</a>
@@ -109,12 +109,10 @@ const Products = () => {
         </div>
         <div className='grid'>
           {sortedClothes.map((cloth) => (
-            <div key={cloth.id} onClick={() => handleClick(cloth.id)}
-            onMouseEnter={() => setHovered(cloth.id)}
-            onMouseLeave={() => setHovered(null)}>
+            <div key={cloth.id} onClick={() => handleClick(cloth.id)}>
               <Card
                 id={cloth.id}
-                imgURL={hovered === cloth.id ? cloth.hoveredImgURL : cloth.imgURL} 
+                imgURL={cloth.imgURL}
                 name={cloth.name}
                 price={cloth.price}
               />

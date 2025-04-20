@@ -79,5 +79,6 @@
         top: 4vh;
         left: 142% !important;
         margin-right: -27px;
+        display: none;
     }
 }

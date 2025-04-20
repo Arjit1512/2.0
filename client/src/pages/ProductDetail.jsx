@@ -19,6 +19,11 @@ import i14 from "../sources/i14.png";
 import i7 from "../sources/i7.png";
 import i8 from "../sources/i8.png";
 
+import r1 from "../sources/r1.jpg";
+import r2 from "../sources/r2.jpg";
+import r3 from "../sources/r3.jpg";
+import r4 from "../sources/r4.jpg";
+
 const ProductDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -45,12 +50,12 @@ const ProductDetail = () => {
         setPopup(false);
       }, 2000)
 
-      if(!userID){
+      if (!userID) {
         alert('Please login to add items!')
         navigate('/login');
         return;
       }
-      
+
       setPopup(true);
 
       console.log('Action: ', action);
@@ -139,10 +144,10 @@ const ProductDetail = () => {
           </div>
           {isOpen && (
             <div className="dropdown-menu black new-dropdown-inside">
-              {(isLoggedIn=="true") && (
+              {(isLoggedIn == "true") && (
                 <a onClick={handleLogout} className="dropdown-item">Logout</a>
               )}
-              {(isLoggedIn=="false" || (isLoggedIn==null)) && (
+              {(isLoggedIn == "false" || (isLoggedIn == null)) && (
                 <a onClick={() => navigate("/login")} className="dropdown-item">Login</a>
               )}
               <a onClick={() => navigate("/cart")} className="dropdown-item">Cart</a>
@@ -311,7 +316,43 @@ const ProductDetail = () => {
           </div>
         </section> */}
 
-        <section id='footer' className='priv'>
+        <section id='more-about'>
+          <h1>Reviews by our customers</h1>
+          <div className='more'>
+            <div className='each-review'>
+              <img src={r3} alt='review.png' />
+              <p>T-shirt quality was decent.</p>
+            </div>
+
+
+            <div className='each-review'>
+              <img src={r4} alt='review.png' />
+              <p>Nice tee, but needed more colors.</p>
+            </div>
+
+            <div className='each-review'>
+              <img src={r1} alt='review.png' />
+              <p>Quality is good, loved the product!</p>
+            </div>
+
+            {/* Duplicate Reviews */}
+            <div className='each-review'>
+              <img src={r3} alt='review.png' />
+              <p>T-shirt quality was decent.</p>
+            </div>
+            <div className='each-review'>
+              <img src={r4} alt='review.png' />
+              <p>Nice tee, but needed more colors.</p>
+            </div>
+            <div className='each-review'>
+              <img src={r1} alt='review.png' />
+              <p>Quality is good, loved the product!</p>
+            </div>
+
+          </div>
+        </section>
+
+        <section id='footer' className='priv new-priv'>
           <div className='mp'>
             <img src={logo1} alt="logo.png" />
             <div className='move-p'>
