@@ -37,7 +37,7 @@ const CustomerCare = () => {
       </div>
       <div className='main m1 black' >
         <img src={logo} alt="logo" className='logo' onClick={refresh} />
-        <div className="dropdown d1 black">
+        <div className="dropdown d1 black nd">
           <div className="hamburger-icon hi" onClick={() => setIsOpen(!isOpen)}>
             <span></span>
             <span></span>

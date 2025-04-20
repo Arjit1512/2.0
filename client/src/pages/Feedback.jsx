@@ -33,6 +33,10 @@ const Community = () => {
     event.preventDefault();
 
     try {
+      if(!userID){
+        alert("Please login to give feedback.")
+        return;
+      }
       setIsLoading(true);
       const token = localStorage.getItem('token'); 
 
@@ -50,10 +54,10 @@ const Community = () => {
         }
       });
 
-      if (response.status === 200) {
+      if (response.data.message === 'Feedback taken succesfully') {
         navigate('/success');
       } else {
-        alert('User does not exist.');
+        alert(response.data.message);
       }
     } catch (error) {
       console.error('Failed to submit message', error);

@@ -295,6 +295,7 @@ body {
     position: relative;
     right: 70%;
     height: 60vh;
+    transition: all 0.3s ease;
 }
 
 .gif-video {
@@ -474,6 +475,7 @@ body {
     }
     .navbar{
         padding-bottom: 1%;
+        position: relative;
     }
 
     #home-div {

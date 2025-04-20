@@ -13,6 +13,7 @@ import pic from '../sources/pic1.png';
 const Products = () => {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
+  const [hovered, setHovered] = useState(null);
   const userID = localStorage.getItem('userID');
   const isLoggedIn = localStorage.getItem('isLoggedIn');
   const [sortOption, setSortOption] = useState("recommended");
@@ -108,10 +109,12 @@ const Products = () => {
         </div>
         <div className='grid'>
           {sortedClothes.map((cloth) => (
-            <div key={cloth.id} onClick={() => handleClick(cloth.id)}>
+            <div key={cloth.id} onClick={() => handleClick(cloth.id)}
+            onMouseEnter={() => setHovered(cloth.id)}
+            onMouseLeave={() => setHovered(null)}>
               <Card
                 id={cloth.id}
-                imgURL={cloth.imgURL}
+                imgURL={hovered === cloth.id ? cloth.hoveredImgURL : cloth.imgURL} 
                 name={cloth.name}
                 price={cloth.price}
               />

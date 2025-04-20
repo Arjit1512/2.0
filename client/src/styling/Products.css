@@ -222,12 +222,10 @@
     .db1 {
         visibility: visible !important;
         position: absolute;
-        top: 5.75vh !important;
         right: 5% !important;
     }
 
     .main.main1 {
-        padding-bottom: 3%;
         position: relative;
           
     }

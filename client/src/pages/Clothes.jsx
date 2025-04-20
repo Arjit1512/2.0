@@ -16,6 +16,9 @@ import alt13 from "../sources/i4.jpg";
 import alt15 from "../sources/i16.png";
 import alt17 from "../sources/i17.png";
 
+
+import hover13 from "../sources/close.png";
+
 const Clothes = [
     // {
     //     id: 1,
@@ -39,6 +42,7 @@ const Clothes = [
         id: 13,
         imgURL: pro13,
         altURL: alt13,
+        hoveredImgURL: hover13,
         price: 699.00,
         name: "Hood Over Fear",
         description: "I'm a product",
