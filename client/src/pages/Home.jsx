@@ -39,6 +39,7 @@ const Home = () => {
     }
   }
 
+  
   const handleClick = (id) => {
     navigate(`/products/${id}`);
     window.scrollTo(0, 0);
