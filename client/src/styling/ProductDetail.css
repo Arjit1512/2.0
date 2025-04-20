@@ -268,17 +268,16 @@ button.atc:hover {
     display: flex;
     flex-direction: row;
     gap: 15%;
-    animation: scroll-left 20s linear infinite;
+    animation: scroll-left 25s linear infinite;
     width: max-content;
 }
 
 @keyframes scroll-left {
     0% {
-        transform: translateX(0%);
+        transform: translateX(0);
     }
-
     100% {
-        transform: translateX(-100%);
+        transform: translateX(calc(-100%)); 
     }
 }
 
@@ -288,6 +287,7 @@ button.atc:hover {
     padding: 1%;
     border-radius: 10px;
     font-size: 0.8rem;
+    flex-shrink: 0;
 }
 
 .each-review p {
@@ -483,6 +483,14 @@ body {
 
     #more-about {
         margin-top: 60%;
+    }
+
+    #more-about h1 {
+        font-size: 1.2rem;
+    }    
+
+    .each-review p {
+        font-size: 0.7rem;
     }
 }
 
