@@ -43,7 +43,7 @@ const Clothes = [
         imgURL: pro13,
         altURL: alt13,
         hoveredImgURL: hover13,
-        price: 699.00,
+        price: 599.00,
         name: "Hood Over Fear",
         description: "I'm a product",
         category: "T-Shirts"

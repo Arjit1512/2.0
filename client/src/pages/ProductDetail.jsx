@@ -318,37 +318,39 @@ const ProductDetail = () => {
 
         <section id='more-about'>
           <h1>Reviews by our customers</h1>
-          <div className='more'>
-            <div className='each-review'>
-              <img src={r3} alt='review.png' />
-              <p>T-shirt quality was decent.</p>
-            </div>
+          <div className='more-container'>
+            <div className='more'>
+              <div className='each-review'>
+                <img src={r3} alt='review.png' />
+                <p>T-shirt quality was decent.</p>
+              </div>
 
 
-            <div className='each-review'>
-              <img src={r4} alt='review.png' />
-              <p>Nice tee, but needed more colors.</p>
-            </div>
+              <div className='each-review'>
+                <img src={r4} alt='review.png' />
+                <p>Nice tee, but needed more colors.</p>
+              </div>
 
-            <div className='each-review'>
-              <img src={r1} alt='review.png' />
-              <p>Quality is good, loved the product!</p>
-            </div>
+              <div className='each-review'>
+                <img src={r1} alt='review.png' />
+                <p>Quality is good, loved the product!</p>
+              </div>
 
-            {/* Duplicate Reviews */}
-            <div className='each-review'>
-              <img src={r3} alt='review.png' />
-              <p>T-shirt quality was decent.</p>
-            </div>
-            <div className='each-review'>
-              <img src={r4} alt='review.png' />
-              <p>Nice tee, but needed more colors.</p>
-            </div>
-            <div className='each-review'>
-              <img src={r1} alt='review.png' />
-              <p>Quality is good, loved the product!</p>
-            </div>
+              {/* Duplicate Reviews */}
+              <div className='each-review'>
+                <img src={r3} alt='review.png' />
+                <p>T-shirt quality was decent.</p>
+              </div>
+              <div className='each-review'>
+                <img src={r4} alt='review.png' />
+                <p>Nice tee, but needed more colors.</p>
+              </div>
+              <div className='each-review'>
+                <img src={r1} alt='review.png' />
+                <p>Quality is good, loved the product!</p>
+              </div>
 
+            </div>
           </div>
         </section>
 

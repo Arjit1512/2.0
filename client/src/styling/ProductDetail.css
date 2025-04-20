@@ -258,6 +258,12 @@ button.atc:hover {
     text-align: center;
 }
 
+.more-container {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
 .more {
     display: flex;
     flex-direction: row;
@@ -272,7 +278,7 @@ button.atc:hover {
     }
 
     100% {
-        transform: translateX(-50%);
+        transform: translateX(-100%);
     }
 }
 
@@ -291,7 +297,7 @@ button.atc:hover {
 .each-review img {
     width: 200px;
     height: 200px;
-    padding:1%;
+    padding: 1%;
     border: 1px solid grey;
     border-radius: 10px;
 }
@@ -475,7 +481,7 @@ body {
         gap: 20px;
     }
 
-    #more-about{
+    #more-about {
         margin-top: 60%;
     }
 }
