@@ -115,6 +115,7 @@ body {
 .th {
     align-items: center;
     text-align: center;
+    cursor: pointer;
 }
 
 .th h1 {

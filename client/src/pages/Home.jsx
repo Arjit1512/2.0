@@ -89,7 +89,7 @@ const Home = () => {
           </div>
         </div>
 
-        <div className="th">
+        <div className="th" onClick={()=> navigate("/products")}>
           <h1>TRUE<span>&nbsp;H</span>OOD</h1>
         </div>
       </section>
