@@ -50,7 +50,7 @@ const products = [
     {
         id: 13,
         imgURL: `/images/i13.png`,
-        price: 599.00,
+        price: 1.00,
         name: "Hood Over Fear",
         description: "I'm a product",
         category: "T-Shirts"
