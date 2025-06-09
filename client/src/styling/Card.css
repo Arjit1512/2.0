@@ -1,21 +1,22 @@
 .card {
     background-color: white;
     padding: 15px;
-    width: 31%;
+    width: 32%;
     margin:2% 5%;
     text-align: center;
     height:430px;
 }
 
 .card-img {
-    width: 100%;
+    width: 215%;
     border-radius: 4px;
     margin-bottom: 10px;
     object-fit: cover;
     height: 335px;
     position: relative;
-    right: 9%;
+    right: 48%;
 }
+
 .card:hover{
     cursor: pointer;
 }

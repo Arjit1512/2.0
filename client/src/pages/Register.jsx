@@ -38,7 +38,7 @@ const Register = () => {
         localStorage.setItem('userID', response.data.userID);
         localStorage.setItem('userName', response.data.userName);
         localStorage.setItem('isLoggedIn', true);
-        navigate("/");
+        navigate("/products");
       }
       else {
         console.log(response.data.message);

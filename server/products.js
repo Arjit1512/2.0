@@ -49,20 +49,20 @@ const products = [
     // },
     {
         id: 13,
-        imgURL: `/images/i13.png`,
+        imgURL: `/images/i20.png`,
         price: 1.00,
         name: "Hood Over Fear",
         description: "I'm a product",
         category: "T-Shirts"
     },
-    // {
-    //     id: 17,
-    //     imgURL: `/images/i17.png`,
-    //     price: 1.00,
-    //     name: "True Hood Culture",
-    //     description: "I'm a product",
-    //     category: "T-Shirts"
-    // },
+    {
+        id: 17,
+        imgURL: `/images/i18.png`,
+        price: 1.00,
+        name: "True Hood Culture",
+        description: "I'm a product",
+        category: "T-Shirts"
+    },
     // {
     //     id: 9,
     //     imgURL: `../images/pro9.webp`,

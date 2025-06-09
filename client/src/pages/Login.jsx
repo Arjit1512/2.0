@@ -39,7 +39,7 @@ const Login = () => {
         localStorage.setItem('userName', response.data.userName);
         localStorage.setItem('isLoggedIn', true);
         console.log('USERID:::: ', response.data.userID);
-        navigate("/");
+        navigate("/products");
       }
       else {
         console.log(response.data.message);
