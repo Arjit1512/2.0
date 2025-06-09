@@ -24,6 +24,7 @@ const Home = () => {
   const [isOpen, setIsOpen] = useState(false);
   const userID = localStorage.getItem('userID');
   const isLoggedIn = localStorage.getItem('isLoggedIn');
+  const [logpopup, setlogPopup] = useState(false);
   const refresh = () => {
     window.location.reload();
   }
@@ -32,14 +33,20 @@ const Home = () => {
       localStorage.removeItem("token");
       localStorage.removeItem("userID");
       localStorage.setItem("isLoggedIn", false);
-      window.location.reload();
+      localStorage.removeItem("tempid");
+      setlogPopup(true);
+      
+      setTimeout(() => {
+        setlogPopup(false);
+        window.location.reload();
+      }, 1500);
       console.log('User logged out successfully.');
     } catch (error) {
       console.log('Error: ', error);
     }
   }
 
-  
+
   const handleClick = (id) => {
     navigate(`/products/${id}`);
     window.scrollTo(0, 0);
@@ -54,7 +61,13 @@ const Home = () => {
       <div className='navbar'>
         <p>WE THE INDEPENDENT</p>
       </div>
-
+      {logpopup && (
+        <>
+          <div className='notification-box' style={{ zIndex: 2000 }}>
+            <h3 className='blinking-text'>Logged out successfully!</h3>
+          </div>
+        </>
+      )}
       <section className="video-background">
         <img src={vid} alt="background" className="background-gif" />
 
@@ -89,7 +102,7 @@ const Home = () => {
           </div>
         </div>
 
-        <div className="th" onClick={()=> navigate("/products")}>
+        <div className="th" onClick={() => navigate("/products")}>
           <h1>TRUE<span>&nbsp;H</span>OOD</h1>
         </div>
       </section>

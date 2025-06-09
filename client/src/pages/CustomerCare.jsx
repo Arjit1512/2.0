@@ -17,14 +17,21 @@ const CustomerCare = () => {
   const [isOpen, setIsOpen] = useState(false);
   const userID = localStorage.getItem('userID');
   const isLoggedIn = localStorage.getItem('isLoggedIn');
+  const [logpopup, setlogPopup] = useState(false);
 
 
   const handleLogout = async () => {
     try {
       localStorage.removeItem("token");
       localStorage.removeItem("userID");
-      localStorage.setItem("isLoggedIn",false);
-      window.location.reload();
+      localStorage.setItem("isLoggedIn", false);
+      localStorage.removeItem("tempid");
+      setlogPopup(true);
+      
+      setTimeout(() => {
+        setlogPopup(false);
+        window.location.reload();
+      }, 1500);
       console.log('User logged out successfully.');
     } catch (error) {
       console.log('Error: ', error);
@@ -35,6 +42,13 @@ const CustomerCare = () => {
       <div className='navbar not-fixed'>
         <p>WE WOULD LOVE TO HEAR FROM YOU.</p>
       </div>
+      {logpopup && (
+        <>
+          <div className='notification-box' style={{ zIndex: 2000 }}>
+            <h3 className='blinking-text'>Logged out successfully!</h3>
+          </div>
+        </>
+      )}
       <div className='main m1 black' >
         <img src={logo} alt="logo" className='logo' onClick={refresh} />
         <div className="dropdown d1 black nd">
@@ -44,19 +58,19 @@ const CustomerCare = () => {
             <span></span>
           </div>
           {isOpen && (
-              <div className="dropdown-menu black">
-                {(isLoggedIn=='true') && (
-                  <a onClick={handleLogout} className="dropdown-item">Logout</a>
-                )}
-                {(isLoggedIn=='false' || (isLoggedIn==null)) && (
-                  <a onClick={() => navigate("/login")} className="dropdown-item">Login</a>
-                )}
-                <a onClick={() => navigate("/products")} className="dropdown-item">SALE</a>
-                <a onClick={() => navigate("/cart")} className="dropdown-item">Cart</a>
-                <a onClick={() => navigate("/dashboard")} className="dropdown-item">My Orders</a>
-                <a onClick={() => navigate("/customer-care")} className="dropdown-item">Customer Care</a>
-              </div>
-            )}
+            <div className="dropdown-menu black">
+              {(isLoggedIn == 'true') && (
+                <a onClick={handleLogout} className="dropdown-item">Logout</a>
+              )}
+              {(isLoggedIn == 'false' || (isLoggedIn == null)) && (
+                <a onClick={() => navigate("/login")} className="dropdown-item">Login</a>
+              )}
+              <a onClick={() => navigate("/products")} className="dropdown-item">SALE</a>
+              <a onClick={() => navigate("/cart")} className="dropdown-item">Cart</a>
+              <a onClick={() => navigate("/dashboard")} className="dropdown-item">My Orders</a>
+              <a onClick={() => navigate("/customer-care")} className="dropdown-item">Customer Care</a>
+            </div>
+          )}
         </div>
       </div>
 

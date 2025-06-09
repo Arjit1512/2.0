@@ -27,6 +27,8 @@ const Register = () => {
     e.preventDefault();
     try {
       setIsLoading(true);
+      const id = localStorage.getItem("tempid");
+       
       const response = await axios.post(`${process.env.REACT_APP_API_URL}/register`, {
         userName,
         email,
@@ -38,6 +40,11 @@ const Register = () => {
         localStorage.setItem('userID', response.data.userID);
         localStorage.setItem('userName', response.data.userName);
         localStorage.setItem('isLoggedIn', true);
+        if(id>0){
+            navigate(`/products/${id}`);
+            return;
+        }
+        localStorage.setItem("justLoggedIn", "true");
         navigate("/products");
       }
       else {

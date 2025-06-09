@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Clothes from './Clothes.jsx'
 import { useNavigate, useParams } from 'react-router-dom';
 import '../styling/ProductDetail.css';
@@ -32,14 +32,38 @@ const ProductDetail = () => {
   const userID = localStorage.getItem('userID');
   const isLoggedIn = localStorage.getItem('isLoggedIn');
   const [popup, setPopup] = useState(false);
+  const [logpopup, setlogPopup] = useState(false);
+  const [loginpopup, setloginPopup] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const refresh = () => {
     navigate("/");
   }
   const cloth = Clothes.find((item) => item.id === parseInt(id));
 
+  const tempid = localStorage.getItem("tempid");
+
+  useEffect(() => {
+    const tempid = localStorage.getItem("tempid");
+
+    if (tempid && userID) {
+      setlogPopup(true);
+      localStorage.removeItem("tempid");
+
+      setTimeout(() => {
+        setlogPopup(false);
+      }, 2000);
+    }
+  }, [userID]);
+
   const handleQuantityChange = async (id, action, size) => {
     try {
+
+      if (!userID) {
+        localStorage.setItem("tempid", id);
+        alert('Please login to add items!')
+        navigate('/login');
+        return;
+      }
 
       if (size === '') {
         alert('Enter valid size!')
@@ -50,11 +74,6 @@ const ProductDetail = () => {
         setPopup(false);
       }, 2000)
 
-      if (!userID) {
-        alert('Please login to add items!')
-        navigate('/login');
-        return;
-      }
 
       setPopup(true);
 
@@ -100,8 +119,15 @@ const ProductDetail = () => {
     try {
       localStorage.removeItem("token");
       localStorage.removeItem("userID");
+      localStorage.removeItem("tempid");
       localStorage.setItem("isLoggedIn", false);
-      window.location.reload();
+      localStorage.removeItem("tempid");
+      setloginPopup(true);
+      
+      setTimeout(() => {
+        setloginPopup(false);
+        window.location.reload();
+      }, 1500);
       console.log('User logged out successfully.');
     } catch (error) {
       console.log('Error: ', error);
@@ -127,6 +153,20 @@ const ProductDetail = () => {
       <div className='navbar not-fixed'>
         <p>WE THE INDEPENDENT</p>
       </div>
+      {loginpopup && (
+        <>
+          <div className='notification-box'>
+            <h3 className='blinking-text'>Logged out successfully!</h3>
+          </div>
+        </>
+      )}
+      {logpopup && (
+        <>
+          <div className='notification-box'>
+            <h3 className='blinking-text'>Loggedin successfully!</h3>
+          </div>
+        </>
+      )}
       {popup && (
         <>
           <div className='notification-box'>

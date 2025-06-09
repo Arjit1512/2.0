@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import logo from "../sources/H-logo.png";
 import Clothes from './Clothes.jsx';
 import { useNavigate, Link } from 'react-router-dom';
@@ -18,17 +18,37 @@ const Products = () => {
   const isLoggedIn = localStorage.getItem('isLoggedIn');
   const [sortOption, setSortOption] = useState("recommended");
   const [sortedClothes, setSortedClothes] = useState(Clothes);
+  const [logpopup, setlogPopup] = useState(false);
+  const [loginpopup, setloginPopup] = useState(false);
 
   const refresh = () => {
     window.location.reload();
   };
+
+  useEffect(() => {
+    const justLoggedIn = localStorage.getItem("justLoggedIn");
+    if (justLoggedIn === "true") {
+      setloginPopup(true);
+      setTimeout(() => {
+        setloginPopup(false);
+        localStorage.removeItem("justLoggedIn"); 
+      }, 1500);
+    }
+  }, []);
 
   const handleLogout = async () => {
     try {
       localStorage.removeItem("token");
       localStorage.removeItem("userID");
       localStorage.setItem("isLoggedIn", false);
-      window.location.reload();
+
+      localStorage.removeItem("tempid");
+      setlogPopup(true);
+
+      setTimeout(() => {
+        setlogPopup(false);
+        window.location.reload();
+      }, 1500);
       console.log('User logged out successfully.');
     } catch (error) {
       console.log('Error: ', error);
@@ -64,7 +84,20 @@ const Products = () => {
       <div className='navbar'>
         <p>THE <span className='blink'>SALE</span> IS LIVE NOW!</p>
       </div>
-
+      {loginpopup && (
+        <>
+          <div className='notification-box' style={{ zIndex: 2000 }}>
+            <h3 className='blinking-text'>Loggedin successfully!</h3>
+          </div>
+        </>
+      )}
+      {logpopup && (
+        <>
+          <div className='notification-box' style={{ zIndex: 2000 }}>
+            <h3 className='blinking-text'>Logged out successfully!</h3>
+          </div>
+        </>
+      )}
       <div className='main main1'>
         <img src={logo} alt="logo" className='inv-rev logo' onClick={() => navigate("/")} />
         <h3 onClick={refresh}>SHOP</h3>

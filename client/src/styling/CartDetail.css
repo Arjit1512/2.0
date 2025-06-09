@@ -24,8 +24,8 @@
 }
 
 .cart-class1 img {
-    height: 225px;
-    width: 266px;
+    height: 270px;
+    width: 270px;
     border: 2px solid black;
 }
 
@@ -80,7 +80,7 @@
     background-color: #000;
     position: absolute;
     right: 18%;
-    top: 34vh;
+    top: 39vh;
 }
 
 .filter-gray {

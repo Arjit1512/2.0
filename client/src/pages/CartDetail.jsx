@@ -12,6 +12,7 @@ export const CartDetail = () => {
     const userID = localStorage.getItem('userID');
     const isLoggedIn = localStorage.getItem('isLoggedIn');
     const [popup, setPopup] = useState(false);
+    const [logpopup, setlogPopup] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const refresh = () => {
@@ -368,12 +369,14 @@ export const CartDetail = () => {
                     },
                 }
             );
-            alert(response.data.message);
             console.log(response.data.message);
             if (response.data.message === "Address added successfully!") {
                 // Do not call handleCheckout here
                 showAddressPopup(false); // Close the address popup
                 loadRazorpayScript(); // Now call Razorpay after address submission
+            }
+            else {
+                alert(response.data.message);
             }
         } catch (error) {
             console.log("Error: ", error);
@@ -393,7 +396,13 @@ export const CartDetail = () => {
             localStorage.removeItem("token");
             localStorage.removeItem("userID");
             localStorage.setItem("isLoggedIn", false);
-            window.location.reload();
+            localStorage.removeItem("tempid");
+            setlogPopup(true);
+
+            setTimeout(() => {
+                setlogPopup(false);
+                window.location.reload();
+            }, 1500);
             console.log('User logged out successfully.');
         } catch (error) {
             console.log('Error: ', error);
@@ -412,7 +421,7 @@ export const CartDetail = () => {
             </div>
         )
     }
-    
+
     if (items.length === 0 && userID) {
         return (
             <div className='oops'>
@@ -421,16 +430,16 @@ export const CartDetail = () => {
             </div>
         )
     }
-    
+
     return (
         <>
-            {(isLoggedIn=="false" || (isLoggedIn==null)) && (
+            {(isLoggedIn == "false" || (isLoggedIn == null)) && (
                 <div className='oops'>
                     <h3>Please login to add items in your cart.</h3>
                     <p>Click <span onClick={() => navigate("/login")}>here</span> to login</p>
                 </div>
             )}
-            {(isLoggedIn=="true") && (
+            {(isLoggedIn == "true") && (
                 <div className='main-center-div'>
                     <div className='navbar true'>
                         <p>WE THE INDEPENDENT</p>
