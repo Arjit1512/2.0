@@ -454,14 +454,14 @@ export const CartDetail = () => {
                             </div>
                             {isOpen && (
                                 <div className="dropdown-menu black">
-                                    {isLoggedIn && (
-                                        <a onClick={handleLogout} className="dropdown-item">Logout</a>
-                                    )}
                                     {!isLoggedIn && (
                                         <a onClick={() => navigate("/login")} className="dropdown-item">Login</a>
                                     )}
                                     <a onClick={() => navigate("/cart")} className="dropdown-item">Cart</a>
                                     <a onClick={() => navigate("/dashboard")} className="dropdown-item">My Orders</a>
+                                    {isLoggedIn && (
+                                        <a onClick={handleLogout} className="dropdown-item">Logout</a>
+                                    )}
                                 </div>
                             )}
                         </div>

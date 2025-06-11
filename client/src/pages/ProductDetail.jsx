@@ -57,7 +57,7 @@ const ProductDetail = () => {
 
   const handleQuantityChange = async (id, action, size) => {
     try {
-
+      
       if (!userID) {
         localStorage.setItem("tempid", id);
         alert('Please login to add items!')
@@ -65,7 +65,7 @@ const ProductDetail = () => {
         return;
       }
 
-      if (size === '') {
+      if (size === '' || !size) {
         alert('Enter valid size!')
         return;
       }
@@ -184,14 +184,14 @@ const ProductDetail = () => {
           </div>
           {isOpen && (
             <div className="dropdown-menu black new-dropdown-inside">
-              {(isLoggedIn == "true") && (
-                <a onClick={handleLogout} className="dropdown-item">Logout</a>
-              )}
               {(isLoggedIn == "false" || (isLoggedIn == null)) && (
                 <a onClick={() => navigate("/login")} className="dropdown-item">Login</a>
               )}
               <a onClick={() => navigate("/cart")} className="dropdown-item">Cart</a>
               <a onClick={() => navigate("/dashboard")} className="dropdown-item">My Orders</a>
+              {(isLoggedIn == "true") && (
+                <a onClick={handleLogout} className="dropdown-item">Logout</a>
+              )}
             </div>
           )}
         </div>

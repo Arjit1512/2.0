@@ -59,9 +59,6 @@ const CustomerCare = () => {
           </div>
           {isOpen && (
             <div className="dropdown-menu black">
-              {(isLoggedIn == 'true') && (
-                <a onClick={handleLogout} className="dropdown-item">Logout</a>
-              )}
               {(isLoggedIn == 'false' || (isLoggedIn == null)) && (
                 <a onClick={() => navigate("/login")} className="dropdown-item">Login</a>
               )}
@@ -69,6 +66,9 @@ const CustomerCare = () => {
               <a onClick={() => navigate("/cart")} className="dropdown-item">Cart</a>
               <a onClick={() => navigate("/dashboard")} className="dropdown-item">My Orders</a>
               <a onClick={() => navigate("/customer-care")} className="dropdown-item">Customer Care</a>
+              {(isLoggedIn == 'true') && (
+                <a onClick={handleLogout} className="dropdown-item">Logout</a>
+              )}
             </div>
           )}
         </div>
