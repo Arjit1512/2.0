@@ -292,7 +292,7 @@ export const CartDetail = () => {
             const orderDetails = {
                 order_id: `order_${Date.now()}`,
                 order_date: new Date().toISOString(),
-                pickup_location: "warehouse",
+                pickup_location: "warehouse-1",
                 comment: "Customer Order",
                 billing_customer_name: user?.name || "Not Provided",
                 billing_address: address?.street || "Not Provided",
