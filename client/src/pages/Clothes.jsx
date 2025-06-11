@@ -17,6 +17,7 @@ import alt13 from "../sources/i4.jpg";
 import alt15 from "../sources/i16.png";
 import alt17 from "../sources/i17.png";
 import alt18 from "../sources/i19.png";
+import alt21 from "../sources/i21.png";
 
 
 import hover13 from "../sources/close.png";
@@ -43,7 +44,7 @@ const Clothes = [
     {
         id: 13,
         imgURL: pro13,
-        altURL: alt18,
+        altURL: alt21,
         hoveredImgURL: hover13,
         price: 1.00,
         name: "Hood Over Fear",
@@ -90,7 +91,7 @@ const Clothes = [
     {
         id: 17,
         imgURL: pro18,
-        altURL: alt18,
+        altURL: alt21,
         price: 1.00,
         name: "True Hood Culture",
         description: "I'm a product",
